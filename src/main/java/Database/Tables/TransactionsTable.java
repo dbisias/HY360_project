@@ -1,4 +1,4 @@
-package main.java.Database.Tables;
+package Database.Tables;
 
 import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
@@ -25,7 +25,7 @@ public class TransactionsTable {
                 + "date DATE NOT NULL, "
                 + "ammount DOUBLE NOT NULL);";
 
-        stmt.execute(sql);
+        stmt.execute(query);
         stmt.close();
         con.close();
     }
