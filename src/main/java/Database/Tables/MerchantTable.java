@@ -2,6 +2,7 @@ package Database.Tables;
 
 import Database.Connection.DB_Connection;
 import Database.mainClasses.Company;
+import Database.mainClasses.Individual;
 import Database.mainClasses.Merchant;
 import com.google.gson.Gson;
 
@@ -10,8 +11,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class MerchantTable {
+    Gson gson = new Gson();
+    public String MerchantToJSON(Merchant merchant){
+        return gson.toJson(merchant);
+    }
+
     public void addMerchantfromJSON(String json) throws SQLException, ClassNotFoundException {
-        Gson gson = new Gson();
         Merchant merchant = gson.fromJson(json, Merchant.class);
         merchant.initfields(0);
         addNewMerchant(merchant);

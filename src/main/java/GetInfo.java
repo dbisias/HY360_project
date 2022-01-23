@@ -1,3 +1,10 @@
+import Database.Tables.CompanyTable;
+import Database.Tables.IndividualTable;
+import Database.Tables.MerchantTable;
+import Database.mainClasses.Account;
+import Database.mainClasses.Company;
+import Database.mainClasses.Individual;
+import Database.mainClasses.Merchant;
 import ServletHelper.ServletHelper;
 import org.json.JSONObject;
 
@@ -5,12 +12,13 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet(name = "GetInfo", value = "/GetInfo")
 public class GetInfo extends HttpServlet {
-
+    ServletHelper helper = new ServletHelper();
+    IndividualTable it = new IndividualTable();
+    CompanyTable ct = new CompanyTable();
+    MerchantTable mt = new MerchantTable();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -22,34 +30,32 @@ public class GetInfo extends HttpServlet {
         String password = (String) session.getAttribute("password");
         JSONObject jsonreply = null;
 
-        EditSimpleUserTable usrtable = new EditSimpleUserTable();
-        User loggedin = null;
+        Account loggedin = null;
         try {
-            loggedin = usrtable.databaseToSimpleUser(logedin_id, password);
+//            loggedin = it.findAccount(logedin_id, password);
             if(loggedin!=null) {
-                jsonreply = new JSONObject(usrtable.simpleUserToJSON((SimpleUser) loggedin));
-                if(loggedin.getUsername().equals("admin")){
-                    jsonreply.put("usertype","admin");
-                }else{
-                    jsonreply.put("usertype","user");
-                }
+                jsonreply = new JSONObject(it.IndividualToJSON((Individual) loggedin));
+                jsonreply.put("usertype","user");
             }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
-        EditDoctorTable doctable = new EditDoctorTable();
-        try {
-            loggedin = doctable.databaseToDoctor(logedin_id, password);
+//            loggedin = ct.findAccount(logedin_id, password);
             if(loggedin!=null) {
-                jsonreply = new JSONObject(doctable.doctorToJSON((Doctor) loggedin));
+                jsonreply = new JSONObject(ct.CompanyToJSON((Company) loggedin));
                 jsonreply.put("usertype", "doctor");
             }
-        } catch (SQLException | ClassNotFoundException e) {
+
+//            loggedin = mt.findAccount(logedin_id, password);
+            if(loggedin!=null) {
+                jsonreply = new JSONObject(mt.MerchantToJSON((Merchant) loggedin));
+                jsonreply.put("usertype", "doctor");
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
+            helper.returnfailedlogin(response);
         }
 
-        if(jsonreply==null){returnfailedlogin(response);}
-        createResponse(response, 200, jsonreply.toString());
+        if(jsonreply==null){helper.returnfailedlogin(response);}
+        helper.createResponse(response, 200, jsonreply.toString());
     }
 }

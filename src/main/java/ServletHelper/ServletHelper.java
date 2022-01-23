@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class ServletHelper {
-    private void returnfailedlogin(HttpServletResponse response) {
+    public void returnfailedlogin(HttpServletResponse response) {
         JSONObject jsonreply = new JSONObject();
         jsonreply.put("loged_in", false);
         jsonreply.put("message", "Username or Password is incorrect!");
