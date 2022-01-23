@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class MerchantTable {
+public class MerchantTable implements DBTable {
     Gson gson = new Gson();
     public String MerchantToJSON(Merchant merchant){
         return gson.toJson(merchant);
@@ -21,10 +21,10 @@ public class MerchantTable {
     public void addMerchantfromJSON(String json) throws SQLException, ClassNotFoundException {
         Merchant merchant = gson.fromJson(json, Merchant.class);
         merchant.initfields(0);
-        addNewMerchant(merchant);
+        addNewAccount(merchant);
     }
 
-    public void addNewMerchant(Merchant merchant) throws SQLException, ClassNotFoundException {
+    public void addNewAccount(Merchant merchant) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
 
         Statement stmt = con.createStatement();
@@ -46,7 +46,7 @@ public class MerchantTable {
         stmt.close();
     }
 
-    public void createMerchantTable() throws SQLException, ClassNotFoundException {
+    public void createTable() throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         String sql = "CREATE TABLE merchants "

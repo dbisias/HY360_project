@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
-public class IndividualTable {
+public class IndividualTable implements DBTable {
     Gson gson = new Gson();
     public String IndividualToJSON(Individual individual) {
         return gson.toJson(individual);
@@ -21,10 +21,10 @@ public class IndividualTable {
     public void addIndividualfromJSON(String json) throws SQLException, ClassNotFoundException {
         Individual individual = gson.fromJson(json, Individual.class);
         individual.initfields();
-        addNewIndividual(individual);
+        addNewAccount(individual);
     }
 
-    public void addNewIndividual(Individual individual) throws SQLException, ClassNotFoundException {
+    public void addNewAccount(Individual individual) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
@@ -48,7 +48,7 @@ public class IndividualTable {
         stmt.close();
     }
 
-    public void createIndividualTable() throws SQLException, ClassNotFoundException {
+    public void createTable() throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         String sql = "CREATE TABLE individuals "
