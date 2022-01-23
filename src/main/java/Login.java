@@ -46,21 +46,21 @@ public class Login extends HttpServlet {
 
         Account logged_in = null;
         try {
-//            logged_in = it.findAccount((String) jsonin.get("username"),(String) jsonin.get("password"));
+            logged_in = it.findAccount((String) jsonin.get("username"),(String) jsonin.get("password"));
             if(logged_in!=null) {
                 usertype = "individual";
                 login(request,response,logged_in,usertype);
                 return;
             }
 
-//            logged_in = ct.findAccount((String) jsonin.get("username"),(String) jsonin.get("password"));
+            logged_in = ct.findAccount((String) jsonin.get("username"),(String) jsonin.get("password"));
             if(logged_in!=null){
                 usertype="company";
                 login(request,response,logged_in,usertype);
                 return;
             }
 
-//            logged_in = mt.findAccount((String) jsonin.get("username"),(String) jsonin.get("password"));
+            logged_in = mt.findAccount((String) jsonin.get("username"),(String) jsonin.get("password"));
             if(logged_in!=null){
                 usertype="merchant";
                 login(request,response,logged_in,usertype);

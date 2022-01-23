@@ -25,13 +25,17 @@ function sendAjaxLoginPOST(event){
             var jsonreply = JSON.parse(xhr.responseText);
             console.log(jsonreply);
             if(jsonreply["logged_in"]){
-                if(jsonreply["usertype"]===3){//0 unknown,1 user,2 doctor,3 admin
-                    window.location.href = "admin";
-                }else if(jsonreply["usertype"]===2){
-                    window.location.href = "doctor";
-                }else{
-                    window.location.href = "user";
+                if(jsonreply["usertype"]==="individual" || jsonreply["usertype"]==="company" || jsonreply["usertype"]==="merchant"){
+                    window.location.href = jsonreply["usertype"];
                 }
+
+                // if(jsonreply["usertype"]===3){//0 unknown,1 user,2 doctor,3 admin
+                //     window.location.href = "admin";
+                // }else if(jsonreply["usertype"]===2){
+                //     window.location.href = "doctor";
+                // }else{
+                //     window.location.href = "user";
+                // }
             }
         }else if(xhr.readyState === 4 && xhr.status === 403){
             $("#ajaxContent").html("<p style='color:red'>Username or password is incorrect!</p>");
