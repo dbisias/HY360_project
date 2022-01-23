@@ -11,7 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
-public class CompanyTable {
+
+public class CompanyTable implements DBTable {
     Gson gson = new Gson();
     public String CompanyToJSON(Company company){
         return gson.toJson(company);
@@ -20,10 +21,10 @@ public class CompanyTable {
     public void addCompanyfromJSON(String json) throws SQLException, ClassNotFoundException {
         Company company = gson.fromJson(json, Company.class);
         company.initfields();
-        addNewComany(company);
+        addNewAccount(company);
     }
 
-    public void addNewComany(Company company) throws SQLException, ClassNotFoundException {
+    public void addNewAccount(Company company) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
@@ -46,7 +47,7 @@ public class CompanyTable {
         stmt.close();
     }
 
-    public void createCompaniesTable() throws SQLException, ClassNotFoundException {
+    public void createTable() throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         String sql = "CREATE TABLE companies "

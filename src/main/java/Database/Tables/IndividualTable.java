@@ -67,6 +67,7 @@ public class IndividualTable {
 
     }
 
+
     public Individual findAccount(String username, String password) throws SQLException, ClassNotFoundException {
         ResultSet rs;
         Individual user;
