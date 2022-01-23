@@ -70,11 +70,10 @@ public class IndividualTable implements DBTable {
 
     }
 
-    public Account findAccount(String username, String password) throws SQLException, ClassNotFoundException {
 
+    public Individual findAccount(String username, String password) throws SQLException, ClassNotFoundException {
         ResultSet rs;
-        Account user;
-        String json;
+        Individual user;
 
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();

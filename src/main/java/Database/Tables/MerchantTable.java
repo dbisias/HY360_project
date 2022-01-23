@@ -63,11 +63,11 @@ public class MerchantTable implements DBTable {
 
     }
 
-    public Account findAccount(String username, String password) throws SQLException, ClassNotFoundException {
-
-        ResultSet rs;
-        Account user;
+    public Merchant findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+        
         String json;
+        ResultSet rs;
+        Merchant user;
 
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();

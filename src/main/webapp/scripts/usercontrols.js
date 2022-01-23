@@ -28,14 +28,6 @@ function sendAjaxLoginPOST(event){
                 if(jsonreply["usertype"]==="individual" || jsonreply["usertype"]==="company" || jsonreply["usertype"]==="merchant"){
                     window.location.href = jsonreply["usertype"];
                 }
-
-                // if(jsonreply["usertype"]===3){//0 unknown,1 user,2 doctor,3 admin
-                //     window.location.href = "admin";
-                // }else if(jsonreply["usertype"]===2){
-                //     window.location.href = "doctor";
-                // }else{
-                //     window.location.href = "user";
-                // }
             }
         }else if(xhr.readyState === 4 && xhr.status === 403){
             $("#ajaxContent").html("<p style='color:red'>Username or password is incorrect!</p>");
@@ -54,14 +46,14 @@ function logout(){
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            window.location.href = "/Project_war_exploded"
+            window.location.href = "/HY360_Project_war_exploded"
 
         } else if (xhr.status !== 200) {
             console.log('Request failed. Returned status of ' + xhr.status);
         }
     };
 
-    xhr.open('POST', '/Project_war_exploded/Logout');
+    xhr.open('POST', '/HY360_Project_war_exploded/Logout');
     xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     xhr.send();
 }
@@ -73,12 +65,12 @@ function checkUserLoggedIn(usertype){
             userdata = JSON.parse(xhr.responseText);
             if(userdata["usertype"]!=usertype){logout();}
         }else if(xhr.status!=200){
-            window.location.href = "/Project_war_exploded";
+            window.location.href = "/HY360_Project_war_exploded";
             console.log("autologin failed with status code: "+xhr.status);
         }
     }
 
-    xhr.open('POST', '/Project_war_exploded/GetInfo');
+    xhr.open('POST', '/HY360_Project_war_exploded/GetInfo');
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send("");
 }
@@ -88,11 +80,11 @@ function autoLogin(){
     xhr.onload = function (){
         if(xhr.readyState === 4 && xhr.status === 200){
             userdata = JSON.parse(xhr.responseText);
-            window.location.href = "/Project_war_exploded/"+userdata[usertype];
+            window.location.href = "/HY360_Project_war_exploded/"+userdata[usertype];
         }
     }
 
-    xhr.open('POST', '/Project_war_exploded/GetInfo');
+    xhr.open('POST', '/HY360_Project_war_exploded/GetInfo');
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send("");
 }

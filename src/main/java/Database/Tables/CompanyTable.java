@@ -76,8 +76,7 @@ public class CompanyTable implements DBTable {
     public Account findAccount(String username, String password) throws SQLException, ClassNotFoundException {
 
         ResultSet rs;
-        Account user;
-        String json;
+        Company user;
 
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
@@ -86,8 +85,8 @@ public class CompanyTable implements DBTable {
 
         rs = stmt.executeQuery(query);
         rs.next();
-        json = DB_Connection.getResultsToJSON(rs);
-        user = gson.fromJson(json, Account.class);
+        String json = DB_Connection.getResultsToJSON(rs);
+        user = gson.fromJson(json, Company.class);
         stmt.close();
         con.close();
 
