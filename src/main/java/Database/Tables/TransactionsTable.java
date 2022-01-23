@@ -25,7 +25,7 @@ public class TransactionsTable {
                 + "date DATE NOT NULL, "
                 + "ammount DOUBLE NOT NULL);";
 
-        stmt.execute(sql);
+        stmt.execute(query);
         stmt.close();
         con.close();
     }

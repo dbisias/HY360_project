@@ -24,35 +24,38 @@ public class GetInfo extends HttpServlet {
         HttpSession session = request.getSession();
         if(session.getAttribute("logged_in")==null){
             helper.returnfailedlogin(response);
+            System.out.println("gamiesai");
             return;
         }
         String logedin_id = session.getAttribute("logged_in").toString();
         String password = (String) session.getAttribute("password");
         JSONObject jsonreply = null;
 
-        Account loggedin = null;
         try {
             if(it.findAccount(logedin_id, password)!=null) {
                 jsonreply = new JSONObject(it.accountToJSON(it.findAccount(logedin_id, password)));
                 jsonreply.put("usertype","individual");
+                helper.createResponse(response, 200, jsonreply.toString());
+                return;
             }
 
             if(ct.findAccount(logedin_id, password)!=null) {
                 jsonreply = new JSONObject(ct.accountToJSON(ct.findAccount(logedin_id, password)));
                 jsonreply.put("usertype", "company");
+                helper.createResponse(response, 200, jsonreply.toString());
+                return;
             }
 
             if(mt.findAccount(logedin_id, password)!=null) {
                 jsonreply = new JSONObject(mt.accountToJSON(mt.findAccount(logedin_id, password)));
                 jsonreply.put("usertype", "merchant");
+                helper.createResponse(response, 200, jsonreply.toString());
+                return;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             helper.returnfailedlogin(response);
         }
-
-        if(jsonreply==null){helper.returnfailedlogin(response);}
-        helper.createResponse(response, 200, jsonreply.toString());
     }
 }
