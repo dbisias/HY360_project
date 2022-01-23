@@ -1,10 +1,12 @@
 package Database.Tables;
 
 import Database.Connection.DB_Connection;
+import Database.mainClasses.Account;
 import Database.mainClasses.Company;
 import com.google.gson.Gson;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -50,7 +52,7 @@ public class CompanyTable {
         String sql = "CREATE TABLE companies "
                 + "(account_id INTEGER not NULL AUTO_INCREMENT, "
                 + "name VARCHAR (40) not null,"
-                + "username VARCHAR (20) not null,"
+                + "username VARCHAR (20) not null unique,"
                 + "password VARCHAR (20) not null,"
                 + "billing_limit DOUBLE, "
                 + "expiration_date DATE , "
@@ -70,21 +72,18 @@ public class CompanyTable {
      * @param password
      * @return user account
      */
-    public Account findAccount(String username, String password){
-
+    public Account findAccount(String username, String password) throws SQLException, ClassNotFoundException {
         ResultSet rs;
         Account user;
-        Gson gson;
-    
-        Connection conn = DB_Connection.getConnection();
+
+        Connection con = DB_Connection.getConnection();
         Statement stmt  = con.createStatement();
         String query    = "SELECT username, password FROM companies WHERE username = '" + 
         username + "' AND password = '" + password +"'";
 
-
         rs = stmt.executeQuery(query);
-        DB_Connection.getResultToJSON(rs);
-        gson = new Gson();
+        rs.next();
+        String json = DB_Connection.getResultsToJSON(rs);
         user = gson.fromJson(json, Account.class);
         stmt.close();
         con.close();

@@ -32,22 +32,22 @@ public class GetInfo extends HttpServlet {
 
         Account loggedin = null;
         try {
-//            loggedin = it.findAccount(logedin_id, password);
+            loggedin = it.findAccount(logedin_id, password);
             if(loggedin!=null) {
                 jsonreply = new JSONObject(it.IndividualToJSON((Individual) loggedin));
-                jsonreply.put("usertype","user");
+                jsonreply.put("usertype","individual");
             }
 
-//            loggedin = ct.findAccount(logedin_id, password);
+            loggedin = ct.findAccount(logedin_id, password);
             if(loggedin!=null) {
                 jsonreply = new JSONObject(ct.CompanyToJSON((Company) loggedin));
-                jsonreply.put("usertype", "doctor");
+                jsonreply.put("usertype", "company");
             }
 
-//            loggedin = mt.findAccount(logedin_id, password);
+            loggedin = mt.findAccount(logedin_id, password);
             if(loggedin!=null) {
                 jsonreply = new JSONObject(mt.MerchantToJSON((Merchant) loggedin));
-                jsonreply.put("usertype", "doctor");
+                jsonreply.put("usertype", "merchant");
             }
 
         } catch (Exception e) {
