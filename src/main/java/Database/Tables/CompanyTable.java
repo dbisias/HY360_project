@@ -62,4 +62,33 @@ public class CompanyTable {
         con.close();
 
     }
+
+    /**
+     * Retuns either a non-null account if credentials are correct
+     * or an exception if they don't match an existing user.
+     * @param username
+     * @param password
+     * @return user account
+     */
+    public Account findAccount(String username, String password){
+
+        ResultSet rs;
+        Account user;
+        Gson gson;
+    
+        Connection conn = DB_Connection.getConnection();
+        Statement stmt  = con.createStatement();
+        String query    = "SELECT username, password FROM companies WHERE username = '" + 
+        username + "' AND password = '" + password +"'";
+
+
+        rs = stmt.executeQuery(query);
+        DB_Connection.getResultToJSON(rs);
+        gson = new Gson();
+        user = gson.fromJson(json, Account.class);
+        stmt.close();
+        con.close();
+
+        return user;
+    }
 }
