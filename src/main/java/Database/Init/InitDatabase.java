@@ -46,9 +46,9 @@ public class InitDatabase {
         String merchant = "{\"account_id\":\"3\",\"name\":\"Dimitris Bisias\",\"username\":\"b1s\",\"password\":\"123456\"}";
 
         try {
-            it.addIndividualfromJSON(individual);
-            ct.addCompanyfromJSON(company);
-            mt.addMerchantfromJSON(merchant);
+            it.addAccountFromJSON(individual);
+            ct.addAccountFromJSON(company);
+            mt.addAccountFromJSON(merchant);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -73,7 +73,7 @@ public class CompanyTable implements DBTable {
      * @param password
      * @return user account
      */
-    public Account findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+    public Company findAccount(String username, String password) throws SQLException, ClassNotFoundException {
 
         ResultSet rs;
         Company user;

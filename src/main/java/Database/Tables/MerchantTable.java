@@ -3,6 +3,7 @@ package Database.Tables;
 import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
 import Database.mainClasses.Company;
+import Database.mainClasses.Merchant;
 import com.google.gson.Gson;
 
 import java.sql.Connection;
@@ -76,7 +77,7 @@ public class MerchantTable implements DBTable {
         rs = stmt.executeQuery(query);
         rs.next();
         json = DB_Connection.getResultsToJSON(rs);
-        user = gson.fromJson(json, Account.class);
+        user = gson.fromJson(json, Merchant.class);
         stmt.close();
         con.close();
 

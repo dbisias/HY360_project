@@ -33,17 +33,17 @@ public class GetInfo extends HttpServlet {
         Account loggedin = null;
         try {
             if(it.findAccount(logedin_id, password)!=null) {
-                jsonreply = new JSONObject(it.IndividualToJSON(it.findAccount(logedin_id, password)));
+                jsonreply = new JSONObject(it.accountToJSON(it.findAccount(logedin_id, password)));
                 jsonreply.put("usertype","individual");
             }
 
             if(ct.findAccount(logedin_id, password)!=null) {
-                jsonreply = new JSONObject(ct.CompanyToJSON(ct.findAccount(logedin_id, password)));
+                jsonreply = new JSONObject(ct.accountToJSON(ct.findAccount(logedin_id, password)));
                 jsonreply.put("usertype", "company");
             }
 
             if(mt.findAccount(logedin_id, password)!=null) {
-                jsonreply = new JSONObject(mt.MerchantToJSON(mt.findAccount(logedin_id, password)));
+                jsonreply = new JSONObject(mt.accountToJSON(mt.findAccount(logedin_id, password)));
                 jsonreply.put("usertype", "merchant");
             }
 
