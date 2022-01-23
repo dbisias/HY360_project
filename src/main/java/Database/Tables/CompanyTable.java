@@ -72,9 +72,9 @@ public class CompanyTable {
      * @param password
      * @return user account
      */
-    public Account findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+    public Company findAccount(String username, String password) throws SQLException, ClassNotFoundException {
         ResultSet rs;
-        Account user;
+        Company user;
 
         Connection con = DB_Connection.getConnection();
         Statement stmt  = con.createStatement();
@@ -84,7 +84,7 @@ public class CompanyTable {
         rs = stmt.executeQuery(query);
         rs.next();
         String json = DB_Connection.getResultsToJSON(rs);
-        user = gson.fromJson(json, Account.class);
+        user = gson.fromJson(json, Company.class);
         stmt.close();
         con.close();
 

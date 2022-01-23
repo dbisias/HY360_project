@@ -64,9 +64,9 @@ public class MerchantTable {
 
     }
 
-    public Account findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+    public Merchant findAccount(String username, String password) throws SQLException, ClassNotFoundException {
         ResultSet rs;
-        Account user;
+        Merchant user;
 
         Connection con = DB_Connection.getConnection();
         Statement stmt  = con.createStatement();
@@ -77,7 +77,7 @@ public class MerchantTable {
         rs.next();
         String json = DB_Connection.getResultsToJSON(rs);
         gson = new Gson();
-        user = gson.fromJson(json, Account.class);
+        user = gson.fromJson(json, Merchant.class);
         stmt.close();
         con.close();
 

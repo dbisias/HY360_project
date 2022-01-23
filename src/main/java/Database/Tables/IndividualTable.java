@@ -67,9 +67,9 @@ public class IndividualTable {
 
     }
 
-    public Account findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+    public Individual findAccount(String username, String password) throws SQLException, ClassNotFoundException {
         ResultSet rs;
-        Account user;
+        Individual user;
 
         Connection con = DB_Connection.getConnection();
         Statement stmt  = con.createStatement();
@@ -81,7 +81,7 @@ public class IndividualTable {
         rs.next();
         String json = DB_Connection.getResultsToJSON(rs);
         gson = new Gson();
-        user = gson.fromJson(json, Account.class);
+        user = gson.fromJson(json, Individual.class);
         stmt.close();
         con.close();
 
