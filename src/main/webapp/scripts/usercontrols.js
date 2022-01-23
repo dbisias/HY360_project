@@ -1,10 +1,4 @@
-let userdata= {"lat":0,"lon":0};
-
-function updateuserdata(jsonreply){
-    userdata["gender"]=jsonreply["gender"];
-    userdata["height"]=jsonreply["height"];
-    userdata["weight"]=jsonreply["weight"];
-}
+let userdata= {};
 
 function showlogin(){
     if($("#loginform").is(":visible")){
@@ -85,3 +79,16 @@ function checkUserLoggedIn(usertype){
     xhr.send("");
 }
 
+function autoLogin(){
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function (){
+        if(xhr.readyState === 4 && xhr.status === 200){
+            userdata = JSON.parse(xhr.responseText);
+            window.location.href = "/Project_war_exploded/"+userdata[usertype];
+        }
+    }
+
+    xhr.open('POST', '/Project_war_exploded/GetInfo');
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send("");
+}
