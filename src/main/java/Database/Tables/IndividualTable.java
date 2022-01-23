@@ -2,7 +2,6 @@ package Database.Tables;
 
 import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
-import Database.mainClasses.Company;
 import Database.mainClasses.Individual;
 import com.google.gson.Gson;
 
@@ -12,19 +11,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
-public class IndividualTable {
+public class IndividualTable implements DBTable {
+
     Gson gson = new Gson();
-    public String IndividualToJSON(Individual individual) {
+
+    public String accountToJSON(Individual individual) {
+
         return gson.toJson(individual);
     }
 
-    public void addIndividualfromJSON(String json) throws SQLException, ClassNotFoundException {
+    public void addAccountFromJSON(String json) throws SQLException, ClassNotFoundException {
+
         Individual individual = gson.fromJson(json, Individual.class);
         individual.initfields();
-        addNewIndividual(individual);
+        addNewAccount(individual);
     }
 
-    public void addNewIndividual(Individual individual) throws SQLException, ClassNotFoundException {
+    public void addNewAccount(Individual individual) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
@@ -48,7 +51,7 @@ public class IndividualTable {
         stmt.close();
     }
 
-    public void createIndividualTable() throws SQLException, ClassNotFoundException {
+    public void createTable() throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         String sql = "CREATE TABLE individuals "
@@ -74,15 +77,14 @@ public class IndividualTable {
         String json;
 
         Connection con = DB_Connection.getConnection();
-        Statement stmt  = con.createStatement();
-        String query    = "SELECT username, password FROM individuals WHERE username = '" + 
+        Statement stmt = con.createStatement();
+        String query   = "SELECT username, password FROM individuals WHERE username = '" + 
         username + "' AND password = '" + password +"'";
 
 
         rs = stmt.executeQuery(query);
         rs.next();
         json = DB_Connection.getResultsToJSON(rs);
-        gson = new Gson();
         user = gson.fromJson(json, Account.class);
         stmt.close();
         con.close();

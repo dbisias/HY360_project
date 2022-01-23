@@ -14,14 +14,14 @@ import java.text.SimpleDateFormat;
 
 public class CompanyTable implements DBTable {
     Gson gson = new Gson();
-    public String CompanyToJSON(Company company){
+    public String accountToJSON(Company company){
         return gson.toJson(company);
     }
 
-    public void addCompanyfromJSON(String json) throws SQLException, ClassNotFoundException {
+    public void addAccountFromJSON(String json) throws SQLException, ClassNotFoundException {
         Company company = gson.fromJson(json, Company.class);
         company.initfields();
-        addNewComany(company);
+        addNewAccount(company);
     }
 
     public void addNewAccount(Company company) throws SQLException, ClassNotFoundException {
@@ -47,7 +47,7 @@ public class CompanyTable implements DBTable {
         stmt.close();
     }
 
-    public void createTable(){
+    public void createTable() throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         String sql = "CREATE TABLE companies "
@@ -73,15 +73,15 @@ public class CompanyTable implements DBTable {
      * @param password
      * @return user account
      */
-    public Account findAccount(String username, String password){
+    public Account findAccount(String username, String password) throws SQLException, ClassNotFoundException {
 
         ResultSet rs;
         Account user;
         String json;
 
         Connection con = DB_Connection.getConnection();
-        Statement stmt  = con.createStatement();
-        String query    = "SELECT username, password FROM companies WHERE username = '" + 
+        Statement stmt = con.createStatement();
+        String query   = "SELECT username, password FROM companies WHERE username = '" + 
         username + "' AND password = '" + password +"'";
 
         rs = stmt.executeQuery(query);
