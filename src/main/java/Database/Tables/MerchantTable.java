@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class MerchantTable implements DBTable {
-
     Gson gson = new Gson();
 
     public String accountToJSON(Merchant merchant){

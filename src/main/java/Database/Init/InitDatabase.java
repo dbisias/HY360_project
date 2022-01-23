@@ -35,9 +35,9 @@ public class InitDatabase {
     }
 
     public void initTables() throws SQLException, ClassNotFoundException {
-        it.createIndividualTable();
-        ct.createCompaniesTable();
-        mt.createMerchantTable();
+        it.createTable();
+        ct.createTable();
+        mt.createTable();
     }
 
     public void addToDatabaseExamples() throws ClassNotFoundException {
