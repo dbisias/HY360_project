@@ -77,8 +77,50 @@ public class CompanyTable implements DBTable {
     @Override
     public int buy(int cli_id, double amount) throws SQLException, ClassNotFoundException {
 
-        //
-        return 0;
+        double tmp;
+        double remain;
+        int ret;
+
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT remaining_amount FROM companies_view WHERE "
+            + "account_id = '" + cli_id + "'");
+
+        rs.next();
+        remain = rs.getDouble("remaining_amount");
+
+        if ( remain >= amount ) {
+
+            stmt.executeUpdate("UPDATE companies SET remaining_amount = '"
+                + (remain - amount) + "' WHERE account_id = '" + cli_id + "'");
+
+            ret = 0;
+        }
+        else {
+
+            tmp = amount - remain;
+            rs = stmt.executeQuery("SELECT billing_limit, amount_due FROM companies_view WHERE "
+                + "account_id = '" + cli_id + "'");
+
+            rs.next();
+            tmp = this.rs.getDouble("amount_due") + (amount - remain);
+            if ( this.rs.getDouble("billing_limit") < tmp )
+                ret = -1;  // error - exceding billing-limit
+            else {
+
+                stmt.executeUpdate("UPDATE companies SET remaining_amount = '"
+                    + 0.0 + "', amount_due = '" + tmp
+                    + "' WHERE account_id = '" + cli_id + "'");
+
+                ret = 1;
+            }
+        }
+
+        stmt.close();
+        con.close();
+
+        return ret;
     }
 
     /**
