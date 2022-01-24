@@ -33,12 +33,12 @@ public class TransactionsTable {
     }
 
     /**
-     * @TODO handle Date better
+     * @TODO add Date support
      * @param cli_id
      * @param mer_id
      * @param amount
      */
-    public void insertTransaction(int cli_id, int mer_id, int amount) throws SQLException {
+    public void insertTransaction(int cli_id, int mer_id, double amount) throws SQLException {
 
         ResultSet rs;
         String json;
@@ -57,15 +57,33 @@ public class TransactionsTable {
 
             rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM companies WHERE "
                     + "account_id = '" + cli_id + "' LIMIT 1)");
-            
+
             if ( !rs.next() )  // empty set again
                 flag = true;
+            else {
+
+                rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM merchants WHERE "
+                    + "account_id = '" + mer_id + "' LIMIT 1)");
+
+                if ( !rs.next() )
+                    flag = true;
+            }
         }
+
+        if ( flag ) {
+
+            stmt.close();
+            con.close();
+    
+            throw new SQLException("client with id = '" + cli_id + "' not found!");
+        }
+
+        SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
+
+        rs = stmt.executeQuery("INSERT INTO transactions (cli_acc_id, mer_acc_id, date, amount) VALUES "
+                + "(" + cli_id + "," + mer_id + "," + df.format(new Date()) + ","  + amount + ")");
 
         stmt.close();
         con.close();
-
-        if ( flag )
-            throw new SQLException("client with id = '" + cli_id + "' not found!");
     }
 }
