@@ -1,4 +1,4 @@
-package Database.Tables;
+package main.java.Database.Tables;
 
 import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
