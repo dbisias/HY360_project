@@ -1,14 +1,66 @@
 <script>
+    function sendbuy(event){
+        event.preventDefault();
+        let myForm = document.getElementById('buyform');
+        let formData = new FormData(myForm);
+        const data = {};
+        formData.forEach((value, key) => (data[key] = value));
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if(xhr.readyState === 4 && xhr.status === 200){
+
+            }else{
+
+            }
+        }
+
+        data["account_id"] = userdata["account_id"];
+        console.log(JSON.stringify(data));
+        xhr.open('POST', '/HY360_Project_war_exploded/TransactionAPI');
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(data));
+    }
+
+    function loadmerchants(){
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if(xhr.readyState === 4 && xhr.status === 200){
+                console.log(xhr.responseText);
+                // $("#merchantselect").append();
+            }else{
+
+            }
+        }
+
+        xhr.open('GET', '/HY360_Project_war_exploded/MerchantAPI');
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send();
+    }
+
+    $(document).ready(function(){
+        loadmerchants();
+        if(userdata["company_id"]!=0){
+            $("#as_company").show();
+        }
+    });
+
 
 </script>
-<header>Buy from a specific Merchant</header>
-<form>
-    <label>Merchant:</label>
+<header>
+    <h4>Buy from a specific Merchant</h4>
+</header>
+<form id="buyform" onsubmit="sendbuy(event);">
+    <label>Merchant: </label>
     <select id="merchantselect">
 
     </select>
-
-    <label>Ammount</label>
-    <
-
+    <br>
+    <label>Ammount: </label>
+    <input name="ammount">
+    <br>
+    <label>Buy as your company: </label>
+    <input type="radio" id="as_company" style="display: none;" name="as_company" value="1">
+    <br>
+    <input type="submit" value="pay">
 </form>
