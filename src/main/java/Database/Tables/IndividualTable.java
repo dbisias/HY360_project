@@ -141,7 +141,7 @@ public class IndividualTable implements DBTable {
 
             rs.next();
             tmp = this.rs.getDouble("amount_due") + (amount - remain);
-            if ( this.rs.getDouble("billing_limit") >= tmp )
+            if ( this.rs.getDouble("billing_limit") < tmp )
                 ret = -1;  // error - exceding billing-limit
             else {
 
