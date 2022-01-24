@@ -111,7 +111,7 @@ public class IndividualTable implements DBTable {
     }
 
     @Override
-    public int buy(int cli_id, double amount) throws ClassNotFoundException, SQLException {
+    public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException {
 
         double tmp;
         double remain;
@@ -135,7 +135,6 @@ public class IndividualTable implements DBTable {
         }
         else {
 
-            tmp = amount - remain;
             rs = stmt.executeQuery("SELECT billing_limit, amount_due FROM individuals_view WHERE "
                 + "account_id = '" + cli_id + "'");
 
@@ -146,12 +145,18 @@ public class IndividualTable implements DBTable {
             else {
 
                 stmt.executeUpdate("UPDATE individuals SET remaining_amount = '"
-                    + 0.0 + "', amount_due = '" + tmp
+                    + 0.0 + "', amount_due = 'amount_due + " + (amount - remain)
                     + "' WHERE account_id = '" + cli_id + "'");
 
                 ret = 1;
             }
         }
+
+        if ( ret != -1 )
+            stmt.executeUpdate("UPDATE merchants SET profit = '"
+                + "profit + " + amount + "', amount_due = 'amount_due"
+                + " + commision * " + amount + "' WHERE "
+                + "account_id = '" + mer_id + "'");
 
         stmt.close();
         con.close();

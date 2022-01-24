@@ -75,7 +75,7 @@ public class CompanyTable implements DBTable {
     }
 
     @Override
-    public int buy(int cli_id, double amount) throws SQLException, ClassNotFoundException {
+    public int buy(int cli_id, int mer_id, double amount) throws SQLException, ClassNotFoundException {
 
         double tmp;
         double remain;
@@ -123,13 +123,6 @@ public class CompanyTable implements DBTable {
         return ret;
     }
 
-    /**
-     * Retuns either a non-null account if credentials are correct
-     * or an exception if they don't match an existing user.
-     * @param username
-     * @param password
-     * @return user account
-     */
     public Company findAccount(String username, String password) throws SQLException, ClassNotFoundException {
 
         ResultSet rs;
