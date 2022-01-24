@@ -33,7 +33,6 @@ public class TransactionsTable {
     }
 
     /**
-     * @TODO add Date support
      * @param cli_id
      * @param mer_id
      * @param amount
@@ -76,6 +75,7 @@ public class TransactionsTable {
             con.close();
     
             throw new SQLException("client with id = '" + cli_id + "' not found!");
+            //return
         }
 
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
