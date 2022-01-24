@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(name = "MerchantAPI", value = "/MerchantAPI")
 public class MerchantAPI extends HttpServlet {
@@ -14,7 +15,13 @@ public class MerchantAPI extends HttpServlet {
         JSONObject jsonOut = new JSONObject();
         ServletHelper helper = new ServletHelper();
         MerchantTable mTable = new MerchantTable();
-        jsonOut = mTable.getAll();
+        try {
+            jsonOut = mTable.getAll();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            helper.createResponse(response,403,e.getMessage());
+            return;
+        }
         helper.createResponse(response, 200, jsonOut.toString());
     }
 

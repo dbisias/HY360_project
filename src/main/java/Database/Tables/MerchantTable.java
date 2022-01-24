@@ -4,6 +4,7 @@ import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
 import Database.mainClasses.Company;
 import Database.mainClasses.Merchant;
+import Exceptions.UserNotFoundException;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
@@ -87,7 +88,7 @@ public class MerchantTable implements DBTable {
         
         Merchant user;
 
-        String query   = "SELECT username, password FROM merchants WHERE username = '" + 
+        String query   = "SELECT * FROM merchants WHERE username = '" +
         username + "' AND password = '" + password +"'";
 
         con = DB_Connection.getConnection();
@@ -120,7 +121,10 @@ public class MerchantTable implements DBTable {
             return null;
         }
 
-        ret = new JSONObject(DB_Connection.getResultsToJSON(rs));
+        ret = new JSONObject();
+        do{
+            ret.append("merchants",DB_Connection.getResultsToJSON(rs));
+        }while(rs.next());
 
         stmt.close();
         con.close();
