@@ -1,4 +1,8 @@
-import Database.Tables.TransactionsTable;
+import main.java.Database.Tables.TransactionsTable;
+import Database.Tables.CompanyTable;
+import Database.Tables.IndividualTable;
+import Database.mainClasses.Individual;
+import Exceptions.InsufficientBalanceException;
 import ServletHelper.ServletHelper;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -29,16 +33,41 @@ public class TransactionsAPI extends HttpServlet {
 
         int merchant_id = Integer.parseInt((String) jsonIn.get("merchant_id"));
         int account_id = (int) jsonIn.get("account_id");
+        String username = (String) jsonIn.get("username");
+        String password = (String) jsonIn.get("password");
         double amount = Double.parseDouble((String) jsonIn.get("amount"));
-        int as_company = (int) jsonIn.get("as_company");
-
+        int company_id = (int) jsonIn.get("as_company");
+        IndividualTable iTable;
+        CompanyTable cTable;
+        int type;
         TransactionsTable tTable = new TransactionsTable();
 
         try {
-            if(as_company == 0)
-                tTable.insertTransaction(account_id, merchant_id, amount,"credit");
-            else
-                tTable.insertTransaction(as_company, merchant_id, amount, "credit");
+            if(company_id == 0) {
+                iTable = new IndividualTable();
+                type = iTable.buy(account_id, amount);
+                if(type == -1) {
+                    helper.createResponse(response, 403, "Your billing limit has been reached");
+                    return;
+                }
+                else if(type == 0)
+                    tTable.insertTransaction(account_id, merchant_id, amount, "billing");
+                else
+                    tTable.insertTransaction(account_id, merchant_id, amount, "credit");
+
+            }
+            else {
+                cTable = new CompanyTable();
+                type = cTable.buy(company_id, amount);
+                if(type == -1) {
+                    helper.createResponse(response, 403, "Your billing limit has been reached");
+                    return;
+                }
+                else if(type == 0)
+                    tTable.insertTransaction(company_id, merchant_id, amount, "billing");
+                else
+                    tTable.insertTransaction(company_id, merchant_id, amount, "credit");
+            }
         }
         catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
