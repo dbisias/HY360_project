@@ -76,11 +76,6 @@ public class MerchantTable implements DBTable {
 
     }
 
-    @Override
-    public void buy(int cli_id, int amount) throws UserNotFoundException, ClassNotFoundException {
-
-    }
-
     public Merchant findAccount(String username, String password) throws SQLException, ClassNotFoundException {
         
         Merchant user;

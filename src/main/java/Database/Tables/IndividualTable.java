@@ -111,7 +111,7 @@ public class IndividualTable implements DBTable {
     }
 
     @Override
-    public void buy(int cli_id, double amount) throws ClassNotFoundException, SQLException {
+    public int buy(int cli_id, double amount) throws ClassNotFoundException, SQLException {
 
         int remain;
         int ret;
@@ -154,5 +154,7 @@ public class IndividualTable implements DBTable {
 
         stmt.close();
         con.close();
+
+        return ret;
     }
 }

@@ -75,7 +75,7 @@ public class CompanyTable implements DBTable {
     }
 
     @Override
-    public void buy(int cli_id, int amount) throws SQLException, ClassNotFoundException {
+    public int buy(int cli_id, double amount) throws SQLException, ClassNotFoundException {
 
         //
     }
