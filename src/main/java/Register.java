@@ -1,8 +1,7 @@
-package ServletHelper;
-
 import Database.Tables.CompanyTable;
 import Database.Tables.IndividualTable;
 import Database.Tables.MerchantTable;
+import ServletHelper.ServletHelper;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -27,7 +26,7 @@ public class Register extends HttpServlet {
         JSONTokener tokener = new JSONTokener(inputJSONfromClient);
         JSONObject jsonin = new JSONObject(tokener);
 
-        try {
+        try{
             if(jsonin.get("usertype").equals("individual")) {
                 IndividualTable iTable = new IndividualTable();
                 iTable.addAccountFromJSON(jsonin.toString());
@@ -40,8 +39,7 @@ public class Register extends HttpServlet {
                 MerchantTable mTable = new MerchantTable();
                 mTable.addAccountFromJSON(jsonin.toString());
             }
-        }
-        catch(Exception ex) {
+        }catch(Exception ex) {
             System.out.println(ex.toString());
         }
         JSONObject jsonOut = new JSONObject();

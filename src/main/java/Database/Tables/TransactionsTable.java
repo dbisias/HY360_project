@@ -33,9 +33,9 @@ public class TransactionsTable {
     }
 
     /**
-     * @param cli_id
-     * @param mer_id
-     * @param amount
+     * @param cli_id The client ID
+     * @param mer_id The mechant ID
+     * @param amount The amount to be paid
      */
     public void insertTransaction(int cli_id, int mer_id, double amount) throws SQLException, ClassNotFoundException {
 
