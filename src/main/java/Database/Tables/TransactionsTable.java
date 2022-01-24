@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
+import java.Date;
+
 public class TransactionsTable {
 
     Gson gson = new Gson();
@@ -28,5 +30,14 @@ public class TransactionsTable {
         stmt.execute(query);
         stmt.close();
         con.close();
+    }
+
+    public void insertTransaction(int cli_id, int mer_id, int amount) {
+
+        //date special case
+
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        String query   = "SELECT";
     }
 }
