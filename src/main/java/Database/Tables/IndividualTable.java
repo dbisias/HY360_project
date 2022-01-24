@@ -113,9 +113,9 @@ public class IndividualTable implements DBTable {
     @Override
     public int buy(int cli_id, double amount) throws ClassNotFoundException, SQLException {
 
+        double tmp;
         int remain;
         int ret;
-        int tmp;
 
 
         con = DB_Connection.getConnection();
