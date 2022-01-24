@@ -59,7 +59,7 @@ public class AccountAPI extends HttpServlet {
         String username = (String) jsonIn.get("username");
         String password = (String) jsonIn.get("password");
         String usertype = (String) jsonIn.get("usertype");
-        String acc_id = (String)  jsonIn.get(acc_id);
+        String acc_id = (String)  jsonIn.get("acc_id");
 
         try{
             if(usertype.equals("individual")) {
@@ -69,7 +69,7 @@ public class AccountAPI extends HttpServlet {
                     helper.createResponse(response, 403, "You can't delete your account. You still owe the CCC money");
                     return;
                 }
-                iTable.deleteAccount(acc_id);
+//                iTable.deleteAccount(acc_id);
                 helper.createResponse(response, 200, "Account deleted successfully");
                 return;
 
@@ -81,7 +81,7 @@ public class AccountAPI extends HttpServlet {
                     helper.createResponse(response, 403, "You can't delete your account. You still owe the CCC money");
                     return;
                 }
-                mTable.deleteAccount(acc_id);
+//                mTable.deleteAccount(acc_id);
                 helper.createResponse(response, 200, "Account deleted successfully");
                 return;
             }
@@ -92,7 +92,7 @@ public class AccountAPI extends HttpServlet {
                     helper.createResponse(response, 403, "You can't delete your account. You still owe the CCC money");
                     return;
                 }
-                cTable.deleteAccount(acc_id);
+//                cTable.deleteAccount(acc_id);
                 helper.createResponse(response, 200, "Account deleted successfully");
                 return;
             }

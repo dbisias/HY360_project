@@ -66,7 +66,7 @@ public class CompanyTable implements DBTable {
     }
 
     @Override
-    public void buy(int cli_id, int amount) throws SQLException, ClassNotFoundException {
+    public void buy(int cli_id, int amount) throws ClassNotFoundException {
 
     }
 
@@ -84,7 +84,7 @@ public class CompanyTable implements DBTable {
 
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
-        String query   = "SELECT username, password FROM companies WHERE username = '" + 
+        String query   = "SELECT * FROM companies WHERE username = '" +
         username + "' AND password = '" + password +"'";
 
         rs = stmt.executeQuery(query);

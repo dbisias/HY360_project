@@ -90,7 +90,7 @@ public class IndividualTable implements DBTable {
         Individual user;
         String json;
 
-        String query   = "SELECT username, password FROM individuals WHERE username = '" + 
+        String query   = "SELECT * FROM individuals WHERE username = '" +
         username + "' AND password = '" + password +"'";
 
 
@@ -110,7 +110,7 @@ public class IndividualTable implements DBTable {
     }
 
     @Override
-    public void buy(int cli_id, int amount) throws UserNotFoundException, ClassNotFoundException {
+    public void buy(int cli_id, int amount) throws UserNotFoundException, ClassNotFoundException, SQLException, InsufficientBalanceException {
 
         Account user;
         int temp;
