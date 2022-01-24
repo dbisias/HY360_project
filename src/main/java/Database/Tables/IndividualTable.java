@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 
 public class IndividualTable implements DBTable {
     
-    private Gson gson = new Gson();
+    private Gson gson;
     private ResultSet rs;
     private Connection con;
     private Statement stmt;
@@ -24,7 +24,7 @@ public class IndividualTable implements DBTable {
 
     public IndividualTable(){
 
-        this.gson = new Gson();
+        super();
     }
 
     public String accountToJSON(Individual individual) {
