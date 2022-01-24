@@ -52,6 +52,7 @@ public class TransactionsTable {
         rs = stmt.executeQuery(query);
         flag = false;
 
+        // TODO: change rs.next with stmt.execute(...);
         if ( !rs.next() ) {  // no results from the 'individuals' table
 
             rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM companies WHERE "
@@ -81,7 +82,7 @@ public class TransactionsTable {
 
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
 
-        rs = stmt.executeQuery("INSERT INTO transactions (cli_acc_id, mer_acc_id, date, amount) VALUES "
+        rs = stmt.executeUpdate("INSERT INTO transactions (cli_acc_id, mer_acc_id, date, amount) VALUES "
                 + "(" + cli_id + "," + mer_id + "," + df.format(new Date()) + ","  + amount + ")");
 
         stmt.close();
