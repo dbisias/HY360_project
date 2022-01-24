@@ -45,11 +45,10 @@ public class DB_Connection {
     }
       
      public static String getResultsToJSON(ResultSet rs) throws SQLException {
-       ResultSetMetaData metadata = rs.getMetaData();
+        ResultSetMetaData metadata = rs.getMetaData();
         int columnCount = metadata.getColumnCount();
-          JsonObject object = new JsonObject();
-        
-        
+        JsonObject object = new JsonObject();
+
         String row = "";
         for (int i = 1; i <= columnCount; i++) {
             String name = metadata.getColumnName(i);
