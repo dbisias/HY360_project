@@ -108,36 +108,33 @@ public class IndividualTable implements DBTable {
     }
 
     @Override
-    public void buy(int cli_id, int amount) throws UserNotFoundException, ClassNotFoundException, SQLException, InsufficientBalanceException {
+    public void buy(int cli_id, double amount) throws ClassNotFoundException, SQLException {
 
-        Account user;
-        int temp;
+        int remain;
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
         rs = stmt.executeQuery("SELECT remaining_ammount FROM individuals_view WHERE "
             + "account_id = '" + cli_id + "'");
 
-        if ( !rs.next() ) {
+        if ( !rs.next() ) {  // is this necessary?
 
             stmt.close();
             con.close();
 
-            throw new UserNotFoundException();
+            System.out.println("ERROR 404 (?)");  // huh? Is it?
+            return;
         }
 
-        temp = rs.getInt("remaining_ammount");
+        remain = rs.getInt("remaining_ammount");
 
-        if ( temp > amount ) {
-
-            stmt.close();
-            con.close();
-
-            throw new InsufficientBalanceException();
-        }
-
-        stmt.executeUpdate("UPDATE individuals SET remaining_ammount = '"
-            + (amount - temp) + "' WHERE account_id = '" + cli_id + "'");
+        if ( remain >= amount )
+            stmt.executeUpdate("UPDATE individuals SET remaining_ammount = '"
+                + (remain - amount) + "' WHERE account_id = '" + cli_id + "'");
+        else
+            stmt.executeUpdate("UPDATE individuals SET remaining_ammount = '"
+                + 0.0 + "', amount_due = '" + ( -(remain - amount) )
+                + "' WHERE account_id = '" + cli_id + "'");
 
         stmt.close();
         con.close();

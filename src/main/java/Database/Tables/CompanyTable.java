@@ -15,25 +15,29 @@ import java.text.SimpleDateFormat;
 
 
 public class CompanyTable implements DBTable {
-    Gson gson = new Gson();
-    public String accountToJSON(Company company){
+
+    private Gson gson = new Gson();
+    private ResultSet rs;
+    private Connection con;
+    private Statement stmt;
+
+    public String accountToJSON(Company company) {
+
         return gson.toJson(company);
     }
 
     public void addAccountFromJSON(String json) throws SQLException, ClassNotFoundException {
+        
         Company company = gson.fromJson(json, Company.class);
         company.initfields();
         addNewAccount(company);
     }
 
     public void addNewAccount(Company company) throws SQLException, ClassNotFoundException {
+
         AccountTable at = new AccountTable();
         int account_id = at.addNewAccount((Account) company);
-
-        Connection con = DB_Connection.getConnection();
-        Statement stmt = con.createStatement();
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
-
         String insertQuery = "INSERT INTO "
                 + " companies (account_id,billing_limit,expiration_date,amount_due,remaining_amount)"
                 + " VALUES ("
@@ -43,15 +47,18 @@ public class CompanyTable implements DBTable {
                 + "'" + company.getAmount_due() + "',"
                 + "'" + company.getRemaining_amount()+ "'"
                 + ")";
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
         stmt.executeUpdate(insertQuery);
         System.out.println("# The company was successfully added in the database.");
 
         stmt.close();
+        con.close();
     }
 
     public void createTable() throws SQLException, ClassNotFoundException {
-        Connection con = DB_Connection.getConnection();
-        Statement stmt = con.createStatement();
+
         String sql = "CREATE TABLE companies "
                 + "(account_id INTEGER not NULL AUTO_INCREMENT unique, "
                 + "billing_limit DOUBLE, "
@@ -59,15 +66,18 @@ public class CompanyTable implements DBTable {
                 + "amount_due DOUBLE, "
                 + "remaining_amount DOUBLE, "
                 + "FOREIGN KEY (account_id) REFERENCES accounts(account_id))";
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
         stmt.execute(sql);
         stmt.close();
         con.close();
-
     }
 
     @Override
-    public void buy(int cli_id, int amount) throws ClassNotFoundException {
+    public void buy(int cli_id, int amount) throws SQLException, ClassNotFoundException {
 
+        //
     }
 
     /**
