@@ -17,6 +17,8 @@
         }
 
         data["account_id"] = userdata["account_id"];
+        data["username"] = userdata["username"];
+        data["password"] = userdata["password"];
         console.log(JSON.stringify(data));
         xhr.open('POST', '/HY360_Project_war_exploded/TransactionsAPI');
         xhr.setRequestHeader("Content-type", "application/json");
@@ -69,8 +71,10 @@
     <label>Ammount: </label>
     <input name="amount" value=0>
     <br>
-    <label>Buy as your company: </label>
-    <input type="radio" id="as_company" style="display: none;" name="as_company" value="1">
+    <div style="display: none" id="as_company">
+        <label>Buy as your company: </label>
+        <input type="radio" name="as_company" value="1">
+    </div>
     <br>
     <input type="submit" value="pay">
 </form>

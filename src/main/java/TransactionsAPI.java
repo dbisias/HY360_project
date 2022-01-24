@@ -1,3 +1,4 @@
+import Database.Tables.TransactionsTable;
 import ServletHelper.ServletHelper;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -10,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import main.java.Database.Tables.TransactionsTable;
 
 @WebServlet(name = "TransactionsAPI", value = "/TransactionsAPI")
 public class TransactionsAPI extends HttpServlet {

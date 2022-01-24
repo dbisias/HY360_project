@@ -1,13 +1,9 @@
 package Database.Init;
 
 import Database.Connection.DB_Connection;
-import Database.Tables.AccountTable;
-import Database.Tables.CompanyTable;
-import Database.Tables.IndividualTable;
-import Database.Tables.MerchantTable;
+import Database.Tables.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import main.java.Database.Tables.TransactionsTable;
 
 import static Database.Connection.DB_Connection.getInitialConnection;
 import java.sql.Connection;

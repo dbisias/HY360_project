@@ -73,10 +73,13 @@ public class IndividualTable implements DBTable {
                 + "expiration_date DATE , "
                 + "amount_due DOUBLE, "
                 + "remaining_amount DOUBLE, "
+                + "company_account_id INTEGER, "
+                + "FOREIGN KEY (company_account_id) REFERENCES accounts(account_id), "
                 + "FOREIGN KEY (account_id) REFERENCES accounts(account_id))";
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
+        System.out.println(sql);
         stmt.execute(sql);
         stmt.close();
         con.close();
