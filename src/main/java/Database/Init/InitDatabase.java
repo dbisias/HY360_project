@@ -5,6 +5,7 @@ import Database.Tables.IndividualTable;
 import Database.Tables.MerchantTable;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import main.java.Database.Tables.TransactionsTable;
 
 import static Database.Connection.DB_Connection.getInitialConnection;
 import java.sql.Connection;
@@ -18,6 +19,7 @@ public class InitDatabase {
     IndividualTable it = new IndividualTable();
     CompanyTable ct = new CompanyTable();
     MerchantTable mt = new MerchantTable();
+    TransactionsTable tt = new TransactionsTable();
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         InitDatabase init = new InitDatabase();
@@ -38,6 +40,7 @@ public class InitDatabase {
         it.createTable();
         ct.createTable();
         mt.createTable();
+        tt.createTable();
     }
 
     public void addToDatabaseExamples() throws ClassNotFoundException {
