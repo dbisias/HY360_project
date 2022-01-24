@@ -12,7 +12,11 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
 public class IndividualTable implements DBTable {
+    
     Gson gson = new Gson();
+    ResultSet rs;
+    Connection con;
+    Statement stmt;
 
     public String accountToJSON(Individual individual) {
 
@@ -27,10 +31,8 @@ public class IndividualTable implements DBTable {
     }
 
     public void addNewAccount(Individual individual) throws SQLException, ClassNotFoundException {
-        Connection con = DB_Connection.getConnection();
-        Statement stmt = con.createStatement();
-        SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
 
+        SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
         String insertQuery = "INSERT INTO "
                 + " individuals (account_id,name,username,password,billing_limit,expiration_date,ammount_due,remaining_ammount)"
                 + " VALUES ("
@@ -43,16 +45,19 @@ public class IndividualTable implements DBTable {
                 + "'" + individual.getAmmount_due() + "',"
                 + "'" + individual.getRemaining_amount()+ "'"
                 + ")";
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
         System.out.println(insertQuery);
         stmt.executeUpdate(insertQuery);
         System.out.println("# The individual was successfully added in the database.");
 
+        con.close();
         stmt.close();
     }
 
     public void createTable() throws SQLException, ClassNotFoundException {
-        Connection con = DB_Connection.getConnection();
-        Statement stmt = con.createStatement();
+
         String sql = "CREATE TABLE individuals "
                 + "(account_id INTEGER not NULL AUTO_INCREMENT, "
                 + "name VARCHAR (40) not null,"
@@ -63,34 +68,46 @@ public class IndividualTable implements DBTable {
                 + "ammount_due DOUBLE, "
                 + "remaining_ammount DOUBLE, "
                 + "PRIMARY KEY ( account_id ))";
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
         stmt.execute(sql);
         stmt.close();
         con.close();
 
     }
 
-
     public Individual findAccount(String username, String password) throws SQLException, ClassNotFoundException {
 
-        ResultSet rs;
         Individual user;
+        String json;
 
-        Connection con = DB_Connection.getConnection();
-        Statement stmt = con.createStatement();
         String query   = "SELECT username, password FROM individuals WHERE username = '" + 
         username + "' AND password = '" + password +"'";
 
 
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
         rs = stmt.executeQuery(query);
 
         if ( !rs.next() )
             return null;
 
-        String json = DB_Connection.getResultsToJSON(rs);
+        json = DB_Connection.getResultsToJSON(rs);
         user = gson.fromJson(json, Individual.class);
         stmt.close();
         con.close();
 
         return user;
+    }
+
+    public void buy(int cli_id, int amount) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        // stmt.executeQuery("");
+
+        stmt.close();
+        con.close();
     }
 }
