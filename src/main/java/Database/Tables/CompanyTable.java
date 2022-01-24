@@ -84,7 +84,10 @@ public class CompanyTable implements DBTable {
         username + "' AND password = '" + password +"'";
 
         rs = stmt.executeQuery(query);
-        if(rs.next()==false){return null;}
+
+        if( !rs.next() )
+            return null;
+
         String json = DB_Connection.getResultsToJSON(rs);
         user = gson.fromJson(json, Company.class);
         stmt.close();
