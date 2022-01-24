@@ -36,9 +36,9 @@ public class TransactionsAPI extends HttpServlet {
 
         try {
             if(as_company == 0)
-                tTable.insertTransaction(account_id, merchant_id, amount);
+                tTable.insertTransaction(account_id, merchant_id, amount,"credit");
             else
-                tTable.insertTransaction(as_company, merchant_id, amount);
+                tTable.insertTransaction(as_company, merchant_id, amount, "credit");
         }
         catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

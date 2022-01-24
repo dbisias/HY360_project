@@ -83,8 +83,8 @@ public class TransactionsTable {
 
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
 
-        stmt.executeUpdate("INSERT INTO transactions_view (cli_acc_id, mer_acc_id, date, amount) VALUES "
-                + "('" + cli_id + "','" + mer_id + "','" + df.format(new Date()) + "','"  + amount + "')");
+        stmt.executeUpdate("INSERT INTO transactions (cli_acc_id, mer_acc_id, date, amount, type) VALUES "
+                + "('" + cli_id + "','" + mer_id + "','" + df.format(new Date()) + "','"  + amount + "','"+ type +"')");
 
         stmt.close();
         con.close();

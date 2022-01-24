@@ -43,7 +43,7 @@ public class MerchantTable implements DBTable {
         int account_id = at.addNewAccount((Account) merchant);
 
         String insertQuery = "INSERT INTO "
-                + " merchants_view (account_id,comission,profit,amount_due)"
+                + " merchants (account_id,comission,profit,amount_due)"
                 + " VALUES ("
                 + "'" + account_id + "',"
                 + "'" + merchant.getComission() + "',"

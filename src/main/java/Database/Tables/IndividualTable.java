@@ -46,7 +46,7 @@ public class IndividualTable implements DBTable {
 
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
         String insertQuery = "INSERT INTO "
-                + " individuals_view (account_id,billing_limit,expiration_date,amount_due,remaining_amount)"
+                + " individuals (account_id,billing_limit,expiration_date,amount_due,remaining_amount)"
                 + " VALUES ("
                 + "'" + account_id + "',"
                 + "'" + individual.getBillimit() + "',"
@@ -136,7 +136,7 @@ public class IndividualTable implements DBTable {
             throw new InsufficientBalanceException();
         }
 
-        stmt.executeUpdate("UPDATE individuals_view SET remaining_ammount = '"
+        stmt.executeUpdate("UPDATE individuals SET remaining_ammount = '"
             + (amount - temp) + "' WHERE account_id = '" + cli_id + "'");
 
         stmt.close();
