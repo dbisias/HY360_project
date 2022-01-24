@@ -25,7 +25,7 @@ public class TransactionsTable {
                 + "cli_acc_id INTEGER NOT NULL, "
                 + "mer_acc_id INTEGER NOT NULL, "
                 + "date DATE NOT NULL, "
-                + "ammount DOUBLE NOT NULL);";
+                + "amount DOUBLE NOT NULL);";
 
         stmt.execute(query);
         stmt.close();

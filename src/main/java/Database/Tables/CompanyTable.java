@@ -30,14 +30,14 @@ public class CompanyTable implements DBTable {
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
 
         String insertQuery = "INSERT INTO "
-                + " companies (name,username,password,billing_limit,expiration_date,ammount_due,remaining_ammount)"
+                + " companies (name,username,password,billing_limit,expiration_date,amount_due,remaining_amount)"
                 + " VALUES ("
                 + "'" + company.getName() + "',"
                 + "'" + company.getUsername() + "',"
                 + "'" + company.getPassword() + "',"
                 + "'" + company.getBillimit() + "',"
                 + "'" + df.format(company.getExpiration_date()) + "',"
-                + "'" + company.getAmmount_due() + "',"
+                + "'" + company.getAmount_due() + "',"
                 + "'" + company.getRemaining_amount()+ "'"
                 + ")";
         stmt.executeUpdate(insertQuery);
@@ -56,8 +56,8 @@ public class CompanyTable implements DBTable {
                 + "password VARCHAR (20) not null,"
                 + "billing_limit DOUBLE, "
                 + "expiration_date DATE , "
-                + "ammount_due DOUBLE, "
-                + "remaining_ammount DOUBLE, "
+                + "amount_due DOUBLE, "
+                + "remaining_amount DOUBLE, "
                 + "PRIMARY KEY ( account_id ))";
         stmt.execute(sql);
         stmt.close();

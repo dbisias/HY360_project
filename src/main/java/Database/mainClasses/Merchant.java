@@ -3,12 +3,12 @@ package Database.mainClasses;
 public class Merchant extends Account{
     protected float comission;
     protected float profit;
-    protected float ammount_due;
+    protected float amount_due;
 
     public void initfields(int comission){
         this.comission = comission;
         profit = 0;
-        ammount_due = 0;
+        amount_due = 0;
     }
 
     public float getComission() {
@@ -27,11 +27,11 @@ public class Merchant extends Account{
         this.profit = profit;
     }
 
-    public float getAmmount_due() {
-        return ammount_due;
+    public float getAmount_due() {
+        return amount_due;
     }
 
-    public void setAmmount_due(float ammount_due) {
-        this.ammount_due = ammount_due;
+    public void setAmount_due(float amount_due) {
+        this.amount_due = amount_due;
     }
 }

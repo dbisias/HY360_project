@@ -41,14 +41,14 @@ public class MerchantTable implements DBTable {
     public void addNewAccount(Merchant merchant) throws SQLException, ClassNotFoundException {
 
         String insertQuery = "INSERT INTO "
-                + " merchants (name,username,password,comission,profit,ammount_due)"
+                + " merchants (name,username,password,comission,profit,amount_due)"
                 + " VALUES ("
                 + "'" + merchant.getName() + "',"
                 + "'" + merchant.getUsername() + "',"
                 + "'" + merchant.getPassword() + "',"
                 + "'" + merchant.getComission() + "',"
                 + "'" + merchant.getProfit() + "',"
-                + "'" + merchant.getAmmount_due() + "'"
+                + "'" + merchant.getAmount_due() + "'"
                 + ")";
 
         con = DB_Connection.getConnection();
@@ -68,7 +68,7 @@ public class MerchantTable implements DBTable {
                 + "password VARCHAR (20) not null,"
                 + "comission DOUBLE, "
                 + "profit DOUBLE, "
-                + "ammount_due DOUBLE, "
+                + "amount_due DOUBLE, "
                 + "PRIMARY KEY ( account_id ))";
 
         con = DB_Connection.getConnection();
