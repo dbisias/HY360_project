@@ -106,6 +106,8 @@ public class MerchantTable implements DBTable {
 
     public JSONObject getAll() throws SQLException, ClassNotFoundException {
 
+        JSONObject ret;
+
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
         rs = stmt.executeQuery("SELECT account_id, name FROM merchants");
@@ -118,9 +120,11 @@ public class MerchantTable implements DBTable {
             return null;
         }
 
+        ret = new JSONObject(DB_Connection.getResultsToJSON(rs));
+
         stmt.close();
         con.close();
 
-        return new JSONObject(DB_Connection.getResultsToJSON(rs));
+        return ret;
     }
 }
