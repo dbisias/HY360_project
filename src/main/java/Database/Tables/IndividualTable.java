@@ -13,10 +13,16 @@ import java.text.SimpleDateFormat;
 
 public class IndividualTable implements DBTable {
     
-    Gson gson = new Gson();
-    ResultSet rs;
-    Connection con;
-    Statement stmt;
+    private Gson gson = new Gson();
+    private ResultSet rs;
+    private Connection con;
+    private Statement stmt;
+
+
+    public IndividualTable(){
+
+        this.gson = new Gson();
+    }
 
     public String accountToJSON(Individual individual) {
 
@@ -105,7 +111,9 @@ public class IndividualTable implements DBTable {
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
         rs = stmt.executeQuery("SELECT remaining_ammount FROM individuals WHERE "
-            + "");
+            + "account_id = '" + cli_id);
+
+        if ( !rs.next() )
 
         stmt.close();
         con.close();
