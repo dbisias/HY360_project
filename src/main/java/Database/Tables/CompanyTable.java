@@ -3,6 +3,8 @@ package Database.Tables;
 import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
 import Database.mainClasses.Company;
+import Exceptions.UserNotFoundException;
+
 import com.google.gson.Gson;
 
 import java.sql.Connection;
@@ -66,7 +68,7 @@ public class CompanyTable implements DBTable {
     }
 
     @Override
-    public void buy(int cli_id, int amount) throws SQLException, ClassNotFoundException {
+    public void buy(int cli_id, int amount) throws UserNotFoundException, ClassNotFoundException {
 
     }
 
