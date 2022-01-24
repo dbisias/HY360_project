@@ -22,7 +22,7 @@ public class IndividualTable implements DBTable {
     private Statement stmt;
 
 
-    public IndividualTable(){
+    public IndividualTable() {
 
         super();
     }
@@ -40,12 +40,13 @@ public class IndividualTable implements DBTable {
     }
 
     public void addNewAccount(Individual individual) throws SQLException, ClassNotFoundException {
+
         AccountTable at = new AccountTable();
         int account_id = at.addNewAccount((Account) individual);
 
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
         String insertQuery = "INSERT INTO "
-                + " individuals (account_id,billing_limit,expiration_date,amount_due,remaining_amount)"
+                + " individuals_view (account_id,billing_limit,expiration_date,amount_due,remaining_amount)"
                 + " VALUES ("
                 + "'" + account_id + "',"
                 + "'" + individual.getBillimit() + "',"
@@ -87,7 +88,7 @@ public class IndividualTable implements DBTable {
         Individual user;
         String json;
 
-        String query   = "SELECT * FROM individuals WHERE username = '" +
+        String query   = "SELECT * FROM individuals_view WHERE username = '" +
         username + "' AND password = '" + password +"'";
 
 
@@ -114,7 +115,7 @@ public class IndividualTable implements DBTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT remaining_ammount FROM individuals WHERE "
+        rs = stmt.executeQuery("SELECT remaining_ammount FROM individuals_view WHERE "
             + "account_id = '" + cli_id + "'");
 
         if ( !rs.next() ) {
@@ -135,7 +136,7 @@ public class IndividualTable implements DBTable {
             throw new InsufficientBalanceException();
         }
 
-        stmt.executeUpdate("UPDATE individuals SET remaining_ammount = '"
+        stmt.executeUpdate("UPDATE individuals_view SET remaining_ammount = '"
             + (amount - temp) + "' WHERE account_id = '" + cli_id + "'");
 
         stmt.close();

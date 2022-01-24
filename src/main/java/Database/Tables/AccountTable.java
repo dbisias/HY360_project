@@ -27,7 +27,6 @@ public class AccountTable {
         stmt.execute(sql);
         stmt.close();
         con.close();
-
     }
 
     public int addNewAccount(Account account) throws SQLException, ClassNotFoundException {

@@ -35,7 +35,7 @@ public class CompanyTable implements DBTable {
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
 
         String insertQuery = "INSERT INTO "
-                + " companies (account_id,billing_limit,expiration_date,amount_due,remaining_amount)"
+                + " companies_view (account_id,billing_limit,expiration_date,amount_due,remaining_amount)"
                 + " VALUES ("
                 + "'" + account_id + "',"
                 + "'" + company.getBillimit() + "',"
@@ -84,7 +84,7 @@ public class CompanyTable implements DBTable {
 
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
-        String query   = "SELECT * FROM companies WHERE username = '" +
+        String query   = "SELECT * FROM companies_view WHERE username = '" +
         username + "' AND password = '" + password +"'";
 
         rs = stmt.executeQuery(query);

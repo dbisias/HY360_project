@@ -43,7 +43,7 @@ public class MerchantTable implements DBTable {
         int account_id = at.addNewAccount((Account) merchant);
 
         String insertQuery = "INSERT INTO "
-                + " merchants (account_id,comission,profit,amount_due)"
+                + " merchants_view (account_id,comission,profit,amount_due)"
                 + " VALUES ("
                 + "'" + account_id + "',"
                 + "'" + merchant.getComission() + "',"
@@ -85,7 +85,7 @@ public class MerchantTable implements DBTable {
         
         Merchant user;
 
-        String query   = "SELECT * FROM merchants WHERE username = '" +
+        String query   = "SELECT * FROM merchants_view WHERE username = '" +
         username + "' AND password = '" + password +"'";
 
         con = DB_Connection.getConnection();
@@ -108,7 +108,7 @@ public class MerchantTable implements DBTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT account_id, name FROM merchants");
+        rs = stmt.executeQuery("SELECT account_id, name FROM merchants_view");
 
         if ( !rs.next() ) {
 

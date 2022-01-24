@@ -25,7 +25,8 @@ public class TransactionsTable {
                 + "cli_acc_id INTEGER NOT NULL, "
                 + "mer_acc_id INTEGER NOT NULL, "
                 + "date DATE NOT NULL, "
-                + "amount DOUBLE NOT NULL);";
+                + "amount DOUBLE NOT NULL, "
+                + "type VARCHAR (6) NOT NULL);";
 
         stmt.execute(query);
         stmt.close();
@@ -37,7 +38,7 @@ public class TransactionsTable {
      * @param mer_id The mechant ID
      * @param amount The amount to be paid
      */
-    public void insertTransaction(int cli_id, int mer_id, double amount) throws SQLException, ClassNotFoundException {
+    public void insertTransaction(int cli_id, int mer_id, double amount, String type) throws SQLException, ClassNotFoundException {
 
         ResultSet rs;
         String json;
@@ -45,7 +46,7 @@ public class TransactionsTable {
 
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
-        String query   = "SELECT EXISTS (SELECT 1 FROM individuals WHERE "
+        String query   = "SELECT EXISTS (SELECT 1 FROM individuals_view WHERE "
                 + "account_id = '" + cli_id + "' LIMIT 1)"; // SELECT list is ignored due to 'EXISTS' / ultra fast approach
 
 
@@ -55,7 +56,7 @@ public class TransactionsTable {
         // TODO: change rs.next with stmt.execute(...);
         if ( !rs.next() ) {  // no results from the 'individuals' table
 
-            rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM companies WHERE "
+            rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM companies_view WHERE "
                     + "account_id = '" + cli_id + "' LIMIT 1)");
 
             if ( !rs.next() )  // empty set again
@@ -63,7 +64,7 @@ public class TransactionsTable {
 
             if ( !flag ) {
 
-                rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM merchants WHERE "
+                rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM merchants_view WHERE "
                     + "account_id = '" + mer_id + "' LIMIT 1)");
 
                 if ( !rs.next() )  // and again
@@ -82,7 +83,7 @@ public class TransactionsTable {
 
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
 
-        stmt.executeUpdate("INSERT INTO transactions (cli_acc_id, mer_acc_id, date, amount) VALUES "
+        stmt.executeUpdate("INSERT INTO transactions_view (cli_acc_id, mer_acc_id, date, amount) VALUES "
                 + "('" + cli_id + "','" + mer_id + "','" + df.format(new Date()) + "','"  + amount + "')");
 
         stmt.close();
