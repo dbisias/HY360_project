@@ -114,20 +114,21 @@ public class IndividualTable implements DBTable {
     public int buy(int cli_id, double amount) throws ClassNotFoundException, SQLException {
 
         double tmp;
-        int remain;
+        double remain;
         int ret;
 
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT remaining_ammount FROM individuals_view WHERE "
+        rs = stmt.executeQuery("SELECT remaining_amount FROM individuals_view WHERE "
             + "account_id = '" + cli_id + "'");
 
-        remain = rs.getInt("remaining_ammount");
+        rs.next();
+        remain = rs.getDouble("remaining_amount");
 
         if ( remain >= amount ) {
 
-            stmt.executeUpdate("UPDATE individuals SET remaining_ammount = '"
+            stmt.executeUpdate("UPDATE individuals SET remaining_amount = '"
                 + (remain - amount) + "' WHERE account_id = '" + cli_id + "'");
 
             ret = 0;
@@ -144,7 +145,7 @@ public class IndividualTable implements DBTable {
                 ret = -1;  // error - exceding billing-limit
             else {
 
-                stmt.executeUpdate("UPDATE individuals SET remaining_ammount = '"
+                stmt.executeUpdate("UPDATE individuals SET remaining_amount = '"
                     + 0.0 + "', amount_due = '" + tmp
                     + "' WHERE account_id = '" + cli_id + "'");
 

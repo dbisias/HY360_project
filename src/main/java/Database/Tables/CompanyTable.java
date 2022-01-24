@@ -78,6 +78,7 @@ public class CompanyTable implements DBTable {
     public int buy(int cli_id, double amount) throws SQLException, ClassNotFoundException {
 
         //
+        return 0;
     }
 
     /**

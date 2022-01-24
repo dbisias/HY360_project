@@ -1,6 +1,6 @@
-import main.java.Database.Tables.TransactionsTable;
 import Database.Tables.CompanyTable;
 import Database.Tables.IndividualTable;
+import Database.Tables.TransactionsTable;
 import Database.mainClasses.Individual;
 import Exceptions.InsufficientBalanceException;
 import ServletHelper.ServletHelper;

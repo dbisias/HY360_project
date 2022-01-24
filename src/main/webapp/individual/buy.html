@@ -10,12 +10,13 @@
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
             if(xhr.readyState === 4 && xhr.status === 200){
-
+                console.log(xhr.responseText);
             }else{
-
+                console.log(xhr.responseText);
             }
         }
 
+        if(data["as_company"]=="1"){data["as_company"]=userdata["company_id"];}
         data["account_id"] = userdata["account_id"];
         data["username"] = userdata["username"];
         data["password"] = userdata["password"];
@@ -24,6 +25,7 @@
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send(JSON.stringify(data));
     }
+
     var reply
     function loadmerchants(){
         var xhr = new XMLHttpRequest();
@@ -76,5 +78,5 @@
         <input type="radio" name="as_company" value="1">
     </div>
     <br>
-    <input type="submit" value="pay">
+    <input type="submit" value="Pay">
 </form>

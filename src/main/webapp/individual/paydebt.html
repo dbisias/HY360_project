@@ -1,0 +1,44 @@
+<script>
+    function paydebt(event) {
+        event.preventDefault();
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if(xhr.readyState === 4 && xhr.status === 200){
+                checkUserLoggedIn("none");
+            }else{
+
+            }
+        }
+
+        xhr.open('PUT', '/HY360_Project_war_exploded/TransactionsAPI');
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send();
+    }
+
+    function updateinfo(){
+        if(userdata["remaining_amount"]<0) {
+            $("#paybtn").prop('disabled', true);
+        }
+
+        if(userdata["amount_due"]>0) {
+            $("#debttext").html("You currently owe CCC: " + userdata["amount_due"] + "€!");
+        }else{
+            $("#debttext").html("You dont owe us any money!");
+            $("#paybtn").prop('disabled', true);
+        }
+
+        $("#balancetext").html("Your balance is: "+userdata["remaining_amount"]+"€");
+    }
+
+    $(document).ready(function(){
+       updateinfo();
+    });
+</script>
+<div>
+    <header><h4 id="debttext"></h4></header>
+    <br>
+    <header><h4 id="balancetext"></h4></header>
+    <br>
+    <input id="paybtn" type="button" value="Pay your debt!" onclick="paydebt(event);">
+</div>

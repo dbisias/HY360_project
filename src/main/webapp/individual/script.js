@@ -7,7 +7,7 @@ function loadbuy(){
 }
 
 function loadpay(){
-    $("#appwindow").load("pay.html");
+    $("#appwindow").load("paydebt.html");
 }
 
 $(document).ready(function(){
