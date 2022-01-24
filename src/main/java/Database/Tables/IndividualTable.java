@@ -104,7 +104,8 @@ public class IndividualTable implements DBTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        // stmt.executeQuery("");
+        rs = stmt.executeQuery("SELECT remaining_ammount FROM individuals WHERE "
+            + "");
 
         stmt.close();
         con.close();
