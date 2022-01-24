@@ -145,7 +145,7 @@ public class IndividualTable implements DBTable {
             else {
 
                 stmt.executeUpdate("UPDATE individuals SET remaining_amount = '"
-                    + 0.0 + "', amount_due = 'amount_due + " + (amount - remain)
+                    + 0.0 + "', amount_due = '" + tmp
                     + "' WHERE account_id = '" + cli_id + "'");
 
                 ret = 1;
