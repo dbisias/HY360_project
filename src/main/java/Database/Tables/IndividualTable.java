@@ -120,15 +120,6 @@ public class IndividualTable implements DBTable {
         rs = stmt.executeQuery("SELECT remaining_ammount FROM individuals_view WHERE "
             + "account_id = '" + cli_id + "'");
 
-        if ( !rs.next() ) {  // is this necessary?
-
-            stmt.close();
-            con.close();
-
-            System.out.println("ERROR 404 (?)");  // huh? Is it?
-            return;
-        }
-
         remain = rs.getInt("remaining_ammount");
 
         if ( remain >= amount )
