@@ -106,6 +106,7 @@ public class IndividualTable implements DBTable {
         return user;
     }
 
+    @Override
     public void buy(int cli_id, int amount) throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
@@ -113,7 +114,7 @@ public class IndividualTable implements DBTable {
         rs = stmt.executeQuery("SELECT remaining_ammount FROM individuals WHERE "
             + "account_id = '" + cli_id);
 
-        if ( !rs.next() )
+        // if ( !rs.next() )
 
         stmt.close();
         con.close();
