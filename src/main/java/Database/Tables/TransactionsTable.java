@@ -1,4 +1,4 @@
-package Database.Tables;
+package main.java.Database.Tables;
 
 import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
@@ -32,12 +32,40 @@ public class TransactionsTable {
         con.close();
     }
 
-    public void insertTransaction(int cli_id, int mer_id, int amount) {
+    /**
+     * @TODO handle Date better
+     * @param cli_id
+     * @param mer_id
+     * @param amount
+     */
+    public void insertTransaction(int cli_id, int mer_id, int amount) throws SQLException {
 
-        //date special case
+        ResultSet rs;
+        String json;
+        boolean flag;
 
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
-        String query   = "SELECT";
+        String query   = "SELECT EXISTS (SELECT 1 FROM individuals WHERE "
+                + "account_id = '" + cli_id + "' LIMIT 1)"; // SELECT list is ignored due to 'EXISTS' / ultra fast approach
+
+
+        rs = stmt.executeQuery(query);
+        flag = false;
+
+        if ( !rs.next() ) {  // query did not return any results from the'individuals' table
+
+            rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM companies WHERE "
+                    + "account_id = '" + cli_id + "' LIMIT 1)");
+            
+            if ( !rs.next() )  // empty set again
+                flag = true;
+        }
+
+        stmt.close();
+        con.close();
+
+        if ( flag )
+            throw new SQLException("client with id = '" + cli_id + "' not found!");
     }
 }

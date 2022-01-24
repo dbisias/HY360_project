@@ -71,6 +71,7 @@ public class IndividualTable implements DBTable {
 
 
     public Individual findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+
         ResultSet rs;
         Individual user;
 
