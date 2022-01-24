@@ -75,7 +75,7 @@ public class MerchantTable implements DBTable {
         username + "' AND password = '" + password +"'";
 
         rs = stmt.executeQuery(query);
-        rs.next();
+        if(rs.next()==false){return null;}
         json = DB_Connection.getResultsToJSON(rs);
         user = gson.fromJson(json, Merchant.class);
         stmt.close();

@@ -82,7 +82,7 @@ public class IndividualTable implements DBTable {
 
 
         rs = stmt.executeQuery(query);
-        rs.next();
+        if(rs.next()==false){return null;}
         String json = DB_Connection.getResultsToJSON(rs);
         user = gson.fromJson(json, Individual.class);
         stmt.close();
