@@ -3,7 +3,6 @@ package Database.Tables;
 import java.sql.SQLException;
 import Database.mainClasses.Account;
 
-import java.sql.SQLException;
 
 interface DBTable {
 

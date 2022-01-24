@@ -52,19 +52,20 @@ public class TransactionsTable {
         rs = stmt.executeQuery(query);
         flag = false;
 
-        if ( !rs.next() ) {  // query did not return any results from the'individuals' table
+        if ( !rs.next() ) {  // no results from the 'individuals' table
 
             rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM companies WHERE "
                     + "account_id = '" + cli_id + "' LIMIT 1)");
 
             if ( !rs.next() )  // empty set again
                 flag = true;
-            else {
+
+            if ( !flag ) {
 
                 rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM merchants WHERE "
                     + "account_id = '" + mer_id + "' LIMIT 1)");
 
-                if ( !rs.next() )
+                if ( !rs.next() )  // and again
                     flag = true;
             }
         }
