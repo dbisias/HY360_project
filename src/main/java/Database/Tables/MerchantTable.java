@@ -110,8 +110,13 @@ public class MerchantTable implements DBTable {
         stmt = con.createStatement();
         rs = stmt.executeQuery("SELECT account_id, name FROM merchants");
 
-        if ( !rs.next() )
+        if ( !rs.next() ) {
+
+            stmt.close();
+            con.close();
+
             return null;
+        }
 
         stmt.close();
         con.close();
