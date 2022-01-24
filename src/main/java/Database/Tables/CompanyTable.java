@@ -3,6 +3,8 @@ package Database.Tables;
 import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
 import Database.mainClasses.Company;
+import Exceptions.UserNotFoundException;
+
 import com.google.gson.Gson;
 
 import java.sql.Connection;
