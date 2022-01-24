@@ -4,7 +4,7 @@ import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
 import Database.mainClasses.Company;
 import Database.mainClasses.Merchant;
-
+import Exceptions.UserNotFoundException;
 import main.java.Exceptions;
 import com.google.gson.Gson;
 import org.json.JSONObject;
@@ -81,7 +81,7 @@ public class MerchantTable implements DBTable {
     }
 
     @Override
-    public void buy(int cli_id, int amount) throws SQLException, ClassNotFoundException {
+    public void buy(int cli_id, int amount) throws UserNotFoundException, ClassNotFoundException {
 
     }
 
@@ -111,6 +111,10 @@ public class MerchantTable implements DBTable {
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
         rs = stmt.executeQuery("SELECT account_id, name FROM merchants");
+
+        if ( !rs.next() )
+            return null;
+
         stmt.close();
         con.close();
 
