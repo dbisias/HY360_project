@@ -62,7 +62,7 @@ public class MerchantTable implements DBTable {
     public void createTable() throws SQLException, ClassNotFoundException {
 
         String sql = "CREATE TABLE merchants "
-                + "(account_id INTEGER not NULL AUTO_INCREMENT, "
+                + "(account_id INTEGER not NULL AUTO_INCREMENT unique, "
                 + "comission DOUBLE, "
                 + "profit DOUBLE, "
                 + "amount_due DOUBLE, "

@@ -67,7 +67,7 @@ public class IndividualTable implements DBTable {
     public void createTable() throws SQLException, ClassNotFoundException {
 
         String sql = "CREATE TABLE individuals "
-                + "(account_id INTEGER not NULL AUTO_INCREMENT, "
+                + "(account_id INTEGER not NULL AUTO_INCREMENT unique, "
                 + "billing_limit DOUBLE, "
                 + "expiration_date DATE , "
                 + "amount_due DOUBLE, "

@@ -53,7 +53,7 @@ public class CompanyTable implements DBTable {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         String sql = "CREATE TABLE companies "
-                + "(account_id INTEGER not NULL AUTO_INCREMENT, "
+                + "(account_id INTEGER not NULL AUTO_INCREMENT unique, "
                 + "billing_limit DOUBLE, "
                 + "expiration_date DATE , "
                 + "amount_due DOUBLE, "
