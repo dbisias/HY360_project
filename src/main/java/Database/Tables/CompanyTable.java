@@ -65,6 +65,11 @@ public class CompanyTable implements DBTable {
 
     }
 
+    @Override
+    public void buy(int cli_id, int amount) throws SQLException, ClassNotFoundException {
+
+    }
+
     /**
      * Retuns either a non-null account if credentials are correct
      * or an exception if they don't match an existing user.
