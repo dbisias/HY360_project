@@ -5,7 +5,6 @@ import Database.mainClasses.Account;
 import Database.mainClasses.Company;
 import Database.mainClasses.Merchant;
 
-import main.java.Exceptions;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
@@ -106,7 +105,7 @@ public class MerchantTable implements DBTable {
         return user;
     }
 
-    public JSONObject getAll() {
+    public JSONObject getAll() throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
