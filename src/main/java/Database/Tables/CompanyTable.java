@@ -30,9 +30,8 @@ public class CompanyTable implements DBTable {
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
 
         String insertQuery = "INSERT INTO "
-                + " companies (account_id,name,username,password,billing_limit,expiration_date,ammount_due,remaining_ammount)"
+                + " companies (name,username,password,billing_limit,expiration_date,ammount_due,remaining_ammount)"
                 + " VALUES ("
-                + "'" + company.getAccount_id() + "',"
                 + "'" + company.getName() + "',"
                 + "'" + company.getUsername() + "',"
                 + "'" + company.getPassword() + "',"

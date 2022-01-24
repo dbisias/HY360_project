@@ -32,9 +32,8 @@ public class IndividualTable implements DBTable {
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
 
         String insertQuery = "INSERT INTO "
-                + " individuals (account_id,name,username,password,billing_limit,expiration_date,ammount_due,remaining_ammount)"
+                + " individuals (name,username,password,billing_limit,expiration_date,ammount_due,remaining_ammount)"
                 + " VALUES ("
-                + "'" + individual.getAccount_id() + "',"
                 + "'" + individual.getName() + "',"
                 + "'" + individual.getUsername() + "',"
                 + "'" + individual.getPassword() + "',"

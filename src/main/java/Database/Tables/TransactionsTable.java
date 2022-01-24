@@ -1,4 +1,4 @@
-package main.java.Database.Tables;
+package Database.Tables;
 
 import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
-import java.Date;
+import java.util.Date;
 
 public class TransactionsTable {
 
@@ -37,7 +37,7 @@ public class TransactionsTable {
      * @param mer_id
      * @param amount
      */
-    public void insertTransaction(int cli_id, int mer_id, double amount) throws SQLException {
+    public void insertTransaction(int cli_id, int mer_id, double amount) throws SQLException, ClassNotFoundException {
 
         ResultSet rs;
         String json;

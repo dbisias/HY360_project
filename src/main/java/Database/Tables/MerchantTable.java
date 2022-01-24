@@ -29,9 +29,8 @@ public class MerchantTable implements DBTable {
         Statement stmt = con.createStatement();
 
         String insertQuery = "INSERT INTO "
-                + " merchants (account_id,name,username,password,comission,profit,ammount_due)"
+                + " merchants (name,username,password,comission,profit,ammount_due)"
                 + " VALUES ("
-                + "'" + merchant.getAccount_id() + "',"
                 + "'" + merchant.getName() + "',"
                 + "'" + merchant.getUsername() + "',"
                 + "'" + merchant.getPassword() + "',"
