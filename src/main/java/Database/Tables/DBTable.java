@@ -1,4 +1,5 @@
-package main.java.Database.Tables;
+
+import com.google.gson.Gson;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

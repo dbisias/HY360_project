@@ -7,6 +7,12 @@ public class Account {
     protected String username;
     protected String password;
 
+    public Account(String name, String username, String password) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+    }
+
     public int getAccount_id() {
         return account_id;
     }

@@ -27,9 +27,9 @@ public class TransactionsAPI extends HttpServlet {
         JSONTokener tokener = new JSONTokener(inputJSONfromClient);
         JSONObject jsonIn = new JSONObject(tokener);
 
-        int merchant_id = (int) jsonIn.get("merchant_id");
+        int merchant_id = Integer.parseInt((String) jsonIn.get("merchant_id"));
         int account_id = (int) jsonIn.get("account_id");
-        double amount = (double) jsonIn.get("amount");
+        double amount = Double.parseDouble((String) jsonIn.get("amount"));
         int as_company = (int) jsonIn.get("as_company");
 
         TransactionsTable tTable = new TransactionsTable();

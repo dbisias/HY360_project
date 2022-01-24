@@ -5,6 +5,10 @@ public class Merchant extends Account{
     protected float profit;
     protected float amount_due;
 
+    public Merchant(String name, String username, String password) {
+        super(name, username, password);
+    }
+
     public void initfields(int comission){
         this.comission = comission;
         profit = 0;

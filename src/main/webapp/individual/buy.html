@@ -4,6 +4,7 @@
         let myForm = document.getElementById('buyform');
         let formData = new FormData(myForm);
         const data = {};
+        data["as_company"]=0;
         formData.forEach((value, key) => (data[key] = value));
 
         var xhr = new XMLHttpRequest();

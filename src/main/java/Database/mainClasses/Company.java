@@ -10,6 +10,10 @@ public class Company extends Account{
     protected int amount_due;
     protected int remaining_amount;
 
+    public Company(String name, String username, String password) {
+        super(name, username, password);
+    }
+
     public void initfields(){
         billimit = 100;
         expiration_date = new Date();

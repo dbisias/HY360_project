@@ -9,6 +9,10 @@ public class Individual extends Account{
     protected int amount_due;
     protected int remaining_amount;
 
+    public Individual(String name, String username, String password) {
+        super(name, username, password);
+    }
+
     public void initfields(){
         billimit = 100;
         expiration_date = new Date();

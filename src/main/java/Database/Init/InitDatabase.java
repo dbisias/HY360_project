@@ -1,5 +1,6 @@
 package Database.Init;
 
+import Database.Tables.AccountTable;
 import Database.Tables.CompanyTable;
 import Database.Tables.IndividualTable;
 import Database.Tables.MerchantTable;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 public class InitDatabase {
 
+    AccountTable at = new AccountTable();
     IndividualTable it = new IndividualTable();
     CompanyTable ct = new CompanyTable();
     MerchantTable mt = new MerchantTable();
@@ -31,12 +33,14 @@ public class InitDatabase {
     public void initDatabase() throws SQLException, ClassNotFoundException {
         Connection conn = getInitialConnection();
         Statement stmt = conn.createStatement();
+        stmt.execute("DROP DATABASE CCC_db");
         stmt.execute("CREATE DATABASE CCC_db");
         stmt.close();
         conn.close();
     }
 
     public void initTables() throws SQLException, ClassNotFoundException {
+        at.createTable();
         it.createTable();
         ct.createTable();
         mt.createTable();

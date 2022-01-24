@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 
 public class IndividualTable implements DBTable {
     
-    private Gson gson;
+    private Gson gson = new Gson();
     private ResultSet rs;
     private Connection con;
     private Statement stmt;
@@ -40,14 +40,14 @@ public class IndividualTable implements DBTable {
     }
 
     public void addNewAccount(Individual individual) throws SQLException, ClassNotFoundException {
+        AccountTable at = new AccountTable();
+        int account_id = at.addNewAccount((Account) individual);
 
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
         String insertQuery = "INSERT INTO "
-                + " individuals (name,username,password,billing_limit,expiration_date,amount_due,remaining_amount)"
+                + " individuals (account_id,billing_limit,expiration_date,amount_due,remaining_amount)"
                 + " VALUES ("
-                + "'" + individual.getName() + "',"
-                + "'" + individual.getUsername() + "',"
-                + "'" + individual.getPassword() + "',"
+                + "'" + account_id + "',"
                 + "'" + individual.getBillimit() + "',"
                 + "'" + df.format(individual.getExpiration_date()) + "',"
                 + "'" + individual.getAmount_due() + "',"
@@ -68,14 +68,11 @@ public class IndividualTable implements DBTable {
 
         String sql = "CREATE TABLE individuals "
                 + "(account_id INTEGER not NULL AUTO_INCREMENT, "
-                + "name VARCHAR (40) not null,"
-                + "username VARCHAR (20) not null unique,"
-                + "password VARCHAR (20) not null,"
                 + "billing_limit DOUBLE, "
                 + "expiration_date DATE , "
                 + "amount_due DOUBLE, "
                 + "remaining_amount DOUBLE, "
-                + "PRIMARY KEY ( account_id ))";
+                + "FOREIGN KEY (account_id) REFERENCES accounts(account_id))";
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();

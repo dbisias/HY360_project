@@ -39,13 +39,13 @@ public class MerchantTable implements DBTable {
     }
 
     public void addNewAccount(Merchant merchant) throws SQLException, ClassNotFoundException {
+        AccountTable at = new AccountTable();
+        int account_id = at.addNewAccount((Account) merchant);
 
         String insertQuery = "INSERT INTO "
-                + " merchants (name,username,password,comission,profit,amount_due)"
+                + " merchants (account_id,comission,profit,amount_due)"
                 + " VALUES ("
-                + "'" + merchant.getName() + "',"
-                + "'" + merchant.getUsername() + "',"
-                + "'" + merchant.getPassword() + "',"
+                + "'" + account_id + "',"
                 + "'" + merchant.getComission() + "',"
                 + "'" + merchant.getProfit() + "',"
                 + "'" + merchant.getAmount_due() + "'"
@@ -63,13 +63,10 @@ public class MerchantTable implements DBTable {
 
         String sql = "CREATE TABLE merchants "
                 + "(account_id INTEGER not NULL AUTO_INCREMENT, "
-                + "name VARCHAR (40) not null,"
-                + "username VARCHAR (20) not null unique, "
-                + "password VARCHAR (20) not null,"
                 + "comission DOUBLE, "
                 + "profit DOUBLE, "
                 + "amount_due DOUBLE, "
-                + "PRIMARY KEY ( account_id ))";
+                + "FOREIGN KEY (account_id) REFERENCES accounts(account_id))";
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
