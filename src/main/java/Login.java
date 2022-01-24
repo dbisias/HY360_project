@@ -37,6 +37,7 @@ public class Login extends HttpServlet {
         return;
     }
 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String usertype; //0 for unknown,1 for user,2 for doctor,3 for admin

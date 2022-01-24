@@ -43,14 +43,14 @@ public class IndividualTable implements DBTable {
 
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
         String insertQuery = "INSERT INTO "
-                + " individuals (name,username,password,billing_limit,expiration_date,ammount_due,remaining_ammount)"
+                + " individuals (name,username,password,billing_limit,expiration_date,amount_due,remaining_amount)"
                 + " VALUES ("
                 + "'" + individual.getName() + "',"
                 + "'" + individual.getUsername() + "',"
                 + "'" + individual.getPassword() + "',"
                 + "'" + individual.getBillimit() + "',"
                 + "'" + df.format(individual.getExpiration_date()) + "',"
-                + "'" + individual.getAmmount_due() + "',"
+                + "'" + individual.getAmount_due() + "',"
                 + "'" + individual.getRemaining_amount()+ "'"
                 + ")";
 
@@ -73,8 +73,8 @@ public class IndividualTable implements DBTable {
                 + "password VARCHAR (20) not null,"
                 + "billing_limit DOUBLE, "
                 + "expiration_date DATE , "
-                + "ammount_due DOUBLE, "
-                + "remaining_ammount DOUBLE, "
+                + "amount_due DOUBLE, "
+                + "remaining_amount DOUBLE, "
                 + "PRIMARY KEY ( account_id ))";
 
         con = DB_Connection.getConnection();

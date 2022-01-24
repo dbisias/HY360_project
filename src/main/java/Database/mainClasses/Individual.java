@@ -6,14 +6,14 @@ public class Individual extends Account{
     protected int company_id;
     protected int billimit;
     protected Date expiration_date;
-    protected int ammount_due;
+    protected int amount_due;
     protected int remaining_amount;
 
     public void initfields(){
         billimit = 100;
         expiration_date = new Date();
         expiration_date.setYear(expiration_date.getYear()+5);
-        ammount_due = 0;
+        amount_due = 0;
         remaining_amount = 100;
     }
 
@@ -41,12 +41,12 @@ public class Individual extends Account{
         this.expiration_date = expiration_date;
     }
 
-    public int getAmmount_due() {
-        return ammount_due;
+    public int getAmount_due() {
+        return amount_due;
     }
 
-    public void setAmmount_due(int ammount_due) {
-        this.ammount_due = ammount_due;
+    public void setAmount_due(int amount_due) {
+        this.amount_due = amount_due;
     }
 
     public int getRemaining_amount() {
