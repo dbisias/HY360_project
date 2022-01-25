@@ -19,7 +19,7 @@ public class Merchant extends Account{
         return commission;
     }
 
-    public void setCommission(float commission) {
+    public void setCommission(double commission) {
         this.commission = commission;
     }
 
@@ -27,7 +27,7 @@ public class Merchant extends Account{
         return profit;
     }
 
-    public void setProfit(float profit) {
+    public void setProfit(double profit) {
         this.profit = profit;
     }
 
@@ -35,7 +35,7 @@ public class Merchant extends Account{
         return amount_due;
     }
 
-    public void setAmount_due(float amount_due) {
+    public void setAmount_due(double amount_due) {
         this.amount_due = amount_due;
     }
 }
