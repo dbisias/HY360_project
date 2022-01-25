@@ -176,7 +176,6 @@ public class IndividualTable {
         stmt.close();
     }
 
-
     public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
@@ -190,7 +189,6 @@ public class IndividualTable {
         stmt.close();
         con.close();
     }
-
 
     public void createTable() throws SQLException, ClassNotFoundException {
 
@@ -212,7 +210,6 @@ public class IndividualTable {
         con.close();
 
     }
-
 
     public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException {
 

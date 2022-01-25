@@ -123,7 +123,6 @@ public class TransactionsAPI extends HttpServlet {
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BufferedReader inputJSONfromClient = request.getReader();
         JSONTokener tokener = new JSONTokener(inputJSONfromClient);
-        System.out.println(tokener.next());
         JSONObject jsonIn = new JSONObject(tokener);
 
         int user_id = jsonIn.getInt("user_id");
