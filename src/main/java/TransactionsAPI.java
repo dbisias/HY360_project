@@ -85,15 +85,14 @@ public class TransactionsAPI extends HttpServlet {
         System.out.println(tokener.next());
         JSONObject jsonIn = new JSONObject(tokener);
 
-        String username = (String) jsonIn.get("username");
-        String password = (String) jsonIn.get("password");
+        int user_id = jsonIn.getInt("user_id");
         int company_id = Integer.parseInt((String) jsonIn.get("as_company"));
         double amount = Double.parseDouble((String) jsonIn.get("amount"));
 
         try{
             if(company_id == 0) {
                 IndividualTable iTable = new IndividualTable();
-                Individual individual = iTable.findAccount(username, password);
+                Individual individual = iTable.findAccount(user_id);
                 double ind_amount = individual.getRemaining_amount();
                 if(ind_amount == 0) {
                     helper.createResponse(response, 403, "broke ass boy");
@@ -112,7 +111,7 @@ public class TransactionsAPI extends HttpServlet {
             }
             else {
                 CompanyTable cTable = new CompanyTable();
-                Company company = cTable.findAccount(username, password);
+                Company company = cTable.findAccount(user_id);
                 double ind_amount = company.getRemaining_amount();
                 if(ind_amount == 0) {
                     helper.createResponse(response, 403, "broke ass boy");

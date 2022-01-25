@@ -22,16 +22,18 @@ public class Login extends HttpServlet {
     private void login(HttpServletRequest request, HttpServletResponse response, Account logged_in, String usertype){
         if(usertype.equals("")){return;}
         JSONObject jsonreply = new JSONObject();
-        HttpSession session = null;
-        session = request.getSession(true);
         jsonreply.put("logged_in", true);
         jsonreply.put("usertype", usertype);
+
+        HttpSession session = null;
+        session = request.getSession(true);
         try {
             session.setAttribute("logged_in", logged_in.getAccount_id());
         }catch (NullPointerException e){
             helper.createResponse(response,403,e.getMessage());
             return;
         }
+
         helper.createResponse(response,200,jsonreply.toString());
         return;
     }
@@ -46,21 +48,21 @@ public class Login extends HttpServlet {
 
         Account logged_in = null;
         try {
-            logged_in = it.findAccount((String) jsonin.get("username"),(String) jsonin.get("password"));
+            logged_in = it.login((String) jsonin.get("username"),(String) jsonin.get("password"));
             if(logged_in!=null) {
                 usertype = "individual";
                 login(request,response,logged_in,usertype);
                 return;
             }
 
-            logged_in = ct.findAccount((String) jsonin.get("username"),(String) jsonin.get("password"));
+            logged_in = ct.login((String) jsonin.get("username"),(String) jsonin.get("password"));
             if(logged_in!=null){
                 usertype="company";
                 login(request,response,logged_in,usertype);
                 return;
             }
 
-            logged_in = mt.findAccount((String) jsonin.get("username"),(String) jsonin.get("password"));
+            logged_in = mt.login((String) jsonin.get("username"),(String) jsonin.get("password"));
             if(logged_in!=null){
                 usertype="merchant";
                 login(request,response,logged_in,usertype);

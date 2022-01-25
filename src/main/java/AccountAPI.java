@@ -59,7 +59,7 @@ public class AccountAPI extends HttpServlet {
         String username = (String) jsonIn.get("username");
         String password = (String) jsonIn.get("password");
         String usertype = (String) jsonIn.get("usertype");
-        int acc_id = Integer.parseInt((String)  jsonIn.get("acc_id"));
+        int acc_id = (Integer) jsonIn.get("acc_id");
 
         try{
             if(usertype.equals("individual")) {

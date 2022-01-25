@@ -65,7 +65,7 @@ public class CompanyTable implements DBTable {
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
         rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
-            + "accound_id = '" + cli_id + "'");
+            + "account_id = '" + cli_id + "'");
 
         if( !rs.next() )
             return null;
@@ -157,7 +157,7 @@ public class CompanyTable implements DBTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        stmt.executeUpdate("DELETE FROM companies WHERE accound_id = '"
+        stmt.executeUpdate("DELETE FROM companies WHERE account_id = '"
             + acc_id + "'");
 
         stmt.executeUpdate("DELETE FROM accounts WHERE accound_id = '"

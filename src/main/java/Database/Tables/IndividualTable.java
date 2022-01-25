@@ -71,7 +71,7 @@ public class IndividualTable implements DBTable {
         Individual user;
         String json;
 
-        String query = "SELECT * FROM individuals_view WHERE accound_id = '" + cli_id + "'";
+        String query   = "SELECT * FROM individuals_view WHERE account_id = '" + cli_id + "'";
 
 
         con = DB_Connection.getConnection();
@@ -93,8 +93,8 @@ public class IndividualTable implements DBTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
-            + "username = '" + username + "' AND password = '" + password + "'");
+        rs = stmt.executeQuery("SELECT * FROM individuals_view WHERE "
+            + "username = '" + username + "'AND password = '" + password + "'");
 
         if( !rs.next() )
             return null;
@@ -160,7 +160,7 @@ public class IndividualTable implements DBTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        stmt.executeUpdate("DELETE FROM individuals WHERE accound_id = '"
+        stmt.executeUpdate("DELETE FROM individuals WHERE account_id = '"
             + acc_id + "'");
 
         stmt.executeUpdate("DELETE FROM accounts WHERE accound_id = '"

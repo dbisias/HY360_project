@@ -100,7 +100,7 @@ public class MerchantTable implements DBTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
+        rs = stmt.executeQuery("SELECT * FROM merchants_view WHERE "
             + "username = '" + username + "'AND password = '" + password + "'");
 
         if( !rs.next() ) {
@@ -212,7 +212,7 @@ public class MerchantTable implements DBTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        stmt.executeUpdate("DELETE FROM merchants WHERE accound_id = '"
+        stmt.executeUpdate("DELETE FROM merchants WHERE account_id = '"
             + acc_id + "'");
 
         stmt.executeUpdate("DELETE FROM accounts WHERE accound_id = '"
