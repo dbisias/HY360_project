@@ -66,13 +66,12 @@ public class IndividualTable implements DBTable {
         stmt.close();
     }
 
-    public Individual findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+    public Individual findAccount(int cli_id) throws SQLException, ClassNotFoundException {
 
         Individual user;
         String json;
 
-        String query   = "SELECT * FROM individuals_view WHERE username = '" +
-        username + "' AND password = '" + password +"'";
+        String query   = "SELECT * FROM individuals_view WHERE accound_id = '" + cli_id + "'";
 
 
         con = DB_Connection.getConnection();
@@ -88,6 +87,19 @@ public class IndividualTable implements DBTable {
         con.close();
 
         return user;
+    }
+
+    public Individual login(String username, String password) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
+            + "username = '" + username + "'AND password = '" + password + "'");
+
+        if( !rs.next() )
+            return null;
+
+        return gson.fromJson(DB_Connection.getResultsToJSON(rs), Individual.class);
     }
 
     public ArrayList<Individual> getGoodUsers() throws SQLException, ClassNotFoundException {
@@ -137,8 +149,8 @@ public class IndividualTable implements DBTable {
                 + "expiration_date DATE , "
                 + "amount_due DOUBLE, "
                 + "remaining_amount DOUBLE, "
-                + "company_account_id INTEGER, "
-                + "FOREIGN KEY (company_account_id) REFERENCES accounts(account_id), "
+                + "Individual_account_id INTEGER, "
+                + "FOREIGN KEY (Individual_account_id) REFERENCES accounts(account_id), "
                 + "FOREIGN KEY (account_id) REFERENCES accounts(account_id))";
 
         con = DB_Connection.getConnection();

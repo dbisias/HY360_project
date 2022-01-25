@@ -20,7 +20,7 @@
         data["password"]=userdata["password"];
         if(payas="individual"){data["as_company"]=0;}
         else{data["as_company"]=userdata["company_account_id"];}
-
+        console.log(data);
         xhr.open('PUT', '/HY360_Project_war_exploded/TransactionsAPI');
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send(data);

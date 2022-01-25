@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 
 public class CompanyTable implements DBTable {
@@ -57,17 +58,14 @@ public class CompanyTable implements DBTable {
         con.close();
     }
 
-    public Company findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+    public Company findAccount(int cli_id) throws SQLException, ClassNotFoundException {
 
-        ResultSet rs;
         Company user;
 
-        Connection con = DB_Connection.getConnection();
-        Statement stmt = con.createStatement();
-        String query   = "SELECT * FROM companies_view WHERE username = '" +
-        username + "' AND password = '" + password +"'";
-
-        rs = stmt.executeQuery(query);
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
+            + "accound_id = '" + cli_id + "'");
 
         if( !rs.next() )
             return null;
@@ -107,6 +105,19 @@ public class CompanyTable implements DBTable {
         stmt = con.createStatement();
         stmt.executeUpdate("UPDATE companies SET amount_due = '"
             + "amount_due - " + amount + "'");
+    }
+
+    public Company login(String username, String password) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
+            + "username = '" + username + "'AND password = '" + password + "'");
+
+        if( !rs.next() )
+            return null;
+
+        return gson.fromJson(DB_Connection.getResultsToJSON(rs), Company.class);
     }
 
     @Override
