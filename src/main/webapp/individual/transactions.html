@@ -85,7 +85,7 @@
     $(document).ready(function(){
         loadtable();
 
-        $("#typeselect").change(function(){
+        $("#sortselect").change(function(){
             if($(this).val()==="none"){
                 $("#typeselect").hide();
                 $("#dateselect").hide();
@@ -106,11 +106,13 @@
     <option value="type">Type</option>
 </select>
 <input type="button" onclick="sorter();" value="Sort">
+<br>
 <select id="typeselect" style="display: none">
     <option value="billing">Billing</option>
     <option value="credit">Credit</option>
     <option value="refunded">Refunded</option>
 </select>
+<br>
 <div id="dateselect" style="display: none">
     <input type="date" id="startdate">
     <input type="date" id="enddate">
