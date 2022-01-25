@@ -152,7 +152,7 @@ public class TransactionsTable {
                 + "account_id = " + rs.getInt("mer_acc_id"));
 
             trs.next();
-            tmp.setMer_name(trs.getString(0));
+            tmp.setMer_name(trs.getString(1));
             tmp.setAmount(rs.getDouble("amount"));
             tmp.setType(rs.getString("type"));
             tmp.setDate(rs.getDate("date"));
@@ -210,4 +210,47 @@ public class TransactionsTable {
 
         return ret;
     }
+
+    public ArrayList<Transaction> getTrans(int cli_id, Date start, Date end) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT merc_acc_id, amount, type, date FROM "
+            + "transactions WHERE cli_acc_id = " + cli_id + " AND "
+            + "date >= '" + start + "' AND date <= '" + end + "'");
+
+        if ( !rs.next() ) {
+
+            stmt.close();
+            con.close();
+
+            return null;
+        }
+
+        ArrayList<Transaction> ret = new ArrayList<Transaction>();
+        Transaction tmp = new Transaction();
+        ResultSet trs;
+
+
+        do {
+
+            trs = stmt.executeQuery("SELECT name FROM accounts WHERE "
+                + "account_id = " + rs.getInt("mer_acc_id"));
+
+            trs.next();
+            tmp.setMer_name(trs.getString(1));
+            tmp.setAmount(rs.getDouble("amount"));
+            tmp.setType(rs.getString("type"));
+            tmp.setDate(rs.getDate("date"));
+
+            ret.add(tmp);
+
+        } while ( rs.next() );
+
+        stmt.close();
+        con.close();
+
+        return ret;
+    }
+
 }
