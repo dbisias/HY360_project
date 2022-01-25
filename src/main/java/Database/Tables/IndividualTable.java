@@ -241,7 +241,7 @@ public class IndividualTable implements DBTable {
 
         if ( ret != -1 )
             stmt.executeUpdate("UPDATE merchants SET profit = "
-                + "profit + (commission / 100) * " + amount
+                + "profit + " + " ((100 - commission) / 100) * " + amount
                 + " WHERE account_id = '" + mer_id + "'");
 
         stmt.close();
