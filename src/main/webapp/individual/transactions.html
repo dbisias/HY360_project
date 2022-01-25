@@ -4,7 +4,7 @@
         $("#transactionstable").html("<thead><th>Date</th><th>Merchant</th><th>Amount</th><th>Transaction Type</th><th>Action</th></thead>")
         for(ind in json){
             var transaction = JSON.parse(json[ind]);
-            var refundbtn = "<input type='button' id='refundbtn_"+transaction["tid"]+"' onclick='refund("+transaction["tid"]+")' value='Refund'>";
+            var refundbtn = "<input type='button' id='refundbtn_"+transaction["id"]+"' onclick='refund("+transaction["id"]+")' value='Refund'>";
             $("#transactionstable").append("<tr><td>"+transaction["date"]+"</td><td>"+transaction["mer_name"]+"</td><td>"+transaction["amount"]+"</td><td>"+transaction["type"]+"</td><td>"+refundbtn+"</td></tr>")
         }
 
