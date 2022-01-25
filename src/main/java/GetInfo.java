@@ -28,9 +28,15 @@ public class GetInfo extends HttpServlet {
         }
         String loggedin_id = session.getAttribute("logged_in").toString();
         String password = (String) session.getAttribute("password");
+        String company_id = (String) request.getParameter("company_id");
         JSONObject jsonreply = null;
 
         try {
+            if(company_id != null) {
+                jsonreply = new JSONObject((ct.accountToJSON(ct.findAccount(company_id))));
+                jsonreply.put("usertype", "company");
+                helper.createResponse(response, 200, jsonreply.toString());
+            }
             if(it.findAccount(loggedin_id, password)!=null) {
                 jsonreply = new JSONObject(it.accountToJSON(it.findAccount(loggedin_id, password)));
                 jsonreply.put("usertype","individual");
