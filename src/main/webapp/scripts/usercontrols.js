@@ -70,9 +70,9 @@ function checkUserLoggedIn(usertype){
         }
     }
 
-    xhr.open('POST', '/HY360_Project_war_exploded/GetInfo');
+    xhr.open('GET', '/HY360_Project_war_exploded/GetInfo');
     xhr.setRequestHeader("Content-type", "application/json");
-    xhr.send("");
+    xhr.send();
 }
 
 function autoLogin(){
@@ -84,7 +84,7 @@ function autoLogin(){
         }
     }
 
-    xhr.open('POST', '/HY360_Project_war_exploded/GetInfo');
+    xhr.open('GET', '/HY360_Project_war_exploded/GetInfo');
     xhr.setRequestHeader("Content-type", "application/json");
-    xhr.send("");
+    xhr.send();
 }
