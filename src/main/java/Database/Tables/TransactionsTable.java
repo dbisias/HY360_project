@@ -26,7 +26,9 @@ public class TransactionsTable {
                 + "mer_acc_id INTEGER NOT NULL, "
                 + "date DATE NOT NULL, "
                 + "amount DOUBLE NOT NULL, "
-                + "type VARCHAR (15) NOT NULL);";
+                + "type VARCHAR (15) NOT NULL,"
+                + "FOREIGN KEY (cli_acc_id) REFERENCES accounts(account_id), "
+                + "FOREIGN KEY (mer_acc_id) REFERENCES accounts(account_id)) ";
 
         stmt.execute(query);
         stmt.close();
