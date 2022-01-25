@@ -14,6 +14,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 
 
@@ -23,6 +24,22 @@ public class TransactionsAPI extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Date start_date;
+        Date end_date;
+        String type = (String) request.getParameter("type");
+        TransactionsTable tTable = new TransactionsTable();
+        int user_id = Integer.parseInt(request.getParameter("user_id"));
+        if(request.getParameter("start") != null) {
+            start_date = Date.valueOf(request.getParameter("start"));
+            end_date = Date.valueOf(request.getParameter("end"));
+        }
+        else if( type!= null ) {
+
+        }
+        else {
+//            tTable.getAllTransactions(user_id);
+        }
+
 
     }
 
@@ -133,5 +150,16 @@ public class TransactionsAPI extends HttpServlet {
         catch(Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int tid = Integer.parseInt(request.getParameter("transaction_id"));
+        TransactionsTable tTable = new TransactionsTable();
+        try {
+            tTable.refund(tid);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        helper.createResponse(response, 200, "Transaction refunded successfully");
     }
 }
