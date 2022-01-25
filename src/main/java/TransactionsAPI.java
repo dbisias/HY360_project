@@ -3,8 +3,10 @@ import Database.Tables.IndividualTable;
 import Database.Tables.TransactionsTable;
 import Database.mainClasses.Company;
 import Database.mainClasses.Individual;
+import Database.mainClasses.Transaction;
 import Exceptions.InsufficientBalanceException;
 import ServletHelper.ServletHelper;
+import com.google.gson.Gson;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -16,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 @WebServlet(name = "TransactionsAPI", value = "/TransactionsAPI")
@@ -24,11 +27,15 @@ public class TransactionsAPI extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        JSONObject jsonOut = new JSONObject();
+        Gson gson = new Gson();
         Date start_date;
         Date end_date;
         String type = (String) request.getParameter("type");
         TransactionsTable tTable = new TransactionsTable();
-//        int user_id = Integer.parseInt(request.getParameter("user_id"));
+        int user_id = Integer.parseInt(request.getParameter("user_id"));
+        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+
         if(request.getParameter("start") != null) {
             start_date = Date.valueOf(request.getParameter("start"));
             end_date = Date.valueOf(request.getParameter("end"));
@@ -37,10 +44,16 @@ public class TransactionsAPI extends HttpServlet {
 
         }
         else {
-//            tTable.getAllTransactions(user_id);
+            try {
+                transactions = tTable.getTrans(user_id);
+                for(int i = 0; i < transactions.size(); i++) {
+                   jsonOut.append("transaction",gson.toJson(transactions.get(i), Transaction.class));
+                }
+                helper.createResponse(response, 200, jsonOut.toString());
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-
-
     }
 
     @Override

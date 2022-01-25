@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class MerchantTable implements DBTable {
+public class MerchantTable {
 
     private Gson gson;
     private Connection con;
@@ -165,12 +165,12 @@ public class MerchantTable implements DBTable {
         return gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class);
     }
 
-    @Override
+
     public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException {
         return 0;
     }
 
-    @Override
+
     public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();

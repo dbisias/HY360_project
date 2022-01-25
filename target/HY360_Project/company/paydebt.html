@@ -1,0 +1,59 @@
+<script>
+    var payas="individual";
+    function paydebt(event) {
+        event.preventDefault();
+        var data={}
+        var inputamount = $("#amouninput").val();
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if(xhr.readyState === 4 && xhr.status === 200){
+                checkUserLoggedIn("individual");
+            }else{
+
+            }
+        }
+
+        if(inputamount>userdata["amount_due"]){inputamount=userdata["amount_due"];}
+        data["amount"]=inputamount;
+        data["username"]=userdata["username"];
+        data["password"]=userdata["password"];
+        data["as"]="merchant"
+        console.log(data);
+        xhr.open('PUT', '/HY360_Project_war_exploded/TransactionsAPI');
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(data);
+    }
+
+    function updateindividualinfo(){
+        payas = "individual";
+        if(userdata["remaining_amount"]<0) {
+            $("#paybtn").prop('disabled', true);
+        }
+
+        if(userdata["amount_due"]>0) {
+            $("#debttext").html("You currently owe CCC: " + userdata["amount_due"] + "€!");
+        }else{
+            $("#debttext").html("You dont owe us any money!");
+            $("#paybtn").prop('disabled', true);
+        }
+
+        $("#balancetext").html("Your balance is: "+userdata["remaining_amount"]+"€");
+    }
+
+    $(document).ready(function(){
+        if(userdata["amount_due"]>userdata["remaining_amount"]){$("#amouninput").val(userdata["remaining_amount"]);}
+        else{$("#amouninput").val(userdata["amount_due"]);}
+        updateindividualinfo();
+
+    });
+</script>
+<div>
+
+    <header><h4 id="debttext"></h4></header>
+    <br>
+    <header id="balancetext"></header>
+    <br>
+    <input type="text" name="amount" id="amouninput">
+    <input id="paybtn" type="button" value="Pay your debt!" onclick="paydebt(event);">
+</div>

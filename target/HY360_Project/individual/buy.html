@@ -1,10 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<script>
+    function sendbuy(event) {
+        event.preventDefault();
+        let myForm = document.getElementById('buyform');
+        let formData = new FormData(myForm);
+        const data = {};
+        data["as_company"] = 0;
+        formData.forEach((value, key) => (data[key] = value));
 
-</body>
-</html>
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                checkUserLoggedIn("individual")
+                $("#ajaxreply").html(xhr.responseText);
+                $("#ajaxreply").css("color","green");
+            }else{
+                $("#ajaxreply").html(xhr.responseText);
+                $("#ajaxreply").css("color","red");
+            }
+        }
+
+        if (data["as_company"] == "yes") {
+            data["as_company"] = userdata["company_account_id"];
+        }
+        data["account_id"] = userdata["account_id"];
+        data["username"] = userdata["username"];
+        data["password"] = userdata["password"];
+        console.log(JSON.stringify(data));
+        xhr.open('POST', '/HY360_Project_war_exploded/TransactionsAPI');
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(data));
+    }
+
+    var reply
+
+    function loadmerchants() {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText);
+                reply = JSON.parse(xhr.responseText);
+                if (jQuery.isEmptyObject(reply)) {
+                    $("#merchantselect").disable();
+                } else {
+                    for (ind in reply["merchants"]) {
+                        var mer = JSON.parse(reply["merchants"][ind]);
+                        var option = "<option value='" + mer["account_id"] + "'>" + mer["name"] + "</option>";
+                        $("#merchantselect").append(option);
+                    }
+                }
+            } else {
+
+            }
+        }
+
+        xhr.open('GET', '/HY360_Project_war_exploded/MerchantAPI');
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send();
+    }
+
+    $(document).ready(function () {
+        loadmerchants();
+        if (userdata["company_id"] != 0) {
+            $("#as_company").show();
+        }
+    });
+
+
+</script>
+<header>
+    <h4>Buy from a specific Merchant</h4>
+</header>
+<form id="buyform" onSubmit="sendbuy(event);">
+    <label>Merchant: </label>
+    <select id="merchantselect" name="merchant_id">
+
+    </select>
+    <br>
+    <label>Ammount: </label>
+    <input name="amount" value=0>
+    <br>
+    <div style="display: none" id="as_company">
+        <label>Buy as your company: </label>
+        <input type="checkbox" name="as_company" value="yes">
+    </div>
+    <br>
+    <input type="submit" value="Pay">
+</form>
+<div id="ajaxreply"></div>

@@ -70,7 +70,7 @@ function checkUserLoggedIn(usertype){
         if(xhr.readyState === 4 && xhr.status === 200){
             userdata = JSON.parse(xhr.responseText);
             if(userdata["usertype"]!=usertype){logout();}
-            updateusergaf()
+            updateusergaf();
         }else if(xhr.status!=200){
             window.location.href = "/HY360_Project_war_exploded";
             console.log("autologin failed with status code: "+xhr.status);
