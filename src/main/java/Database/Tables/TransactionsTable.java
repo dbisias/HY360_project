@@ -98,14 +98,14 @@ public class TransactionsTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT (cli_acc_id, merc_acc_id, amount) FROM "
+        rs = stmt.executeQuery("SELECT cli_acc_id, mer_acc_id, amount FROM "
             + "transactions WHERE tid = " + tid);
 
         rs.next();  // transaction exists for sure
 
-        cli_id = rs.getInt(0);
-        mer_id = rs.getInt(1);
-        amount = rs.getDouble(2);
+        cli_id = rs.getInt(1);
+        mer_id = rs.getInt(2);
+        amount = rs.getDouble(3);
 
         rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM individuals_view WHERE "
         + "account_id = '" + cli_id + "' LIMIT 1)");  // SELECT list is ignored due to 'EXISTS' / ultra fast approach
@@ -124,6 +124,6 @@ public class TransactionsTable {
             + "WHERE account_id = " + mer_id);
 
         stmt.executeUpdate("UPDATE transactions SET type = "
-        + "refunded WHERE tid = " + tid);
+        + "'refunded' WHERE tid = " + tid);
     }
 }

@@ -28,7 +28,7 @@ public class TransactionsAPI extends HttpServlet {
         Date end_date;
         String type = (String) request.getParameter("type");
         TransactionsTable tTable = new TransactionsTable();
-        int user_id = Integer.parseInt(request.getParameter("user_id"));
+//        int user_id = Integer.parseInt(request.getParameter("user_id"));
         if(request.getParameter("start") != null) {
             start_date = Date.valueOf(request.getParameter("start"));
             end_date = Date.valueOf(request.getParameter("end"));

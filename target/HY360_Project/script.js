@@ -1,5 +1,4 @@
 function sendAjaxRegisterPOST(event){
-    console.log("ola good")
     event.preventDefault();
     let myForm = document.getElementById('myForm');
     let formData = new FormData(myForm);
