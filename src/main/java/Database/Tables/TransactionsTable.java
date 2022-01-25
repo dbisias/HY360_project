@@ -130,7 +130,7 @@ public class TransactionsTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
+        rs = stmt.executeQuery("SELECT mer_acc_id, amount, type, date FROM "
             + "transactions WHERE cli_acc_id = " + cli_id);
 
         if ( !rs.next() ) {
@@ -175,7 +175,7 @@ public class TransactionsTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT tid, merc_acc_id, amount, type, date FROM "
+        rs = stmt.executeQuery("SELECT mer_acc_id, amount, type, date FROM "
             + "transactions WHERE cli_acc_id = " + cli_id + " AND "
             + "type = '" + type + "'");
 
@@ -221,7 +221,7 @@ public class TransactionsTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT tid, merc_acc_id, amount, type, date FROM "
+        rs = stmt.executeQuery("SELECT mer_acc_id, amount, type, date FROM "
             + "transactions WHERE cli_acc_id = " + cli_id + " AND "
             + "date >= '" + start + "' AND date <= '" + end + "'");
 
