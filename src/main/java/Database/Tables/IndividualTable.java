@@ -123,6 +123,27 @@ public class IndividualTable implements DBTable {
         return ret;
     }
 
+    public ArrayList<Individual> getBadUsers() throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM individuals_view WHERE "
+        + "amount_due > '0' ORDER BY amount_due DESC");
+
+        if ( !rs.next() )
+            return null;
+
+        ArrayList<Individual> ret = new ArrayList<Individual>();
+
+        while ( rs.next() )
+            ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Individual.class));
+
+        stmt.close();
+        con.close();
+
+        return ret;
+    }
+
     public void payDebt(int cli_id, double amount) throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
