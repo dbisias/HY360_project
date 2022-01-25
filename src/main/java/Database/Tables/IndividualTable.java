@@ -65,27 +65,6 @@ public class IndividualTable implements DBTable {
         stmt.close();
     }
 
-    public void createTable() throws SQLException, ClassNotFoundException {
-
-        String sql = "CREATE TABLE individuals "
-                + "(account_id INTEGER not NULL AUTO_INCREMENT unique, "
-                + "billing_limit DOUBLE, "
-                + "expiration_date DATE , "
-                + "amount_due DOUBLE, "
-                + "remaining_amount DOUBLE, "
-                + "company_account_id INTEGER, "
-                + "FOREIGN KEY (company_account_id) REFERENCES accounts(account_id), "
-                + "FOREIGN KEY (account_id) REFERENCES accounts(account_id))";
-
-        con = DB_Connection.getConnection();
-        stmt = con.createStatement();
-        System.out.println(sql);
-        stmt.execute(sql);
-        stmt.close();
-        con.close();
-
-    }
-
     public Individual findAccount(String username, String password) throws SQLException, ClassNotFoundException {
 
         Individual user;
@@ -110,6 +89,36 @@ public class IndividualTable implements DBTable {
         return user;
     }
 
+    @Override
+    public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        stmt.executeUpdate("DELETE FROM individuals WHERE accound_id = '"
+            + acc_id + "'");
+    }
+
+    @Override
+    public void createTable() throws SQLException, ClassNotFoundException {
+
+        String sql = "CREATE TABLE individuals "
+                + "(account_id INTEGER not NULL AUTO_INCREMENT unique, "
+                + "billing_limit DOUBLE, "
+                + "expiration_date DATE , "
+                + "amount_due DOUBLE, "
+                + "remaining_amount DOUBLE, "
+                + "company_account_id INTEGER, "
+                + "FOREIGN KEY (company_account_id) REFERENCES accounts(account_id), "
+                + "FOREIGN KEY (account_id) REFERENCES accounts(account_id))";
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        System.out.println(sql);
+        stmt.execute(sql);
+        stmt.close();
+        con.close();
+
+    }
 
     @Override
     public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException {

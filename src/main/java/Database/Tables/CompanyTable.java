@@ -57,6 +57,39 @@ public class CompanyTable implements DBTable {
         con.close();
     }
 
+    public Company findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+
+        ResultSet rs;
+        Company user;
+
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        String query   = "SELECT * FROM companies_view WHERE username = '" +
+        username + "' AND password = '" + password +"'";
+
+        rs = stmt.executeQuery(query);
+
+        if( !rs.next() )
+            return null;
+
+        String json = DB_Connection.getResultsToJSON(rs);
+        user = gson.fromJson(json, Company.class);
+        stmt.close();
+        con.close();
+
+        return user;
+    }
+
+    @Override
+    public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        stmt.executeUpdate("DELETE FROM companies WHERE accound_id = '"
+            + acc_id + "'");
+    }
+
+    @Override
     public void createTable() throws SQLException, ClassNotFoundException {
 
         String sql = "CREATE TABLE companies "
@@ -129,26 +162,4 @@ public class CompanyTable implements DBTable {
         return ret;
     }
 
-    public Company findAccount(String username, String password) throws SQLException, ClassNotFoundException {
-
-        ResultSet rs;
-        Company user;
-
-        Connection con = DB_Connection.getConnection();
-        Statement stmt = con.createStatement();
-        String query   = "SELECT * FROM companies_view WHERE username = '" +
-        username + "' AND password = '" + password +"'";
-
-        rs = stmt.executeQuery(query);
-
-        if( !rs.next() )
-            return null;
-
-        String json = DB_Connection.getResultsToJSON(rs);
-        user = gson.fromJson(json, Company.class);
-        stmt.close();
-        con.close();
-
-        return user;
-    }
 }

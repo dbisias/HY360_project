@@ -78,6 +78,15 @@ public class MerchantTable implements DBTable {
         return 0;
     }
 
+    @Override
+    public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        stmt.executeUpdate("DELETE FROM merchants WHERE accound_id = '"
+            + acc_id + "'");
+    }
+
 
     public Merchant findAccount(String username, String password) throws SQLException, ClassNotFoundException {
         
