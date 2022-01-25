@@ -188,7 +188,7 @@ public class TransactionsTable {
         ArrayList<Transaction> ret = new ArrayList<Transaction>();
         Transaction tmp = new Transaction();
         ResultSet trs;
-
+        Statement stmt2 = con.createStatement();
 
         do {
 
