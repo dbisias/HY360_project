@@ -1,9 +1,7 @@
 package Database.Tables;
 
 import Database.Connection.DB_Connection;
-import Database.mainClasses.Account;
 import Database.mainClasses.Transaction;
-import com.google.gson.Gson;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -135,12 +133,61 @@ public class TransactionsTable {
         rs = stmt.executeQuery("SELECT (mer_acc_id, amount, type, date) FROM "
             + "transactions WHERE cli_acc_id = " + cli_id);
 
-        if ( !rs.next() )
+        if ( !rs.next() ) {
+
+            stmt.close();
+            con.close();
+
             return null;
+        }
 
         ArrayList<Transaction> ret = new ArrayList<Transaction>();
         Transaction tmp = new Transaction();
         ResultSet trs;
+
+
+        do {
+
+            trs = stmt.executeQuery("SELECT name FROM accounts WHERE "
+                + "account_id = " + rs.getInt("mer_acc_id"));
+
+            trs.next();
+            tmp.setMer_name(trs.getString(0));
+            tmp.setAmount(rs.getDouble("amount"));
+            tmp.setType(rs.getString("type"));
+            tmp.setDate(rs.getDate("date"));
+
+            ret.add(tmp);
+
+        } while ( rs.next() );
+
+        trs.close();
+        stmt.close();
+        con.close();
+
+        return ret;
+    }
+
+    public ArrayList<Transaction> getTrans(int cli_id, String type) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT merc_acc_id, amount, type, date FROM "
+            + "transactions WHERE cli_acc_id = " + cli_id + " AND "
+            + "type = '" + type + "'");
+
+        if ( !rs.next() ) {
+
+            stmt.close();
+            con.close();
+
+            return null;
+        }
+
+        ArrayList<Transaction> ret = new ArrayList<Transaction>();
+        Transaction tmp = new Transaction();
+        ResultSet trs;
+
 
         do {
 
