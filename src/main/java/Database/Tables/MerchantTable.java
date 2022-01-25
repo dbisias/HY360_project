@@ -151,6 +151,9 @@ public class MerchantTable implements DBTable {
         stmt.executeUpdate("UPDATE merchants SET amount_due = '"
             + "amount_due - " + amount + "'");
 
+        stmt.executeUpdate("UPDATE merchants SET remaining_ammount = "
+            + "remaining_amount - " + amount);
+
         stmt.close();
         con.close();
     }
@@ -199,7 +202,11 @@ public class MerchantTable implements DBTable {
 
     public Merchant getBest() throws SQLException, ClassNotFoundException {
 
-        //
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT MAX(");
+
+        return null;
     }
 
     @Override

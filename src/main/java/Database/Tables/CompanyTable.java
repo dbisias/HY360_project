@@ -127,6 +127,9 @@ public class CompanyTable implements DBTable {
         stmt.executeUpdate("UPDATE companies SET amount_due = '"
             + "amount_due - " + amount + "'");
 
+        stmt.executeUpdate("UPDATE companies SET remaining_ammount = "
+            + "remaining_amount - " + amount);
+
         stmt.close();
         con.close();
     }

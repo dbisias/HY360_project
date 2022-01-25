@@ -151,6 +151,9 @@ public class IndividualTable implements DBTable {
         stmt.executeUpdate("UPDATE individuals SET amount_due = '"
             + "amount_due - " + amount + "'");
 
+        stmt.executeUpdate("UPDATE individuals SET remaining_ammount = "
+            + "remaining_amount - " + amount);
+
         con.close();
         stmt.close();
     }
