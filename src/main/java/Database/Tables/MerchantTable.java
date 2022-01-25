@@ -149,6 +149,7 @@ public class MerchantTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
+        Statement stmt2 = con.createStatement();
         rs = stmt.executeQuery("SELECT * FROM merchants_view WHERE "
             + "profit = (SELECT MAX(profit) FROM merchants_view) LIMIT 1");
         
@@ -160,13 +161,16 @@ public class MerchantTable {
             return null;
         }
 
-        stmt.executeUpdate("UPDATE merchants SET commission = "
+        stmt2.executeUpdate("UPDATE merchants SET commission = "
             + " 0.95 * commission WHERE account_id = " + rs.getInt("account_id"));
 
+        Merchant merchant = gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class);
+
         stmt.close();
+        stmt2.close();
         con.close();
 
-        return gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class);
+        return merchant;
     }
 
     public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {

@@ -24,61 +24,55 @@
     <script src="script.js"></script>
 </head>
 <body>
-    <div id="fb-root"></div>
-    <!--	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/el_GR/sdk.js#xfbml=1&version=v12.0" nonce="BaStU0Ys"></script>-->
+<div id="fb-root"></div>
+<!--	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/el_GR/sdk.js#xfbml=1&version=v12.0" nonce="BaStU0Ys"></script>-->
 
-    <header id="top_header">
-        <div id="header_logo">
-            <a href=""><img id="site_logo" src="../images/CCC-BPC.png"></a>
-        </div>
-        <div id="header_text">
-            <h2>Credit Card Company</h2>
-            <h7>Powered by: B1S, PAP, CHIOTIS</h7>
-        </div>
-
-        <div id="usercontrols">
-            <nav id="loginnav" class="navbar navbar-expand-lg navbar-light bg-light">
-                <ul class="navbar-nav">
-                    <li id="logoutbtn" class="nav-item">
-                        <a class="nav-link" onclick="logout();">Logout </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div id="usergaf">
-            <h6 id="gaf"></h6>
-            <h6 id="xrwstoumenagaf"></h6>
-        </div>
-
-    </header>
-    <nav id="cp_navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-        <ul class="navbar-nav">
-            <li id="returnbtn" class="nav-item">
-                <a class="nav-link" onclick="loadtransactions();">Transactions </a>
-            </li>
-            <li id="buybtn" class="nav-item">
-                <a class="nav-link" onclick="loadbuy();">Buy </a>
-            </li>
-            <li id="paybtn" class="nav-item">
-                <a class="nav-link" onclick="loadpay();">Pay Debt </a>
-            </li>
-            <li id="accountbtn" class="nav-item">
-                <a class="nav-link" onclick="loadaccount();">Account </a>
-            </li>
-        </ul>
-    </nav>
-    <div>
-        <div id="appwindow">
-
-        </div>
+<header id="top_header">
+    <div id="header_logo">
+        <a href=""><img id="site_logo" src="../images/CCC-BPC.png"></a>
     </div>
-    <footer>
-        <div id="footer_form">
-            <h6>Subscribe to Papastampedia newsletter:</h6>
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" placeholder="example@mail.com">
-                <button id="newsletter_btn" class="btn btn-outline-success my-2 my-sm-0">Subscribe</button>
-            </form>
-        </div>
-    </footer>
+    <div id="header_text">
+        <h2>Credit Card Company</h2>
+        <h7>Powered by: B1S, PAP, CHIOTIS</h7>
+    </div>
+
+    <div id="usercontrols">
+        <nav id="loginnav" class="navbar navbar-expand-lg navbar-light bg-light">
+            <ul class="navbar-nav">
+                <li id="logoutbtn" class="nav-item">
+                    <a class="nav-link" onclick="logout();">Logout </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div id="usergaf">
+        <h6 id="gaf"></h6>
+        <h6 id="xrwstoumenagaf"></h6>
+    </div>
+
+</header>
+<nav id="cp_navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="navbar-nav">
+        <li id="returnbtn" class="nav-item">
+            <a class="nav-link" onclick="loadtransactions();">Transactions </a>
+        </li>
+        <li id="paybtn" class="nav-item">
+            <a class="nav-link" onclick="loadpay();">Pay Debt </a>
+        </li>
+    </ul>
+</nav>
+<div>
+    <div id="appwindow">
+
+    </div>
+</div>
+<footer>
+    <div id="footer_form">
+        <h6>Subscribe to Papastampedia newsletter:</h6>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" placeholder="example@mail.com">
+            <button id="newsletter_btn" class="btn btn-outline-success my-2 my-sm-0">Subscribe</button>
+        </form>
+    </div>
+</footer>
 </body>

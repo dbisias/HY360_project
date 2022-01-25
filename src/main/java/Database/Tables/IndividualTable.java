@@ -129,6 +129,7 @@ public class IndividualTable {
             return null;
 
         ArrayList<Individual> ret = new ArrayList<Individual>();
+        ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Individual.class));
 
         while ( rs.next() )
             ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Individual.class));
@@ -150,6 +151,7 @@ public class IndividualTable {
             return null;
 
         ArrayList<Individual> ret = new ArrayList<Individual>();
+        ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Individual.class));
 
         while ( rs.next() )
             ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Individual.class));

@@ -64,8 +64,79 @@
         </ul>
     </nav>
     <div>
-        <div id="appwindow">
+        <script>
+            function loadbestmerchant() {
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    if(xhr.readyState===4 && xhr.status===200){
+                        var merchant= JSON.parse(xhr.responseText)
+                        $("#bestmerchant").html("The best merchant of CCC is: "+merchant["name"])
+                    }
+                }
 
+
+                xhr.open('GET', '/HY360_Project_war_exploded/AccountAPI?type=merchant');
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send();
+            }
+
+            function loadbestuser() {
+
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    if(xhr.readyState===4 && xhr.status===200){
+                        $("#bestuser").html("The best users of CCC are: ")
+
+                        var individuals = JSON.parse(xhr.responseText)["individual"];
+
+                        for(ind in individuals){
+                            var indi = JSON.parse(individuals[ind])
+                            $("#bestuser").append(indi["name"]+", ")
+
+                        }
+                    }
+                }
+
+
+                xhr.open('GET', '/HY360_Project_war_exploded/AccountAPI?type=good');
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send();
+            }
+
+            function loadworstuser() {
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    if(xhr.readyState===4 && xhr.status===200){
+                        $("#worstuser").html("The worst users of CCC are: ")
+
+                        var individuals = JSON.parse(xhr.responseText)["individual"];
+
+                        for(ind in individuals){
+                            var indi = JSON.parse(individuals[ind])
+                            $("#worstuser").append(indi["name"]+", ")
+
+                        }
+                    }
+                }
+
+
+                xhr.open('GET', '/HY360_Project_war_exploded/AccountAPI?type=bad');
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send();
+            }
+
+            $(document).ready(function () {
+                loadbestmerchant();
+                loadbestuser();
+                loadworstuser();
+            })
+        </script>
+        <div id="appwindow">
+            <div id="bestmerchant"></div>
+            <br>
+            <div id="bestuser"></div>
+            <br>
+            <div id="worstuser"></div>
         </div>
     </div>
     <footer>

@@ -128,7 +128,7 @@ public class CompanyTable {
             + "amount_due - " + amount + " WHERE account_id = '"
             + cli_id + "'");
 
-        stmt.executeUpdate("UPDATE companies SET remaining_ammount = "
+        stmt.executeUpdate("UPDATE companies SET remaining_amount = "
             + "remaining_amount - " + amount + " WHERE account_id = '"
             + cli_id + "'");
 
