@@ -160,6 +160,9 @@ public class CompanyTable implements DBTable {
         stmt.executeUpdate("DELETE FROM companies WHERE accound_id = '"
             + acc_id + "'");
 
+        stmt.executeUpdate("DELETE FROM accounts WHERE accound_id = '"
+            + acc_id + "'");
+
         stmt.close();
         con.close();
     }
