@@ -1,6 +1,8 @@
 <script>
     function paydebt(event) {
         event.preventDefault();
+        var data={}
+        var inputamount = $("#amouninput").val();
 
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
@@ -11,9 +13,14 @@
             }
         }
 
+        if(inputamount>userdata["amount_due"]){inputamount=userdata["amount_due"];}
+        data["amount"]=inputamount;
+        data["username"]=userdata["username"];
+        data["password"]=userdata["password"];
+        data["as_company"]
         xhr.open('PUT', '/HY360_Project_war_exploded/TransactionsAPI');
         xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send();
+        xhr.send(data);
     }
 
     function updateinfo(){
@@ -32,13 +39,17 @@
     }
 
     $(document).ready(function(){
-       updateinfo();
+        if(userdata["amount_due"]>userdata["remaining_amount"]){$("#amouninput").val(userdata["remaining_amount"]);}
+        else{$("#amouninput").val(userdata["amount_due"]);}
+        updateinfo();
+
     });
 </script>
 <div>
     <header><h4 id="debttext"></h4></header>
     <br>
-    <header><h4 id="balancetext"></h4></header>
+    <header id="balancetext"></header>
     <br>
+    <input type="text" name="amount" id="amouninput">
     <input id="paybtn" type="button" value="Pay your debt!" onclick="paydebt(event);">
 </div>

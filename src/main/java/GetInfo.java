@@ -20,7 +20,7 @@ public class GetInfo extends HttpServlet {
     CompanyTable ct = new CompanyTable();
     MerchantTable mt = new MerchantTable();
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGET(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if(session.getAttribute("logged_in")==null){
             helper.returnfailedlogin(response);
@@ -32,8 +32,7 @@ public class GetInfo extends HttpServlet {
 
         try {
             if(it.findAccount(loggedin_id, password)!=null) {
-                Individual ind = it.findAccount(loggedin_id, password);
-                jsonreply = new JSONObject(it.accountToJSON(ind));
+                jsonreply = new JSONObject(it.accountToJSON(it.findAccount(loggedin_id, password)));
                 jsonreply.put("usertype","individual");
                 helper.createResponse(response, 200, jsonreply.toString());
                 return;
