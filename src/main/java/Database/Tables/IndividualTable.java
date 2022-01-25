@@ -66,13 +66,12 @@ public class IndividualTable implements DBTable {
         stmt.close();
     }
 
-    public Individual findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+    public Individual findAccount(int cli_id) throws SQLException, ClassNotFoundException {
 
         Individual user;
         String json;
 
-        String query   = "SELECT * FROM individuals_view WHERE username = '" +
-        username + "' AND password = '" + password +"'";
+        String query   = "SELECT * FROM individuals_view WHERE accound_id = '" + cli_id + "'";
 
 
         con = DB_Connection.getConnection();

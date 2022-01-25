@@ -1,4 +1,4 @@
-package main.java.Database.Tables;
+package Database.Tables;
 
 import com.google.gson.Gson;
 
@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class DBTable<T> {
+public abstract class ADBTable<T> {
     
     private Gson gson;
     private ResultSet rs;
@@ -15,7 +15,7 @@ public abstract class DBTable<T> {
     private Statement stmt;
 
 
-    public DBTable() {
+    public ADBTable() {
 
         gson = new Gson();
     }

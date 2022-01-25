@@ -58,17 +58,15 @@ public class CompanyTable implements DBTable {
         con.close();
     }
 
-    public Company findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+    public Company findAccount(int cli_id) throws SQLException, ClassNotFoundException {
 
         ResultSet rs;
         Company user;
 
-        Connection con = DB_Connection.getConnection();
-        Statement stmt = con.createStatement();
-        String query   = "SELECT * FROM companies_view WHERE username = '" +
-        username + "' AND password = '" + password +"'";
-
-        rs = stmt.executeQuery(query);
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
+            + "accound_id = '" + cli_id + "'");
 
         if( !rs.next() )
             return null;

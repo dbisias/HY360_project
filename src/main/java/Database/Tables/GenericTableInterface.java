@@ -14,5 +14,5 @@ interface DBTable {
     public void delAccount(int acc_id) throws SQLException, ClassNotFoundException;
     public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException;
 //    public String accountToJSON(Account account);
-    public Account findAccount(String username, String password) throws SQLException, ClassNotFoundException;
+    public Account findAccount(int cli_id) throws SQLException, ClassNotFoundException;
 }
