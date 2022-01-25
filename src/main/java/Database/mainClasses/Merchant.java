@@ -1,7 +1,7 @@
 package Database.mainClasses;
 
 public class Merchant extends Account{
-    protected float comission;
+    protected float commission;
     protected float profit;
     protected float amount_due;
 
@@ -9,18 +9,18 @@ public class Merchant extends Account{
         super(name, username, password);
     }
 
-    public void initfields(int comission){
-        this.comission = comission;
+    public void initfields(int commission){
+        this.commission = commission;
         profit = 0;
         amount_due = 0;
     }
 
-    public float getComission() {
-        return comission;
+    public float getCommission() {
+        return commission;
     }
 
-    public void setComission(float comission) {
-        this.comission = comission;
+    public void setCommission(float commission) {
+        this.commission = commission;
     }
 
     public float getProfit() {

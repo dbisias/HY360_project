@@ -22,19 +22,16 @@ public class MerchantTable implements DBTable {
 
 
     public MerchantTable() {
-
         gson = new Gson();
     }
 
     public String accountToJSON(Merchant merchant) {
-
         return gson.toJson(merchant);
     }
 
     public void addAccountFromJSON(String json) throws SQLException, ClassNotFoundException {
-
         Merchant merchant = gson.fromJson(json, Merchant.class);
-        merchant.initfields(0);
+        merchant.initfields(10);
         addNewAccount(merchant);
     }
 
@@ -43,10 +40,10 @@ public class MerchantTable implements DBTable {
         int account_id = at.addNewAccount((Account) merchant);
 
         String insertQuery = "INSERT INTO "
-                + " merchants (account_id,comission,profit,amount_due)"
+                + " merchants (account_id,commission,profit,amount_due)"
                 + " VALUES ("
                 + "'" + account_id + "',"
-                + "'" + merchant.getComission() + "',"
+                + "'" + merchant.getCommission() + "',"
                 + "'" + merchant.getProfit() + "',"
                 + "'" + merchant.getAmount_due() + "'"
                 + ")";
@@ -63,7 +60,7 @@ public class MerchantTable implements DBTable {
 
         String sql = "CREATE TABLE merchants "
                 + "(account_id INTEGER not NULL AUTO_INCREMENT unique, "
-                + "comission DOUBLE, "
+                + "commission DOUBLE, "
                 + "profit DOUBLE, "
                 + "amount_due DOUBLE, "
                 + "FOREIGN KEY (account_id) REFERENCES accounts(account_id))";
@@ -77,9 +74,10 @@ public class MerchantTable implements DBTable {
     }
 
     @Override
-    public int buy(int cli_id, double amount) throws ClassNotFoundException, SQLException {
+    public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException {
         return 0;
     }
+
 
     public Merchant findAccount(String username, String password) throws SQLException, ClassNotFoundException {
         

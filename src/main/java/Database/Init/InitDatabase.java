@@ -33,7 +33,7 @@ public class InitDatabase {
         Statement stmt = con.createStatement();
         stmt.execute("CREATE VIEW individuals_view AS SELECT accounts.account_id,accounts.name,accounts.username,accounts.password,individuals.billing_limit,individuals.expiration_date,individuals.amount_due,individuals.remaining_amount FROM accounts JOIN individuals ON accounts.account_id=individuals.account_id");
         stmt.execute("CREATE VIEW companies_view AS SELECT accounts.account_id,accounts.name,accounts.username,accounts.password,companies.billing_limit,companies.expiration_date,companies.amount_due,companies.remaining_amount FROM accounts JOIN companies ON accounts.account_id=companies.account_id");
-        stmt.execute("CREATE VIEW merchants_view AS SELECT accounts.account_id,accounts.name,accounts.username,accounts.password,merchants.comission,merchants.profit,merchants.amount_due FROM accounts JOIN merchants ON accounts.account_id=merchants.account_id");
+        stmt.execute("CREATE VIEW merchants_view AS SELECT accounts.account_id,accounts.name,accounts.username,accounts.password,merchants.commission,merchants.profit,merchants.amount_due FROM accounts JOIN merchants ON accounts.account_id=merchants.account_id");
         stmt.close();
         con.close();
     }
