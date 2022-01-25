@@ -33,7 +33,7 @@ public class GetInfo extends HttpServlet {
 
         try {
             if(company_id != null) {
-                jsonreply = new JSONObject((ct.accountToJSON(ct.findAccount(company_id))));
+//                jsonreply = new JSONObject((ct.accountToJSON(ct.findAccount(company_id))));
                 jsonreply.put("usertype", "company");
                 helper.createResponse(response, 200, jsonreply.toString());
             }
