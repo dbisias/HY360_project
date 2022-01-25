@@ -142,15 +142,17 @@ public class TransactionsTable {
         }
 
         ArrayList<Transaction> ret = new ArrayList<Transaction>();
-        Transaction tmp = new Transaction();
-        ResultSet trs;
         Statement stmt2 = con.createStatement();
+        Transaction tmp;
+        ResultSet trs;
 
 
         do {
 
-            trs = stmt.executeQuery("SELECT name FROM accounts WHERE "
+            trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
                 + "account_id = " + rs.getInt("mer_acc_id"));
+
+            tmp = new Transaction();
 
             trs.next();
             tmp.setMer_name(trs.getString(1));
@@ -162,7 +164,6 @@ public class TransactionsTable {
 
         } while ( rs.next() );
 
-        trs.close();
         stmt.close();
         con.close();
 
@@ -186,14 +187,17 @@ public class TransactionsTable {
         }
 
         ArrayList<Transaction> ret = new ArrayList<Transaction>();
-        Transaction tmp = new Transaction();
-        ResultSet trs;
         Statement stmt2 = con.createStatement();
+        Transaction tmp;
+        ResultSet trs;
+
 
         do {
 
             trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
                 + "account_id = " + rs.getInt("mer_acc_id"));
+
+            tmp = new Transaction();
 
             trs.next();
             tmp.setMer_name(trs.getString(1));
@@ -228,14 +232,17 @@ public class TransactionsTable {
         }
 
         ArrayList<Transaction> ret = new ArrayList<Transaction>();
-        Transaction tmp = new Transaction();
+        Statement stmt2 = con.createStatement();
+        Transaction tmp;
         ResultSet trs;
 
 
         do {
 
-            trs = stmt.executeQuery("SELECT name FROM accounts WHERE "
+            trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
                 + "account_id = " + rs.getInt("mer_acc_id"));
+
+            tmp = new Transaction();
 
             trs.next();
             tmp.setMer_name(trs.getString(1));
