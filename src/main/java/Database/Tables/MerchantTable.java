@@ -22,6 +22,7 @@ public class MerchantTable implements DBTable {
 
 
     public MerchantTable() {
+
         gson = new Gson();
     }
 
@@ -88,12 +89,12 @@ public class MerchantTable implements DBTable {
     }
 
 
-    public Merchant findAccount(String username, String password) throws SQLException, ClassNotFoundException {
+    public Merchant findAccount(int cli_id) throws SQLException, ClassNotFoundException {
         
         Merchant user;
 
-        String query   = "SELECT * FROM merchants_view WHERE username = '" +
-        username + "' AND password = '" + password +"'";
+        String query   = "SELECT * FROM merchants_view WHERE "
+            + "account_id = '" + cli_id + "'";
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
