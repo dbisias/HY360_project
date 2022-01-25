@@ -94,7 +94,7 @@ public class IndividualTable implements DBTable {
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
         rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
-            + "username = '" + username + "'AND password = '" + password + "'");
+            + "username = '" + username + "' AND password = '" + password + "'");
 
         if( !rs.next() )
             return null;
