@@ -3,10 +3,11 @@ package Database.mainClasses;
 import java.util.Date;
 
 public class Transaction {
-    double amount;
-    Date date;
-    String mer_name;
-    String type;
+    
+    private double amount;
+    private Date date;
+    private String mer_name;
+    private String type;
 
     public double getAmount() {
         return amount;
