@@ -126,6 +126,9 @@ public class CompanyTable implements DBTable {
         stmt = con.createStatement();
         stmt.executeUpdate("UPDATE companies SET amount_due = '"
             + "amount_due - " + amount + "'");
+
+        stmt.close();
+        con.close();
     }
 
     public Company login(String username, String password) throws SQLException, ClassNotFoundException {
@@ -135,8 +138,16 @@ public class CompanyTable implements DBTable {
         rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
             + "username = '" + username + "'AND password = '" + password + "'");
 
-        if( !rs.next() )
+        if( !rs.next() ) {
+
+            stmt.close();
+            con.close();
+
             return null;
+        }
+
+        stmt.close();
+        con.close();
 
         return gson.fromJson(DB_Connection.getResultsToJSON(rs), Company.class);
     }
@@ -148,6 +159,9 @@ public class CompanyTable implements DBTable {
         stmt = con.createStatement();
         stmt.executeUpdate("DELETE FROM companies WHERE accound_id = '"
             + acc_id + "'");
+
+        stmt.close();
+        con.close();
     }
 
     @Override

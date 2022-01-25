@@ -71,7 +71,7 @@ public class IndividualTable implements DBTable {
         Individual user;
         String json;
 
-        String query   = "SELECT * FROM individuals_view WHERE accound_id = '" + cli_id + "'";
+        String query = "SELECT * FROM individuals_view WHERE accound_id = '" + cli_id + "'";
 
 
         con = DB_Connection.getConnection();
@@ -150,6 +150,9 @@ public class IndividualTable implements DBTable {
         stmt = con.createStatement();
         stmt.executeUpdate("UPDATE individuals SET amount_due = '"
             + "amount_due - " + amount + "'");
+
+        con.close();
+        stmt.close();
     }
 
     @Override
@@ -159,6 +162,9 @@ public class IndividualTable implements DBTable {
         stmt = con.createStatement();
         stmt.executeUpdate("DELETE FROM individuals WHERE accound_id = '"
             + acc_id + "'");
+
+        stmt.close();
+        con.close();
     }
 
     @Override
