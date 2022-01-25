@@ -9,8 +9,11 @@
         xhr.onload = function () {
             if(xhr.readyState === 4 && xhr.status === 200){
                 checkUserLoggedIn("individual");
+                $("#ajaxreply").html(xhr.responseText);
+                $("#ajaxreply").css("color","green");
             }else{
-
+                $("#ajaxreply").html(xhr.responseText);
+                $("#ajaxreply").css("color","red");
             }
         }
 
@@ -85,3 +88,4 @@
     <input type="text" name="amount" id="amouninput">
     <input id="paybtn" type="button" value="Pay your debt!" onclick="paydebt(event);">
 </div>
+<div id="ajaxreply"></div>
