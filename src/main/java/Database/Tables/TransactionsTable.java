@@ -132,7 +132,7 @@ public class TransactionsTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT (mer_acc_id, amount, type, date) FROM "
+        rs = stmt.executeQuery("SELECT mer_acc_id, amount, type, date FROM "
             + "transactions WHERE cli_acc_id = " + cli_id);
 
         if ( !rs.next() )
@@ -141,14 +141,15 @@ public class TransactionsTable {
         ArrayList<Transaction> ret = new ArrayList<Transaction>();
         Transaction tmp = new Transaction();
         ResultSet trs;
+        Statement stmt2 = con.createStatement();
 
         do {
 
-            trs = stmt.executeQuery("SELECT name FROM accounts WHERE "
+            trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
                 + "account_id = " + rs.getInt("mer_acc_id"));
 
             trs.next();
-            tmp.setMer_name(trs.getString(0));
+            tmp.setMer_name(trs.getString(1));
             tmp.setAmount(rs.getDouble("amount"));
             tmp.setType(rs.getString("type"));
             tmp.setDate(rs.getDate("date"));
@@ -157,7 +158,6 @@ public class TransactionsTable {
 
         } while ( rs.next() );
 
-        trs.close();
         stmt.close();
         con.close();
 

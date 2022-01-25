@@ -22,7 +22,7 @@
             }
         }
 
-        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI');
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?user_id='+userdata["account_id"]);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send();
     }
