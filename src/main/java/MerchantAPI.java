@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class MerchantAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        JSONObject jsonOut = new JSONObject();
+        JSONObject jsonOut;
         ServletHelper helper = new ServletHelper();
         MerchantTable mTable = new MerchantTable();
         try {

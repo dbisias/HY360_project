@@ -46,7 +46,7 @@ public class AccountAPI extends HttpServlet {
                 }
                 helper.createResponse(response, 200, jsonOut.toString());
             }
-            else if(type.equals("merchants")) {
+            else if(type.equals("merchant")) {
                 MerchantTable mTable = new MerchantTable();
                 Merchant merchant;
                 merchant = mTable.getBest();

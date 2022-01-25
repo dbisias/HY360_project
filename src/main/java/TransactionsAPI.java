@@ -63,7 +63,7 @@ public class TransactionsAPI extends HttpServlet {
             }
         }
         catch(Exception ex) {
-            helper.createResponse(response, 403, ex.getMessage());
+            helper.createResponse(response, 403, "");
         }
     }
 
