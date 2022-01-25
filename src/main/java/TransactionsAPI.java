@@ -29,30 +29,41 @@ public class TransactionsAPI extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JSONObject jsonOut = new JSONObject();
         Gson gson = new Gson();
-        Date start_date;
-        Date end_date;
+        Date start_date = null;
+        Date end_date = null;
         String type = (String) request.getParameter("type");
         TransactionsTable tTable = new TransactionsTable();
         int user_id = Integer.parseInt(request.getParameter("user_id"));
         ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
-        if(request.getParameter("start") != null) {
-            start_date = Date.valueOf(request.getParameter("start"));
-            end_date = Date.valueOf(request.getParameter("end"));
-        }
-        else if( type!= null ) {
+        try{
+            if(request.getParameter("start") != null) {
+                start_date = Date.valueOf(request.getParameter("start"));
+                end_date = Date.valueOf(request.getParameter("end"));
 
-        }
-        else {
-            try {
-                transactions = tTable.getTrans(user_id);
-                for(int i = 0; i < transactions.size(); i++) {
-                   jsonOut.append("transaction",gson.toJson(transactions.get(i), Transaction.class));
+                transactions = tTable.getTrans(user_id, start_date, end_date);
+                for(Transaction transaction : transactions) {
+                    jsonOut.append("transaction", gson.toJson(transaction, Transaction.class));
                 }
                 helper.createResponse(response, 200, jsonOut.toString());
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
             }
+            else if(type != null) {
+                transactions = tTable.getTrans(user_id, type);
+                for (Transaction transaction : transactions) {
+                    jsonOut.append("transaction", gson.toJson(transaction, Transaction.class));
+                }
+                helper.createResponse(response, 200, jsonOut.toString());
+            }
+            else {
+                transactions = tTable.getTrans(user_id);
+                for (Transaction transaction : transactions) {
+                    jsonOut.append("transaction", gson.toJson(transaction, Transaction.class));
+                }
+                helper.createResponse(response, 200, jsonOut.toString());
+            }
+        }
+        catch(Exception ex) {
+            helper.createResponse(response, 403, ex.getMessage());
         }
     }
 
