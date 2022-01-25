@@ -60,7 +60,6 @@ public class CompanyTable implements DBTable {
 
     public Company findAccount(int cli_id) throws SQLException, ClassNotFoundException {
 
-        ResultSet rs;
         Company user;
 
         con = DB_Connection.getConnection();
@@ -106,6 +105,19 @@ public class CompanyTable implements DBTable {
         stmt = con.createStatement();
         stmt.executeUpdate("UPDATE companies SET amount_due = '"
             + "amount_due - " + amount + "'");
+    }
+
+    public Company login(String username, String password) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
+            + "username = '" + username + "'AND password = '" + password + "'");
+
+        if( !rs.next() )
+            return null;
+
+        return gson.fromJson(DB_Connection.getResultsToJSON(rs), Company.class);
     }
 
     @Override

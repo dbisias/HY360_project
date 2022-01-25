@@ -2,7 +2,7 @@ package Database.Tables;
 
 import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
-import Database.mainClasses.Company;
+import Database.mainClasses.Merchant;
 import Database.mainClasses.Merchant;
 import Exceptions.UserNotFoundException;
 import com.google.gson.Gson;
@@ -88,7 +88,6 @@ public class MerchantTable implements DBTable {
             + acc_id + "'");
     }
 
-
     public Merchant findAccount(int cli_id) throws SQLException, ClassNotFoundException {
         
         Merchant user;
@@ -108,6 +107,19 @@ public class MerchantTable implements DBTable {
         con.close();
 
         return user;
+    }
+
+    public Merchant login(String username, String password) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
+            + "username = '" + username + "'AND password = '" + password + "'");
+
+        if( !rs.next() )
+            return null;
+
+        return gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class);
     }
 
     public JSONObject getAll() throws SQLException, ClassNotFoundException {
