@@ -12,5 +12,5 @@ function loadpay(){
 
 $(document).ready(function(){
     loadtransactions();
-    checkUserLoggedIn("company");
+    updateUserInfo("company");
 })

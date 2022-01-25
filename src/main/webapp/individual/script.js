@@ -16,5 +16,5 @@ function loadaccount(){
 
 $(document).ready(function(){
     loadtransactions();
-    checkUserLoggedIn("individual");
+    updateUserInfo("individual");
 })
