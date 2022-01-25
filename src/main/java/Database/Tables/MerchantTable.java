@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class MerchantTable {
 
@@ -159,17 +158,14 @@ public class MerchantTable {
             return null;
         }
 
+        stmt.executeUpdate("UPDATE merchants SET commission = "
+            + " 0.95 * commission WHERE account_id = " + rs.getInt("account_id"));
+
         stmt.close();
         con.close();
 
         return gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class);
     }
-
-
-    public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException {
-        return 0;
-    }
-
 
     public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {
 
@@ -184,6 +180,5 @@ public class MerchantTable {
         stmt.close();
         con.close();
     }
-
 
 }

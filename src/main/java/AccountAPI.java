@@ -5,6 +5,7 @@ import Database.mainClasses.Company;
 import Database.mainClasses.Individual;
 import Database.mainClasses.Merchant;
 import ServletHelper.ServletHelper;
+import com.google.gson.Gson;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -13,6 +14,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Objects;
 
 @WebServlet(name = "AccountAPI", value = "/AccountAPI")
@@ -20,7 +23,40 @@ public class AccountAPI extends HttpServlet {
     ServletHelper helper = new ServletHelper();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String type = request.getParameter("type");
+        IndividualTable iTable = new IndividualTable();
+        ArrayList<Individual> iResults;
+        JSONObject jsonOut = new JSONObject();
+        Gson gson = new Gson();
 
+        try {
+            if (type.equals("good")) {
+                iResults = iTable.getGoodUsers();
+
+                for(Individual individual : iResults) {
+                    jsonOut.append("individual", gson.toJson(individual, Individual.class));
+                }
+                helper.createResponse(response, 200, jsonOut.toString());
+            }
+            else if(type.equals("bad")) {
+                iResults = iTable.getBadUsers();
+
+                for(Individual individual : iResults) {
+                    jsonOut.append("individual", gson.toJson(individual, Individual.class));
+                }
+                helper.createResponse(response, 200, jsonOut.toString());
+            }
+            else if(type.equals("merchants")) {
+                MerchantTable mTable = new MerchantTable();
+                Merchant merchant;
+                merchant = mTable.getBest();
+
+                helper.createResponse(response, 200, gson.toJson(merchant, Merchant.class));
+            }
+        }
+        catch(Exception ex) {
+            helper.createResponse(response, 403, ex.getMessage());
+        }
     }
 
     @Override
