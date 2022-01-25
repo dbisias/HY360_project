@@ -124,11 +124,13 @@ public class CompanyTable implements DBTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        stmt.executeUpdate("UPDATE companies SET amount_due = '"
-            + "amount_due - " + amount + "'");
+        stmt.executeUpdate("UPDATE companies SET amount_due = "
+            + "amount_due - " + amount + " WHERE account_id = '"
+            + cli_id + "'");
 
         stmt.executeUpdate("UPDATE companies SET remaining_ammount = "
-            + "remaining_amount - " + amount);
+            + "remaining_amount - " + amount + " WHERE account_id = '"
+            + cli_id + "'");
 
         stmt.close();
         con.close();
@@ -233,9 +235,8 @@ public class CompanyTable implements DBTable {
 
         if ( ret != -1 )
             stmt.executeUpdate("UPDATE merchants SET profit = "
-                + "profit + " + amount + ", amount_due = amount_due"
-                + " + commission * " + amount + " WHERE "
-                + "account_id = '" + mer_id + "'");
+                + "profit + (commission / 100) * " + amount
+                + " WHERE account_id = '" + mer_id + "'");
 
         stmt.close();
         con.close();

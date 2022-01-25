@@ -144,69 +144,25 @@ public class MerchantTable implements DBTable {
         return ret;
     }
 
-    public void payDebt(int cli_id, double amount) throws SQLException, ClassNotFoundException {
-
-        con = DB_Connection.getConnection();
-        stmt = con.createStatement();
-        stmt.executeUpdate("UPDATE merchants SET amount_due = '"
-            + "amount_due - " + amount + "'");
-
-        stmt.executeUpdate("UPDATE merchants SET remaining_ammount = "
-            + "remaining_amount - " + amount);
-
-        stmt.close();
-        con.close();
-    }
-
-    public ArrayList<Merchant> getGoodUsers() throws SQLException, ClassNotFoundException {
-
-        con = DB_Connection.getConnection();
-        stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT * FROM merchants_view WHERE "
-        + "amount_due = '0'");
-
-        if ( !rs.next() )
-            return null;
-
-        ArrayList<Merchant> ret = new ArrayList<Merchant>();
-
-        while ( rs.next() )
-            ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class));
-
-        stmt.close();
-        con.close();
-
-        return ret;
-    }
-
-    public ArrayList<Merchant> getBadUsers() throws SQLException, ClassNotFoundException {
-
-        con = DB_Connection.getConnection();
-        stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT * FROM merchants_view WHERE "
-        + "amount_due > '0' ORDER BY amount_due DESC");
-
-        if ( !rs.next() )
-            return null;
-
-        ArrayList<Merchant> ret = new ArrayList<Merchant>();
-
-        while ( rs.next() )
-            ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class));
-
-        stmt.close();
-        con.close();
-
-        return ret;
-    }
-
     public Merchant getBest() throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT MAX(");
+        rs = stmt.executeQuery("SELECT * FROM merchants_view WHERE "
+            + "profit = (SELECT MAX(profit) FROM merchants_view) LIMIT 1");
+        
+        if ( !rs.next() ) {
 
-        return null;
+            stmt.close();
+            con.close();
+
+            return null;
+        }
+
+        stmt.close();
+        con.close();
+
+        return gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class);
     }
 
     @Override
