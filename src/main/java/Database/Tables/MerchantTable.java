@@ -144,20 +144,6 @@ public class MerchantTable implements DBTable {
         return ret;
     }
 
-    public void payDebt(int cli_id, double amount) throws SQLException, ClassNotFoundException {
-
-        con = DB_Connection.getConnection();
-        stmt = con.createStatement();
-        stmt.executeUpdate("UPDATE merchants SET amount_due = '"
-            + "amount_due - " + amount + "'");
-
-        stmt.executeUpdate("UPDATE merchants SET remaining_ammount = "
-            + "remaining_amount - " + amount);
-
-        stmt.close();
-        con.close();
-    }
-
     public ArrayList<Merchant> getGoodUsers() throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
