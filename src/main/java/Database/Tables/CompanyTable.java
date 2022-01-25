@@ -157,7 +157,6 @@ public class CompanyTable {
         return gson.fromJson(DB_Connection.getResultsToJSON(rs), Company.class);
     }
 
-
     public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
@@ -172,13 +171,12 @@ public class CompanyTable {
         con.close();
     }
 
-
     public void createTable() throws SQLException, ClassNotFoundException {
 
         String sql = "CREATE TABLE companies "
                 + "(account_id INTEGER not NULL AUTO_INCREMENT unique, "
                 + "billing_limit DOUBLE, "
-                + "expiration_date DATE , "
+                + "expiration_date DATE, "
                 + "amount_due DOUBLE, "
                 + "remaining_amount DOUBLE, "
                 + "FOREIGN KEY (account_id) REFERENCES accounts(account_id))";
@@ -189,7 +187,6 @@ public class CompanyTable {
         stmt.close();
         con.close();
     }
-
 
     public int buy(int cli_id, int mer_id, double amount) throws SQLException, ClassNotFoundException {
 
