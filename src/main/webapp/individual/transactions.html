@@ -1,4 +1,8 @@
 <script>
+    function printtable(json){
+        console.log(json)
+    }
+
     function sorter(){
         var sort = $("#sortselect").val();
         if(sort==="none"){
@@ -14,8 +18,7 @@
         var xhr = new XMLHttpRequest();
         xhr.onload = function(){
             if(xhr.readyState===4 && xhr.status===200){
-                $("#ajaxreply").html(xhr.responseText)
-                $("#ajaxreply").css("color","green")
+                printtable(JSON.parse(xhr.responseText));
             } else {
                 $("#ajaxreply").html(xhr.responseText)
                 $("#ajaxreply").css("color","red")
@@ -32,15 +35,14 @@
         var xhr = new XMLHttpRequest();
         xhr.onload = function(){
             if(xhr.readyState===4 && xhr.status===200){
-                $("#ajaxreply").html(xhr.responseText)
-                $("#ajaxreply").css("color","green")
+                printtable(JSON.parse(xhr.responseText));
             } else {
                 $("#ajaxreply").html(xhr.responseText)
                 $("#ajaxreply").css("color","red")
             }
         }
 
-        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?type='+type);
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?user_id='+userdata["account_id"]+'&type='+type);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send();
     }
@@ -50,15 +52,14 @@
         var xhr = new XMLHttpRequest();
         xhr.onload = function(){
             if(xhr.readyState===4 && xhr.status===200){
-                $("#ajaxreply").html(xhr.responseText)
-                $("#ajaxreply").css("color","green")
+                printtable(JSON.parse(xhr.responseText));
             } else {
                 $("#ajaxreply").html(xhr.responseText)
                 $("#ajaxreply").css("color","red")
             }
         }
 
-        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?start='+start+"&end="+end);
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?user_id='+userdata["account_id"]+'&start='+start+"&end="+end);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send();
     }
