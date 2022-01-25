@@ -45,7 +45,7 @@ public class TransactionsAPI extends HttpServlet {
         try {
             if(company_id == 0) {
                 iTable = new IndividualTable();
-                type = iTable.buy(account_id, amount);
+                type = iTable.buy(account_id, merchant_id, amount);
                 if(type == -1) {
                     helper.createResponse(response, 403, "Your billing limit has been reached");
                     return;
@@ -58,7 +58,7 @@ public class TransactionsAPI extends HttpServlet {
             }
             else {
                 cTable = new CompanyTable();
-                type = cTable.buy(company_id, amount);
+                type = cTable.buy(company_id, merchant_id, amount);
                 if(type == -1) {
                     helper.createResponse(response, 403, "Your billing limit has been reached");
                     return;

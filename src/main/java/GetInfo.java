@@ -32,7 +32,8 @@ public class GetInfo extends HttpServlet {
 
         try {
             if(it.findAccount(loggedin_id, password)!=null) {
-                jsonreply = new JSONObject(it.accountToJSON(it.findAccount(loggedin_id, password)));
+                Individual ind = it.findAccount(loggedin_id, password);
+                jsonreply = new JSONObject(it.accountToJSON(ind));
                 jsonreply.put("usertype","individual");
                 helper.createResponse(response, 200, jsonreply.toString());
                 return;
