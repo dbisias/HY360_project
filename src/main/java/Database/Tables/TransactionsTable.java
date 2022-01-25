@@ -134,7 +134,7 @@ public class TransactionsTable {
             rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
                     + "transactions WHERE cli_acc_id = " + cli_id);
         }else{
-            rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
+            rs = stmt.executeQuery("SELECT tid, cli_acc_id, amount, type, date FROM "
                     + "transactions WHERE mer_acc_id = " + cli_id);
         }
 
@@ -153,9 +153,13 @@ public class TransactionsTable {
 
 
         do {
-
-            trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
-                + "account_id = " + rs.getInt("mer_acc_id"));
+            if(merchant==0) {
+                trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
+                        + "account_id = " + rs.getInt("mer_acc_id"));
+            }else{
+                trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
+                        + "account_id = " + rs.getInt("cli_acc_id"));
+            }
 
             tmp = new Transaction();
 
@@ -185,7 +189,7 @@ public class TransactionsTable {
                     + "transactions WHERE cli_acc_id = " + cli_id + " AND "
                     + "type = '" + type + "'");
         }else{
-            rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
+            rs = stmt.executeQuery("SELECT tid, cli_acc_id, amount, type, date FROM "
                     + "transactions WHERE mer_acc_id = " + cli_id + " AND "
                     + "type = '" + type + "'");
         }
@@ -207,8 +211,13 @@ public class TransactionsTable {
 
         do {
 
-            trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
-                + "account_id = " + rs.getInt("mer_acc_id"));
+            if(merchant==0) {
+                trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
+                        + "account_id = " + rs.getInt("mer_acc_id"));
+            }else{
+                trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
+                        + "account_id = " + rs.getInt("cli_acc_id"));
+            }
 
             tmp = new Transaction();
 
@@ -238,7 +247,7 @@ public class TransactionsTable {
                     + "transactions WHERE cli_acc_id = " + cli_id + " AND "
                     + "date >= '" + start + "' AND date <= '" + end + "'");
         }else{
-            rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
+            rs = stmt.executeQuery("SELECT tid, cli_acc_id, amount, type, date FROM "
                     + "transactions WHERE mer_acc_id = " + cli_id + " AND "
                     + "date >= '" + start + "' AND date <= '" + end + "'");
         }
@@ -259,8 +268,13 @@ public class TransactionsTable {
 
         do {
 
-            trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
-                + "account_id = " + rs.getInt("mer_acc_id"));
+            if(merchant==0) {
+                trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
+                        + "account_id = " + rs.getInt("mer_acc_id"));
+            }else{
+                trs = stmt2.executeQuery("SELECT name FROM accounts WHERE "
+                        + "account_id = " + rs.getInt("cli_acc_id"));
+            }
 
             tmp = new Transaction();
 

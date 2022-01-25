@@ -233,7 +233,7 @@ public class CompanyTable {
 
         if ( ret != -1 )
             stmt.executeUpdate("UPDATE merchants SET profit = "
-                + "profit + " + " ((q00 - commission) / 100) * " + amount
+                + "profit + " + " ((100 - commission) / 100) * " + amount
                 + " WHERE account_id = '" + mer_id + "'");
 
         stmt.close();
