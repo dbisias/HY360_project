@@ -56,14 +56,42 @@ public class InitDatabase {
     }
 
     public void addToDatabaseExamples() throws ClassNotFoundException {
-        String individual = "{\"account_id\":\"1\",\"name\":\"Christos Papastamos\",\"username\":\"papastam\",\"password\":\"123456\"}";
-        String company = "{\"account_id\":\"2\",\"name\":\"CCC\",\"username\":\"ccc\",\"password\":\"123456\"}";
-        String merchant = "{\"account_id\":\"3\",\"name\":\"Dimitris Bisias\",\"username\":\"b1s\",\"password\":\"123456\"}";
+        String company1 = "{\"name\":\"CCC\",\"username\":\"ccc\",\"password\":\"123456\"}";
+        String company2 = "{\"name\":\"Amita\",\"username\":\"amita\",\"password\":\"amita\"}";
+        String company3 = "{\"name\":\"RedBull\",\"username\":\"redbull\",\"password\":\"redbull\"}";
+        String company4 = "{\"name\":\"Black Diamond\",\"username\":\"bdiamond\",\"password\":\"bdiamond\"}";
+        String company5 = "{\"name\":\"Suzuki\",\"username\":\"suzuki\",\"password\":\"samurai\"}";
+
+        String individual1 = "{\"name\":\"Christos Papastamos\",\"username\":\"papastam\",\"password\":\"123456\", \"company_account_id\":1}";
+        String individual2 = "{\"name\":\"Dimitris Bisias\",\"username\":\"b1s_\",\"password\":\"654321\", \"company_account_id\":2}";;
+        String individual3 = "{\"name\":\"Orestis Chiotakis\",\"username\":\"chiotakos\",\"password\":\"456123\", \"company_account_id\":3}";;
+        String individual4 = "{\"name\":\"Kyriakos Fragkakos\",\"username\":\"magkas7\",\"password\":\"faih123\"}";;
+        String individual5 = "{\"name\":\"Nwntas Kartsonakis\",\"username\":\"moun10\",\"password\":\"tovou123\"}";;
+
+
+        String merchant1 = "{\"name\":\"Georgios Lamprinakis\",\"username\":\"modz123\",\"password\":\"ergo123\"}";
+        String merchant2 = "{\"name\":\"Antonis Dhmhtrakopoulos\",\"username\":\"AD\",\"password\":\"metwn12.5\"}";
+        String merchant3 = "{\"name\":\"Shfhs Gyparhs\",\"username\":\"jgyparhs\",\"password\":\"shotgunbr0\"}";
+        String merchant4 = "{\"name\":\"Giannis Smyrn\",\"username\":\"smyrn\",\"password\":\"kafes\"}";
+        String merchant5 = "{\"name\":\"Giannis Oiko\",\"username\":\"gangsterOiko\",\"password\":\"kerdisaIphone\"}";
+
 
         try {
-            it.addAccountFromJSON(individual);
-            ct.addAccountFromJSON(company);
-            mt.addAccountFromJSON(merchant);
+            ct.addAccountFromJSON(company1);
+            ct.addAccountFromJSON(company2);
+            ct.addAccountFromJSON(company3);
+            ct.addAccountFromJSON(company4);
+            ct.addAccountFromJSON(company5);
+            it.addAccountFromJSON(individual1);
+            it.addAccountFromJSON(individual2);
+            it.addAccountFromJSON(individual3);
+            it.addAccountFromJSON(individual4);
+            it.addAccountFromJSON(individual5);
+            mt.addAccountFromJSON(merchant1);
+            mt.addAccountFromJSON(merchant2);
+            mt.addAccountFromJSON(merchant3);
+            mt.addAccountFromJSON(merchant4);
+            mt.addAccountFromJSON(merchant5);
         } catch (SQLException e) {
             e.printStackTrace();
         }

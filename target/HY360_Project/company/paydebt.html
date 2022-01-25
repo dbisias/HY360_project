@@ -8,7 +8,7 @@
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
             if(xhr.readyState === 4 && xhr.status === 200){
-                checkUserLoggedIn("individual");
+                updateUserInfo("individual");
             }else{
 
             }
@@ -22,7 +22,7 @@
         console.log(data);
         xhr.open('PUT', '/HY360_Project_war_exploded/TransactionsAPI');
         xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send(data);
+        xhr.send(JSON.stringify(data));
     }
 
     function updateindividualinfo(){

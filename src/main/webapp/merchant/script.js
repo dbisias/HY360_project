@@ -8,5 +8,5 @@ function loadpay(){
 
 $(document).ready(function(){
     loadtransactions();
-    checkUserLoggedIn("merchant");
+    updateUserInfo("merchant");
 })

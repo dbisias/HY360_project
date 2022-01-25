@@ -79,6 +79,7 @@
                 loadtable();
                 $("#ajaxreply").html(xhr.responseText)
                 $("#ajaxreply").css("color","green")
+                updateUserInfo();
             } else {
                 $("#ajaxreply").html(xhr.responseText)
                 $("#ajaxreply").css("color","red")
@@ -107,7 +108,7 @@
         })
     });
 </script>
-<label>Sort by:</label>
+<label>Filter by:</label>
 <select id="sortselect">
     <option value="none" selected>None</option>
     <option value="date">Date</option>
