@@ -14,43 +14,39 @@ import java.util.Date;
 
 public class TransactionsTable {
 
-    Gson gson = new Gson();
+    private Connection con;
+    private Statement stmt;
+    private ResultSet rs;
+
 
     public void createTable() throws SQLException, ClassNotFoundException {
 
-        Connection con = DB_Connection.getConnection();
-        Statement stmt = con.createStatement();
         String query   = "CREATE TABLE transactions ("
-                + "tid INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-                + "cli_acc_id INTEGER NOT NULL, "
-                + "mer_acc_id INTEGER NOT NULL, "
-                + "date DATE NOT NULL, "
-                + "amount DOUBLE NOT NULL, "
-                + "type VARCHAR (15) NOT NULL,"
-                + "FOREIGN KEY (cli_acc_id) REFERENCES accounts(account_id), "
-                + "FOREIGN KEY (mer_acc_id) REFERENCES accounts(account_id)) ";
-
+        + "tid INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+        + "cli_acc_id INTEGER NOT NULL, "
+        + "mer_acc_id INTEGER NOT NULL, "
+        + "date DATE NOT NULL, "
+        + "amount DOUBLE NOT NULL, "
+        + "type VARCHAR (15) NOT NULL,"
+        + "FOREIGN KEY (cli_acc_id) REFERENCES accounts(account_id), "
+        + "FOREIGN KEY (mer_acc_id) REFERENCES accounts(account_id)) ";
+        
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
         stmt.execute(query);
         stmt.close();
         con.close();
     }
 
-    /**
-     * @param cli_id The client ID
-     * @param mer_id The mechant ID
-     * @param amount The amount to be paid
-     */
     public void insertTransaction(int cli_id, int mer_id, double amount, String type) throws SQLException, ClassNotFoundException {
 
-        ResultSet rs;
         boolean flag;
-
-        Connection con = DB_Connection.getConnection();
-        Statement stmt = con.createStatement();
         String query   = "SELECT EXISTS (SELECT 1 FROM individuals_view WHERE "
-                + "account_id = '" + cli_id + "' LIMIT 1)"; // SELECT list is ignored due to 'EXISTS' / ultra fast approach
-
-
+        + "account_id = '" + cli_id + "' LIMIT 1)"; // SELECT list is ignored due to 'EXISTS' / ultra fast approach
+        
+        
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
         rs = stmt.executeQuery(query);
         flag = false;
 
@@ -89,5 +85,45 @@ public class TransactionsTable {
 
         stmt.close();
         con.close();
+    }
+
+    public void refund(int tid) throws SQLException, ClassNotFoundException {
+
+        double amount;
+        String tmp;
+
+        int cli_id;
+        int mer_id;
+
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT (cli_acc_id, merc_acc_id, amount) FROM "
+            + "transactions WHERE tid = " + tid);
+
+        rs.next();  // transaction exists for sure
+
+        cli_id = rs.getInt(0);
+        mer_id = rs.getInt(1);
+        amount = rs.getDouble(2);
+
+        rs = stmt.executeQuery("SELECT EXISTS (SELECT 1 FROM individuals_view WHERE "
+        + "account_id = '" + cli_id + "' LIMIT 1)");  // SELECT list is ignored due to 'EXISTS' / ultra fast approach
+
+        if ( !rs.next() )
+            tmp = "companies";    // exists in 'companies' table
+        else
+            tmp = "individuals";  // exists in 'individuals' table
+
+        stmt.executeUpdate("UPDATE " + tmp + " SET remaining_amount = "
+            + "remaining_amount + " + amount + " WHERE "
+            + "account_id = " + cli_id);
+
+        stmt.executeUpdate("UPDATE merchants SET profit = "
+            + "profit - ((100 - commission)/100 * " + amount + ") "
+            + "WHERE account_id = " + mer_id);
+
+        stmt.executeUpdate("UPDATE transactions SET type = "
+        + "refunded WHERE tid = " + tid);
     }
 }
