@@ -157,6 +157,10 @@ public class TransactionsTable {
 
         } while ( rs.next() );
 
+        trs.close();
+        stmt.close();
+        con.close();
+
         return ret;
     }
 }
