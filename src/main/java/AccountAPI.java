@@ -64,7 +64,7 @@ public class AccountAPI extends HttpServlet {
         try{
             if(usertype.equals("individual")) {
                 IndividualTable iTable = new IndividualTable();
-                Individual individual = iTable.findAccount(username, password);
+                Individual individual = iTable.findAccount(acc_id);
                 if(individual.getAmount_due() != 0) {
                     helper.createResponse(response, 403, "You can't delete your account. You still owe the CCC money");
                     return;
@@ -76,7 +76,7 @@ public class AccountAPI extends HttpServlet {
             }
             else if(usertype.equals("merchant")) {
                 MerchantTable mTable = new MerchantTable();
-                Merchant merchant = mTable.findAccount(username, password);
+                Merchant merchant = mTable.findAccount(acc_id);
                 if(merchant.getAmount_due() != 0) {
                     helper.createResponse(response, 403, "You can't delete your account. You still owe the CCC money");
                     return;
@@ -87,7 +87,7 @@ public class AccountAPI extends HttpServlet {
             }
             else {
                 CompanyTable cTable = new CompanyTable();
-                Company company = cTable.findAccount(username, password);
+                Company company = cTable.findAccount(acc_id);
                 if(company.getAmount_due() != 0) {
                     helper.createResponse(response, 403, "You can't delete your account. You still owe the CCC money");
                     return;
