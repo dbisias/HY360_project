@@ -1,0 +1,64 @@
+<script>
+    $("#showpass,#cshowpass").click(function(){
+        if($(this).siblings(".pwrdfld").attr('type')=="password"){
+            $(this).siblings(".pwrdfld").attr('type', 'text');
+            $(this).html("Hide Password");
+        }else{
+            $(this).siblings(".pwrdfld").attr('type', 'password');
+            $(this).html("Show Password");
+        }
+    });
+
+    $("#cpasswordfield").keyup(function(){
+        var pass = $("#passwordfield").val();
+        var cpass = $("#cpasswordfield").val();
+
+        if(pass!==cpass){
+            $("#wrongpass").show();
+            $("#submitbtn").prop("disabled",true);
+        }else{
+            $("#wrongpass").hide();
+            $("#submitbtn").prop("disabled",false);
+        }
+    });
+
+</script>
+<script src="script.js"></script>
+<form id="myForm" name="myForm" onsubmit='sendAjaxRegisterPOST(event);return false;'>
+    <header>
+        <h4 class="title">Register to the CCC Database</h4>
+    </header>
+    <!--Fields modified to fit the db fields-->
+    <ul>
+        <li>
+            <label for="username">Username:</label>
+            <input id="username" type="text" name="username" pattern=".{8,}" title="Eight or more characters" required />
+        </li>
+        <li>
+            <label for="password">Password:</label>
+            <input id="passwordfield" class="pwrdfld" type="password" name="password" title="Password must contain at least one number, one upercase, one lowercase character, and should be at least 8 characters long" required />
+            <button type='button' id="showpass"> Show Password </button>
+            <label for="password" id="passwordstrength"></label>
+        </li>
+        <li>
+            <label for="cpassword">Confirm Password:</label>
+            <input id="cpasswordfield" class="pwrdfld" type="password" name="cpassword" title="Password must contain at least one number, one upercase, one lowercase character, and should be at least 8 characters long" required />
+            <button type='button' id="cshowpass"> Show Password </button>
+            <label class="errormsg" for="cpassword" id="wrongpass">Passwords dont match!</label>
+        </li>
+        <li>
+            <label for="usertype">Type of user:</label>
+            <select id="usertype" name="usertype">
+                <option value="individual" selected>Individual</option>
+                <option value="company">Company</option>
+                <option value="merchant">Merchant</option>
+            </select>
+        </li>
+        <li>
+            <label for="name">Full Name:</label>
+            <input type="text" name="name" title="Your name as it is shown on your ID Card" required />
+        </li>
+    </ul>
+    <input id="submitbtn" type="submit" class="button" value="Register">
+    <div id="registerReply"></div>
+</form>
