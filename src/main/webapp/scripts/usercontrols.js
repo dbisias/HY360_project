@@ -58,12 +58,19 @@ function logout(){
     xhr.send();
 }
 
+function updateusergaf(){
+    $("#gaf").html("Balance: "+userdata["remaining_amount"]+"€");
+    if(userdata["amount_due"]>0){$("#xrwstoumenagaf").html("Debt: " + userdata["amount_due"] + "€");
+    }else{$("#xrwstoumenagaf").html();}
+}
+
 function checkUserLoggedIn(usertype){
     var xhr = new XMLHttpRequest();
     xhr.onload = function (){
         if(xhr.readyState === 4 && xhr.status === 200){
             userdata = JSON.parse(xhr.responseText);
             if(userdata["usertype"]!=usertype){logout();}
+            updateusergaf()
         }else if(xhr.status!=200){
             window.location.href = "/HY360_Project_war_exploded";
             console.log("autologin failed with status code: "+xhr.status);
