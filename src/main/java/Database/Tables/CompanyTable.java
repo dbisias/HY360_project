@@ -82,8 +82,29 @@ public class CompanyTable implements DBTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT * FROM individuals_view WHERE "
+        rs = stmt.executeQuery("SELECT * FROM Companys_view WHERE "
         + "amount_due = '0'");
+
+        if ( !rs.next() )
+            return null;
+
+        ArrayList<Company> ret = new ArrayList<Company>();
+
+        while ( rs.next() )
+            ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Company.class));
+
+        stmt.close();
+        con.close();
+
+        return ret;
+    }
+
+    public ArrayList<Company> getBadUsers() throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
+        + "amount_due > '0' ORDER BY amount_due DESC");
 
         if ( !rs.next() )
             return null;
@@ -105,6 +126,9 @@ public class CompanyTable implements DBTable {
         stmt = con.createStatement();
         stmt.executeUpdate("UPDATE companies SET amount_due = '"
             + "amount_due - " + amount + "'");
+
+        stmt.close();
+        con.close();
     }
 
     public Company login(String username, String password) throws SQLException, ClassNotFoundException {
@@ -114,8 +138,16 @@ public class CompanyTable implements DBTable {
         rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
             + "username = '" + username + "'AND password = '" + password + "'");
 
-        if( !rs.next() )
+        if( !rs.next() ) {
+
+            stmt.close();
+            con.close();
+
             return null;
+        }
+
+        stmt.close();
+        con.close();
 
         return gson.fromJson(DB_Connection.getResultsToJSON(rs), Company.class);
     }
@@ -127,6 +159,9 @@ public class CompanyTable implements DBTable {
         stmt = con.createStatement();
         stmt.executeUpdate("DELETE FROM companies WHERE account_id = '"
             + acc_id + "'");
+
+        stmt.close();
+        con.close();
     }
 
     @Override
