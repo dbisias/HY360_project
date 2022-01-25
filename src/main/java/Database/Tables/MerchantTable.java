@@ -110,10 +110,12 @@ public class MerchantTable {
             return null;
         }
 
+        Merchant logged_in = gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class);
+
         stmt.close();
         con.close();
 
-        return gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class);
+        return logged_in;
     }
 
     public JSONObject getAll() throws SQLException, ClassNotFoundException {

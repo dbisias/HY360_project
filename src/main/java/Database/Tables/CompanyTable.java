@@ -150,11 +150,12 @@ public class CompanyTable {
 
             return null;
         }
+        Company logged_in = gson.fromJson(DB_Connection.getResultsToJSON(rs), Company.class);
 
         stmt.close();
         con.close();
 
-        return gson.fromJson(DB_Connection.getResultsToJSON(rs), Company.class);
+        return logged_in;
     }
 
     public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {

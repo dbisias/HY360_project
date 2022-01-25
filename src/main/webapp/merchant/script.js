@@ -2,8 +2,8 @@ function loadtransactions(){
     $("#appwindow").load("transactions.html");
 }
 
-function loadpay(){
-    $("#appwindow").load("paydebt.html");
+function loadaccount(){
+    $("#appwindow").load("account.html");
 }
 
 $(document).ready(function(){
