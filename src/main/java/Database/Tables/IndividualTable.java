@@ -110,6 +110,7 @@ public class IndividualTable implements DBTable {
         return user;
     }
 
+
     @Override
     public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException {
 
@@ -153,9 +154,9 @@ public class IndividualTable implements DBTable {
         }
 
         if ( ret != -1 )
-            stmt.executeUpdate("UPDATE merchants SET profit = "
-                + "profit + " + amount + ", amount_due = amount_due"
-                + " + commission * " + amount + " WHERE "
+            stmt.executeUpdate("UPDATE merchants SET profit = '"
+                + "profit + " + amount + "', amount_due = 'amount_due"
+                + " + (commision / 100) * " + amount + "' WHERE "
                 + "account_id = '" + mer_id + "'");
 
         stmt.close();
