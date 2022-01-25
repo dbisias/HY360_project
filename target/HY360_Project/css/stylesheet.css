@@ -243,7 +243,7 @@ form ul{
 }
 
 #usergaf{
-	position:relative;
+	position:absolute;
 	bottom: 0px;
 	right: 0px;
 }
