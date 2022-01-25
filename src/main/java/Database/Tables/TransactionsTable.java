@@ -43,7 +43,6 @@ public class TransactionsTable {
     public void insertTransaction(int cli_id, int mer_id, double amount, String type) throws SQLException, ClassNotFoundException {
 
         ResultSet rs;
-        String json;
         boolean flag;
 
         Connection con = DB_Connection.getConnection();

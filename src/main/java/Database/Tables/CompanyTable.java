@@ -127,6 +127,9 @@ public class CompanyTable implements DBTable {
         stmt.executeUpdate("UPDATE companies SET amount_due = '"
             + "amount_due - " + amount + "'");
 
+        stmt.executeUpdate("UPDATE companies SET remaining_ammount = "
+            + "remaining_amount - " + amount);
+
         stmt.close();
         con.close();
     }
@@ -158,6 +161,9 @@ public class CompanyTable implements DBTable {
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
         stmt.executeUpdate("DELETE FROM companies WHERE account_id = '"
+            + acc_id + "'");
+
+        stmt.executeUpdate("DELETE FROM accounts WHERE accound_id = '"
             + acc_id + "'");
 
         stmt.close();

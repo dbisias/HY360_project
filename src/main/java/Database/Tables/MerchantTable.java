@@ -103,8 +103,16 @@ public class MerchantTable implements DBTable {
         rs = stmt.executeQuery("SELECT * FROM merchants_view WHERE "
             + "username = '" + username + "'AND password = '" + password + "'");
 
-        if( !rs.next() )
+        if( !rs.next() ) {
+
+            stmt.close();
+            con.close();
+
             return null;
+        }
+
+        stmt.close();
+        con.close();
 
         return gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class);
     }
@@ -142,6 +150,9 @@ public class MerchantTable implements DBTable {
         stmt = con.createStatement();
         stmt.executeUpdate("UPDATE merchants SET amount_due = '"
             + "amount_due - " + amount + "'");
+
+        stmt.executeUpdate("UPDATE merchants SET remaining_ammount = "
+            + "remaining_amount - " + amount);
 
         stmt.close();
         con.close();
@@ -189,6 +200,15 @@ public class MerchantTable implements DBTable {
         return ret;
     }
 
+    public Merchant getBest() throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT MAX(");
+
+        return null;
+    }
+
     @Override
     public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException {
         return 0;
@@ -200,6 +220,9 @@ public class MerchantTable implements DBTable {
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
         stmt.executeUpdate("DELETE FROM merchants WHERE account_id = '"
+            + acc_id + "'");
+
+        stmt.executeUpdate("DELETE FROM accounts WHERE accound_id = '"
             + acc_id + "'");
 
         stmt.close();

@@ -151,6 +151,9 @@ public class IndividualTable implements DBTable {
         stmt.executeUpdate("UPDATE individuals SET amount_due = '"
             + "amount_due - " + amount + "'");
 
+        stmt.executeUpdate("UPDATE individuals SET remaining_ammount = "
+            + "remaining_amount - " + amount);
+
         con.close();
         stmt.close();
     }
@@ -161,6 +164,9 @@ public class IndividualTable implements DBTable {
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
         stmt.executeUpdate("DELETE FROM individuals WHERE account_id = '"
+            + acc_id + "'");
+
+        stmt.executeUpdate("DELETE FROM accounts WHERE accound_id = '"
             + acc_id + "'");
 
         stmt.close();
