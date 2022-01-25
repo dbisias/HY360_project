@@ -195,7 +195,7 @@ public class IndividualTable {
         String sql = "CREATE TABLE individuals "
                 + "(account_id INTEGER not NULL AUTO_INCREMENT unique, "
                 + "billing_limit DOUBLE, "
-                + "expiration_date DATE , "
+                + "expiration_date DATE, "
                 + "amount_due DOUBLE, "
                 + "remaining_amount DOUBLE, "
                 + "company_account_id INTEGER, "
