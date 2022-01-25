@@ -2,6 +2,7 @@ package Database.Tables;
 
 import Database.Connection.DB_Connection;
 import Database.mainClasses.Account;
+import Database.mainClasses.Transaction;
 import com.google.gson.Gson;
 
 import java.sql.Connection;
@@ -9,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-
+import java.util.ArrayList;
 import java.util.Date;
 
 public class TransactionsTable {
@@ -127,10 +128,35 @@ public class TransactionsTable {
         + "refunded WHERE tid = " + tid);
     }
 
-    public void getTrans(int cli_id) throws SQLException, ClassNotFoundException {
+    public ArrayList<Transaction> getTrans(int cli_id) throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT (");
+        rs = stmt.executeQuery("SELECT (mer_acc_id, amount, type, date) FROM "
+            + "transactions WHERE cli_acc_id = " + cli_id);
+
+        if ( !rs.next() )
+            return null;
+
+        ArrayList<Transaction> ret = new ArrayList<Transaction>();
+        Transaction tmp = new Transaction();
+        ResultSet trs;
+
+        do {
+
+            trs = stmt.executeQuery("SELECT name FROM accounts WHERE "
+                + "account_id = " + rs.getInt("mer_acc_id"));
+
+            trs.next();
+            tmp.setMer_name(trs.getString(0));
+            tmp.setAmount(rs.getDouble("amount"));
+            tmp.setType(rs.getString("type"));
+            tmp.setDate(rs.getDate("date"));
+
+            ret.add(tmp);
+
+        } while ( rs.next() );
+
+        return ret;
     }
 }

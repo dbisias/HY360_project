@@ -7,9 +7,10 @@
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr.responseText);
-            } else if (xhr.status != 200) {
-                console.log("deleteaccount failed with status code: " + xhr.status);
+                logout();
+            }else{
+                $("#ajaxreply").html(xhr.responseText);
+                $("#ajaxreply").css("color","red");
             }
         }
 
@@ -23,3 +24,4 @@
     }
 </script>
 <button onClick="deleteaccount();">Delete Account</button>
+<div id="ajaxreply"></div>

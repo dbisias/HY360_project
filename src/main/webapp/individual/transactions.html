@@ -1,10 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<script>
+    function sorter(){
+        var sort = $("#sortselect").val();
+        if(sort==="none"){
+            loadtable();
+        }else if(sort==="date"){
+            loadtablebydate($("#startdate").val(),$("#enddate").val())
+        }else if(sort==="type"){
+            loadtablebytype($("#typeselect").val())
+        }
+    }
 
-</body>
-</html>
+    function loadtable(){
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function(){
+            if(xhr.readyState===4 && xhr.status===200){
+                $("#ajaxreply").html(xhr.responseText)
+                $("#ajaxreply").css("color","green")
+            } else {
+                $("#ajaxreply").html(xhr.responseText)
+                $("#ajaxreply").css("color","red")
+            }
+        }
+
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI');
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send();
+    }
+
+    function loadtablebytype(type){
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function(){
+            if(xhr.readyState===4 && xhr.status===200){
+                $("#ajaxreply").html(xhr.responseText)
+                $("#ajaxreply").css("color","green")
+            } else {
+                $("#ajaxreply").html(xhr.responseText)
+                $("#ajaxreply").css("color","red")
+            }
+        }
+
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?type='+type);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send();
+    }
+
+    function loadtablebydate(start, end){
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function(){
+            if(xhr.readyState===4 && xhr.status===200){
+                $("#ajaxreply").html(xhr.responseText)
+                $("#ajaxreply").css("color","green")
+            } else {
+                $("#ajaxreply").html(xhr.responseText)
+                $("#ajaxreply").css("color","red")
+            }
+        }
+
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?start='+start+"&end="+end);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send();
+    }
+
+    function refund(tid){
+        var xhr = new XMLHttpRequest();
+
+        xhr.onload = function(){
+            if(xhr.readyState===4 && xhr.status===200){
+                loadtable();
+                $("#ajaxreply").html(xhr.responseText)
+                $("#ajaxreply").css("color","green")
+            } else {
+                $("#ajaxreply").html(xhr.responseText)
+                $("#ajaxreply").css("color","red")
+            }
+        }
+
+        xhr.open('DELETE', '/HY360_Project_war_exploded/TransactionsAPI?transaction_id='+tid);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send();
+    }
+
+    $(document).ready(function(){
+        loadtable();
+
+        $("#typeselect").change(function(){
+            if($(this).val()==="none"){
+                $("#typeselect").hide();
+                $("#dateselect").hide();
+            }else if($(this).val()==="date"){
+                $("#typeselect").hide();
+                $("#dateselect").show();
+            }else if($(this).val()==="type"){
+                $("#typeselect").show();
+                $("#dateselect").hide();
+            }
+        })
+    });
+</script>
+<label>Sort by:</label>
+<select id="sortselect">
+    <option value="none" selected>None</option>
+    <option value="date">Date</option>
+    <option value="type">Type</option>
+</select>
+<input type="button" onclick="sorter();" value="Sort">
+<select id="typeselect" style="display: none">
+    <option value="billing">Billing</option>
+    <option value="credit">Credit</option>
+    <option value="refunded">Refunded</option>
+</select>
+<div id="dateselect" style="display: none">
+    <input type="date" id="startdate">
+    <input type="date" id="enddate">
+</div>
+<div id="transactionstable"></div>
+<div id="ajaxreply"></div>
