@@ -58,21 +58,44 @@ function logout(){
     xhr.send();
 }
 
+function updateusergaf(){
+    $("#gaf").html("Balance: "+userdata["remaining_amount"]+"€");
+    if(userdata["amount_due"]>0){$("#xrwstoumenagaf").html("Debt: " + userdata["amount_due"] + "€");
+    }else{$("#xrwstoumenagaf").html();}
+}
+
 function checkUserLoggedIn(usertype){
     var xhr = new XMLHttpRequest();
     xhr.onload = function (){
         if(xhr.readyState === 4 && xhr.status === 200){
             userdata = JSON.parse(xhr.responseText);
             if(userdata["usertype"]!=usertype){logout();}
+            updateusergaf();
         }else if(xhr.status!=200){
             window.location.href = "/HY360_Project_war_exploded";
             console.log("autologin failed with status code: "+xhr.status);
         }
     }
 
-    xhr.open('POST', '/HY360_Project_war_exploded/GetInfo');
+    xhr.open('GET', '/HY360_Project_war_exploded/GetInfo');
     xhr.setRequestHeader("Content-type", "application/json");
-    xhr.send("");
+    xhr.send();
+}
+
+function getCompanyInfo(){
+    if(userdata["company"]==0){return;}
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function (){
+        if(xhr.readyState === 4 && xhr.status === 200){
+            companydata = JSON.parse(xhr.responseText);
+        }else if(xhr.status!=200){
+            console.log("getcompanyinfo failed with status code: "+xhr.status);
+        }
+    }
+
+    xhr.open('GET', '/HY360_Project_war_exploded/GetInfo?company_id='+userdata["company_account_id"]);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send();
 }
 
 function autoLogin(){
@@ -84,7 +107,7 @@ function autoLogin(){
         }
     }
 
-    xhr.open('POST', '/HY360_Project_war_exploded/GetInfo');
+    xhr.open('GET', '/HY360_Project_war_exploded/GetInfo');
     xhr.setRequestHeader("Content-type", "application/json");
-    xhr.send("");
+    xhr.send();
 }

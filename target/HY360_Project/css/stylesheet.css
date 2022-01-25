@@ -239,6 +239,13 @@ form ul{
 #top_header {
 	height: 143px;
 	border-bottom: groove;
+	position: relative;
+}
+
+#usergaf{
+	position:relative;
+	bottom: 0px;
+	right: 0px;
 }
 
 #infocard_table tr {

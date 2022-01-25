@@ -13,6 +13,10 @@ public class Individual extends Account{
         super(name, username, password);
     }
 
+    public Individual(){
+        super();
+    }
+
     public void initfields(){
         billimit = 100;
         expiration_date = new Date();
