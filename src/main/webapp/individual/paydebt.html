@@ -26,7 +26,7 @@
         console.log(data);
         xhr.open('PUT', '/HY360_Project_war_exploded/TransactionsAPI');
         xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send(data);
+        xhr.send(JSON.stringify(data));
     }
 
     function updateindividualinfo(){
