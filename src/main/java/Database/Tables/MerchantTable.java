@@ -126,11 +126,4 @@ public class MerchantTable implements DBTable {
 
         return ret;
     }
-
-
-    @Override
-    public int buy(int cli_id, double amount) throws ClassNotFoundException, SQLException {
-        return 0;
-    }
-
 }
