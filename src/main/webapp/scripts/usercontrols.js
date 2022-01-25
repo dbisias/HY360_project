@@ -75,6 +75,22 @@ function checkUserLoggedIn(usertype){
     xhr.send();
 }
 
+function getCompanyInfo(){
+    if(userdata["company"]==0){return;}
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function (){
+        if(xhr.readyState === 4 && xhr.status === 200){
+            companydata = JSON.parse(xhr.responseText);
+        }else if(xhr.status!=200){
+            console.log("getcompanyinfo failed with status code: "+xhr.status);
+        }
+    }
+
+    xhr.open('GET', '/HY360_Project_war_exploded/GetInfo?company_id='+userdata["company_account_id"]);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send();
+}
+
 function autoLogin(){
     var xhr = new XMLHttpRequest();
     xhr.onload = function (){

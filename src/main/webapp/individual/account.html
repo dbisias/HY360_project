@@ -1,0 +1,21 @@
+<script>
+    function deleteaccount() {
+        if(userdata["company"]==0){return;}
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function (){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                console.log(xhr.responseText);
+            }else if(xhr.status!=200){
+                console.log("deleteaccount failed with status code: "+xhr.status);
+            }
+        }
+
+        data["username"]=userdata["username"];
+        data["password"]=userdata["password"];
+        data["usertype"]="individual";
+        xhr.open('DELETE', '/HY360_Project_war_exploded/AccountAPI');
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(data);
+    }
+</script>
+<button onclick="deleteaccount();">Deelete Account</button>
