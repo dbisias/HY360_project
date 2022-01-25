@@ -1,6 +1,13 @@
 <script>
     function printtable(json){
-        console.log(json)
+        json=json["transaction"]
+        $("#transactionstable").html("<thead><th>Date</th><th>Merchant</th><th>Amount</th><th>Transaction Type</th><th>Action</th></thead>")
+        for(ind in json){
+            var transaction = JSON.parse(json[ind]);
+            var refundbtn = "<input type='button' id='refundbtn_"+transaction["id"]+"' onclick='refund("+transaction["id"]+")' value='Refund'>";
+            $("#transactionstable").append("<tr><td>"+transaction["date"]+"</td><td>"+transaction["mer_name"]+"</td><td>"+transaction["amount"]+"</td><td>"+transaction["type"]+"</td><td>"+refundbtn+"</td></tr>")
+        }
+
     }
 
     function sorter(){
@@ -118,5 +125,7 @@
     <input type="date" id="startdate">
     <input type="date" id="enddate">
 </div>
-<div id="transactionstable"></div>
+<table id="transactionstable">
+
+</table>
 <div id="ajaxreply"></div>

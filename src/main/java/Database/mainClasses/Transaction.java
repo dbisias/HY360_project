@@ -4,10 +4,21 @@ import java.util.Date;
 
 public class Transaction {
     
+    private int id;
     private double amount;
     private Date date;
     private String mer_name;
     private String type;
+
+    public int getId() {
+
+        return id;
+    }
+
+    public void setId(int val) {
+
+        id = val;
+    }
 
     public double getAmount() {
         return amount;
