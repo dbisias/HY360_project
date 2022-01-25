@@ -126,4 +126,11 @@ public class TransactionsTable {
         stmt.executeUpdate("UPDATE transactions SET type = "
         + "refunded WHERE tid = " + tid);
     }
+
+    public void getTrans(int cli_id) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT (");
+    }
 }
