@@ -22,7 +22,7 @@ public class Individual extends Account{
         expiration_date = new Date();
         expiration_date.setYear(expiration_date.getYear()+5);
         amount_due = 0;
-        remaining_amount = 100;
+        remaining_amount = 300;
     }
 
     public int getCompany_account_id() {

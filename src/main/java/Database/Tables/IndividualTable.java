@@ -46,15 +46,31 @@ public class IndividualTable {
         int account_id = at.addNewAccount((Account) individual);
 
         SimpleDateFormat df = new SimpleDateFormat("YY-MM-DD");
-        String insertQuery = "INSERT INTO "
-                + " individuals (account_id,billing_limit,expiration_date,amount_due,remaining_amount)"
-                + " VALUES ("
-                + "'" + account_id + "',"
-                + "'" + individual.getBillimit() + "',"
-                + "'" + df.format(individual.getExpiration_date()) + "',"
-                + "'" + individual.getAmount_due() + "',"
-                + "'" + individual.getRemaining_amount()+ "'"
-                + ")";
+        String insertQuery;
+        if(individual.getCompany_account_id() != 0) {
+            insertQuery = "INSERT INTO "
+                    + " individuals (account_id,billing_limit,expiration_date,amount_due,remaining_amount,company_account_id)"
+                    + " VALUES ("
+                    + "'" + account_id + "',"
+                    + "'" + individual.getBillimit() + "',"
+                    + "'" + df.format(individual.getExpiration_date()) + "',"
+                    + "'" + individual.getAmount_due() + "',"
+                    + "'" + individual.getRemaining_amount()+ "',"
+                    + "" + individual.getCompany_account_id()+ ""
+                    + ")";
+        }
+        else {
+            insertQuery = "INSERT INTO "
+                    + " individuals (account_id,billing_limit,expiration_date,amount_due,remaining_amount)"
+                    + " VALUES ("
+                    + "'" + account_id + "',"
+                    + "'" + individual.getBillimit() + "',"
+                    + "'" + df.format(individual.getExpiration_date()) + "',"
+                    + "'" + individual.getAmount_due() + "',"
+                    + "'" + individual.getRemaining_amount()+ "'"
+                    + ")";
+        }
+
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
