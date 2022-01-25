@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class MerchantTable implements DBTable {
 
@@ -74,20 +75,6 @@ public class MerchantTable implements DBTable {
 
     }
 
-    @Override
-    public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException {
-        return 0;
-    }
-
-    @Override
-    public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {
-
-        con = DB_Connection.getConnection();
-        stmt = con.createStatement();
-        stmt.executeUpdate("DELETE FROM merchants WHERE accound_id = '"
-            + acc_id + "'");
-    }
-
     public Merchant findAccount(int cli_id) throws SQLException, ClassNotFoundException {
         
         Merchant user;
@@ -148,4 +135,76 @@ public class MerchantTable implements DBTable {
 
         return ret;
     }
+
+    public void payDebt(int cli_id, double amount) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        stmt.executeUpdate("UPDATE merchants SET amount_due = '"
+            + "amount_due - " + amount + "'");
+
+        stmt.close();
+        con.close();
+    }
+
+    public ArrayList<Merchant> getGoodUsers() throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM merchants_view WHERE "
+        + "amount_due = '0'");
+
+        if ( !rs.next() )
+            return null;
+
+        ArrayList<Merchant> ret = new ArrayList<Merchant>();
+
+        while ( rs.next() )
+            ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class));
+
+        stmt.close();
+        con.close();
+
+        return ret;
+    }
+
+    public ArrayList<Merchant> getBadUsers() throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM merchants_view WHERE "
+        + "amount_due > '0' ORDER BY amount_due DESC");
+
+        if ( !rs.next() )
+            return null;
+
+        ArrayList<Merchant> ret = new ArrayList<Merchant>();
+
+        while ( rs.next() )
+            ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Merchant.class));
+
+        stmt.close();
+        con.close();
+
+        return ret;
+    }
+
+    @Override
+    public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException {
+        return 0;
+    }
+
+    @Override
+    public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        stmt.executeUpdate("DELETE FROM merchants WHERE accound_id = '"
+            + acc_id + "'");
+
+        stmt.close();
+        con.close();
+    }
+
+
 }

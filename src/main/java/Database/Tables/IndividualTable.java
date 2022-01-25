@@ -71,7 +71,7 @@ public class IndividualTable implements DBTable {
         Individual user;
         String json;
 
-        String query   = "SELECT * FROM individuals_view WHERE accound_id = '" + cli_id + "'";
+        String query = "SELECT * FROM individuals_view WHERE accound_id = '" + cli_id + "'";
 
 
         con = DB_Connection.getConnection();
@@ -94,7 +94,7 @@ public class IndividualTable implements DBTable {
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
         rs = stmt.executeQuery("SELECT * FROM companies_view WHERE "
-            + "username = '" + username + "'AND password = '" + password + "'");
+            + "username = '" + username + "' AND password = '" + password + "'");
 
         if( !rs.next() )
             return null;
@@ -123,12 +123,36 @@ public class IndividualTable implements DBTable {
         return ret;
     }
 
+    public ArrayList<Individual> getBadUsers() throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM individuals_view WHERE "
+        + "amount_due > '0' ORDER BY amount_due DESC");
+
+        if ( !rs.next() )
+            return null;
+
+        ArrayList<Individual> ret = new ArrayList<Individual>();
+
+        while ( rs.next() )
+            ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Individual.class));
+
+        stmt.close();
+        con.close();
+
+        return ret;
+    }
+
     public void payDebt(int cli_id, double amount) throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
         stmt.executeUpdate("UPDATE individuals SET amount_due = '"
             + "amount_due - " + amount + "'");
+
+        con.close();
+        stmt.close();
     }
 
     @Override
@@ -138,6 +162,9 @@ public class IndividualTable implements DBTable {
         stmt = con.createStatement();
         stmt.executeUpdate("DELETE FROM individuals WHERE accound_id = '"
             + acc_id + "'");
+
+        stmt.close();
+        con.close();
     }
 
     @Override
