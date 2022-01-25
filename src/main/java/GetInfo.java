@@ -26,36 +26,28 @@ public class GetInfo extends HttpServlet {
             helper.returnfailedlogin(response);
             return;
         }
-        String loggedin_id = session.getAttribute("logged_in").toString();
-        String password = (String) session.getAttribute("password");
+        int loggedin_id = (int) session.getAttribute("logged_in");
         String company_id = (String) request.getParameter("company_id");
         JSONObject jsonreply = null;
 
         try {
             if(company_id != null) {
-//                jsonreply = new JSONObject((ct.accountToJSON(ct.findAccount(company_id))));
+                int cid = Integer.parseInt(company_id);
+                jsonreply = new JSONObject((ct.accountToJSON(ct.findAccount(cid))));
                 jsonreply.put("usertype", "company");
                 helper.createResponse(response, 200, jsonreply.toString());
-            }
-            if(it.findAccount(loggedin_id, password)!=null) {
-                jsonreply = new JSONObject(it.accountToJSON(it.findAccount(loggedin_id, password)));
+            }else if(it.findAccount(loggedin_id)!=null) {
+                jsonreply = new JSONObject(it.accountToJSON(it.findAccount(loggedin_id)));
                 jsonreply.put("usertype","individual");
                 helper.createResponse(response, 200, jsonreply.toString());
-                return;
-            }
-
-            if(ct.findAccount(loggedin_id, password)!=null) {
-                jsonreply = new JSONObject(ct.accountToJSON(ct.findAccount(loggedin_id, password)));
+            }else if(ct.findAccount(loggedin_id)!=null) {
+                jsonreply = new JSONObject(ct.accountToJSON(ct.findAccount(loggedin_id)));
                 jsonreply.put("usertype", "company");
                 helper.createResponse(response, 200, jsonreply.toString());
-                return;
-            }
-
-            if(mt.findAccount(loggedin_id, password)!=null) {
-                jsonreply = new JSONObject(mt.accountToJSON(mt.findAccount(loggedin_id, password)));
+            }else if(mt.findAccount(loggedin_id)!=null) {
+                jsonreply = new JSONObject(mt.accountToJSON(mt.findAccount(loggedin_id)));
                 jsonreply.put("usertype", "merchant");
                 helper.createResponse(response, 200, jsonreply.toString());
-                return;
             }
 
         } catch (Exception e) {
