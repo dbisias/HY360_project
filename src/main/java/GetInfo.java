@@ -20,7 +20,7 @@ public class GetInfo extends HttpServlet {
     CompanyTable ct = new CompanyTable();
     MerchantTable mt = new MerchantTable();
     @Override
-    protected void doGET(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if(session.getAttribute("logged_in")==null){
             helper.returnfailedlogin(response);
