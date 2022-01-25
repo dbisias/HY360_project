@@ -15,7 +15,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class IndividualTable implements DBTable {
+public class IndividualTable {
     
     private Gson gson = new Gson();
     private ResultSet rs;
@@ -160,7 +160,7 @@ public class IndividualTable implements DBTable {
         stmt.close();
     }
 
-    @Override
+
     public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
@@ -175,7 +175,7 @@ public class IndividualTable implements DBTable {
         con.close();
     }
 
-    @Override
+
     public void createTable() throws SQLException, ClassNotFoundException {
 
         String sql = "CREATE TABLE individuals "
@@ -197,7 +197,7 @@ public class IndividualTable implements DBTable {
 
     }
 
-    @Override
+
     public int buy(int cli_id, int mer_id, double amount) throws ClassNotFoundException, SQLException {
 
         double tmp;
