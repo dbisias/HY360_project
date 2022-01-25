@@ -5,10 +5,10 @@ import java.text.ParsePosition;
 import java.util.Date;
 
 public class Company extends Account{
-    protected int billimit;
+    protected double billimit;
     protected Date expiration_date;
-    protected int amount_due;
-    protected int remaining_amount;
+    protected double amount_due;
+    protected double remaining_amount;
 
     public Company(String name, String username, String password) {
         super(name, username, password);
@@ -22,7 +22,7 @@ public class Company extends Account{
         remaining_amount = 100;
     }
 
-    public int getBillimit() {
+    public double getBillimit() {
         return billimit;
     }
 
@@ -38,7 +38,7 @@ public class Company extends Account{
         this.expiration_date = expiration_date;
     }
 
-    public int getAmount_due() {
+    public double getAmount_due() {
         return amount_due;
     }
 
@@ -46,7 +46,7 @@ public class Company extends Account{
         this.amount_due = amount_due;
     }
 
-    public int getRemaining_amount() {
+    public double getRemaining_amount() {
         return remaining_amount;
     }
 
