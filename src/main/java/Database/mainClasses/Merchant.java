@@ -1,9 +1,9 @@
 package Database.mainClasses;
 
 public class Merchant extends Account{
-    protected float commission;
-    protected float profit;
-    protected float amount_due;
+    protected double commission;
+    protected double profit;
+    protected double amount_due;
 
     public Merchant(String name, String username, String password) {
         super(name, username, password);
@@ -15,7 +15,7 @@ public class Merchant extends Account{
         amount_due = 0;
     }
 
-    public float getCommission() {
+    public double getCommission() {
         return commission;
     }
 
@@ -23,7 +23,7 @@ public class Merchant extends Account{
         this.commission = commission;
     }
 
-    public float getProfit() {
+    public double getProfit() {
         return profit;
     }
 
@@ -31,7 +31,7 @@ public class Merchant extends Account{
         this.profit = profit;
     }
 
-    public float getAmount_due() {
+    public double getAmount_due() {
         return amount_due;
     }
 

@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class Individual extends Account{
     protected int company_account_id;
-    protected int billimit;
+    protected double billimit;
     protected Date expiration_date;
-    protected int amount_due;
-    protected int remaining_amount;
+    protected double amount_due;
+    protected double remaining_amount;
 
     public Individual(String name, String username, String password) {
         super(name, username, password);
@@ -29,7 +29,7 @@ public class Individual extends Account{
         this.company_account_id = company_account_id;
     }
 
-    public int getBillimit() {
+    public double getBillimit() {
         return billimit;
     }
 
@@ -45,7 +45,7 @@ public class Individual extends Account{
         this.expiration_date = expiration_date;
     }
 
-    public int getAmount_due() {
+    public double getAmount_due() {
         return amount_due;
     }
 
@@ -53,7 +53,7 @@ public class Individual extends Account{
         this.amount_due = amount_due;
     }
 
-    public int getRemaining_amount() {
+    public double getRemaining_amount() {
         return remaining_amount;
     }
 

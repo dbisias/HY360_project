@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class IndividualTable implements DBTable {
     
@@ -87,6 +88,35 @@ public class IndividualTable implements DBTable {
         con.close();
 
         return user;
+    }
+
+    public ArrayList<Individual> getGoodUsers() throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM individuals_view WHERE "
+        + "amount_due = '0'");
+
+        if ( !rs.next() )
+            return null;
+
+        ArrayList<Individual> ret = new ArrayList<Individual>();
+
+        while ( rs.next() )
+            ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Individual.class));
+
+        stmt.close();
+        con.close();
+
+        return ret;
+    }
+
+    public void payDebt(int cli_id, double amount) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        stmt.executeUpdate("UPDATE individuals SET amount_due = '"
+            + "amount_due - " + amount + "'");
     }
 
     @Override

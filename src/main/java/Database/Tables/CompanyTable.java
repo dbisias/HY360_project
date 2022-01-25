@@ -80,6 +80,35 @@ public class CompanyTable implements DBTable {
         return user;
     }
 
+    public ArrayList<Company> getGoodUsers() throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        rs = stmt.executeQuery("SELECT * FROM individuals_view WHERE "
+        + "amount_due = '0'");
+
+        if ( !rs.next() )
+            return null;
+
+        ArrayList<Company> ret = new ArrayList<Company>();
+
+        while ( rs.next() )
+            ret.add(gson.fromJson(DB_Connection.getResultsToJSON(rs), Company.class));
+
+        stmt.close();
+        con.close();
+
+        return ret;
+    }
+
+    public void payDebt(int cli_id, double amount) throws SQLException, ClassNotFoundException {
+
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+        stmt.executeUpdate("UPDATE companies SET amount_due = '"
+            + "amount_due - " + amount + "'");
+    }
+
     @Override
     public void delAccount(int acc_id) throws SQLException, ClassNotFoundException {
 
