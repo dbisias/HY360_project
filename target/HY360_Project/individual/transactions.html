@@ -32,7 +32,7 @@
             }
         }
 
-        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?user_id='+userdata["account_id"]);
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?as=individual&user_id='+userdata["account_id"]);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send();
     }
@@ -49,7 +49,7 @@
             }
         }
 
-        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?user_id='+userdata["account_id"]+'&type='+type);
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?as=individual&user_id='+userdata["account_id"]+'&type='+type);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send();
     }
@@ -66,7 +66,7 @@
             }
         }
 
-        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?user_id='+userdata["account_id"]+'&start='+start+"&end="+end);
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?as=individual&user_id='+userdata["account_id"]+'&start='+start+"&end="+end);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send();
     }

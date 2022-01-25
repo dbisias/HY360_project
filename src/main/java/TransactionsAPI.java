@@ -31,31 +31,35 @@ public class TransactionsAPI extends HttpServlet {
         Gson gson = new Gson();
         Date start_date = null;
         Date end_date = null;
+        String as = (String) request.getParameter("as");
         String type = (String) request.getParameter("type");
         TransactionsTable tTable = new TransactionsTable();
         int user_id = Integer.parseInt(request.getParameter("user_id"));
         ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        int merchant;
+        if(as.equals("individual")){merchant=0;}else{merchant=1;}
+
 
         try{
             if(request.getParameter("start") != null) {
                 start_date = Date.valueOf(request.getParameter("start"));
                 end_date = Date.valueOf(request.getParameter("end"));
 
-                transactions = tTable.getTrans(user_id, start_date, end_date);
+                transactions = tTable.getTrans(user_id, start_date, end_date, merchant);
                 for(Transaction transaction : transactions) {
                     jsonOut.append("transaction", gson.toJson(transaction, Transaction.class));
                 }
                 helper.createResponse(response, 200, jsonOut.toString());
             }
             else if(type != null) {
-                transactions = tTable.getTrans(user_id, type);
+                transactions = tTable.getTrans(user_id, type, merchant);
                 for (Transaction transaction : transactions) {
                     jsonOut.append("transaction", gson.toJson(transaction, Transaction.class));
                 }
                 helper.createResponse(response, 200, jsonOut.toString());
             }
             else {
-                transactions = tTable.getTrans(user_id);
+                transactions = tTable.getTrans(user_id, merchant);
                 for (Transaction transaction : transactions) {
                     jsonOut.append("transaction", gson.toJson(transaction, Transaction.class));
                 }

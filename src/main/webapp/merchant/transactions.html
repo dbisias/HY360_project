@@ -1,11 +1,10 @@
 <script>
     function printtable(json){
         json=json["transaction"]
-        $("#transactionstable").html("<thead><th>Date</th><th>Merchant</th><th>Amount</th><th>Transaction Type</th><th>Action</th></thead>")
+        $("#transactionstable").html("<thead><th>Date</th><th>Merchant</th><th>Amount</th><th>Transaction Type</th></thead>")
         for(ind in json){
             var transaction = JSON.parse(json[ind]);
-            var refundbtn = "<input type='button' id='refundbtn_"+transaction["id"]+"' onclick='refund("+transaction["id"]+")' value='Refund'>";
-            $("#transactionstable").append("<tr><td>"+transaction["date"]+"</td><td>"+transaction["mer_name"]+"</td><td>"+transaction["amount"]+"</td><td>"+transaction["type"]+"</td><td>"+refundbtn+"</td></tr>")
+            $("#transactionstable").append("<tr><td>"+transaction["date"]+"</td><td>"+transaction["mer_name"]+"</td><td>"+transaction["amount"]+"</td><td>"+transaction["type"]+"</td></tr>")
         }
 
     }
@@ -32,7 +31,7 @@
             }
         }
 
-        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?user_id='+userdata["account_id"]);
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?as=merchant&user_id='+userdata["account_id"]);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send();
     }
@@ -49,7 +48,7 @@
             }
         }
 
-        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?user_id='+userdata["account_id"]+'&type='+type);
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?as=merchant&user_id='+userdata["account_id"]+'&type='+type);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send();
     }
@@ -66,7 +65,7 @@
             }
         }
 
-        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?user_id='+userdata["account_id"]+'&start='+start+"&end="+end);
+        xhr.open('GET', '/HY360_Project_war_exploded/TransactionsAPI?as=merchant&user_id='+userdata["account_id"]+'&start='+start+"&end="+end);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send();
     }

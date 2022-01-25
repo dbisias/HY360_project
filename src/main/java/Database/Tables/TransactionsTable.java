@@ -126,12 +126,17 @@ public class TransactionsTable {
         + "'refunded' WHERE tid = " + tid);
     }
 
-    public ArrayList<Transaction> getTrans(int cli_id) throws SQLException, ClassNotFoundException {
+    public ArrayList<Transaction> getTrans(int cli_id,int merchant) throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
-            + "transactions WHERE cli_acc_id = " + cli_id);
+        if(merchant==0) {
+            rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
+                    + "transactions WHERE cli_acc_id = " + cli_id);
+        }else{
+            rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
+                    + "transactions WHERE mer_acc_id = " + cli_id);
+        }
 
         if ( !rs.next() ) {
 
@@ -171,13 +176,20 @@ public class TransactionsTable {
         return ret;
     }
 
-    public ArrayList<Transaction> getTrans(int cli_id, String type) throws SQLException, ClassNotFoundException {
+    public ArrayList<Transaction> getTrans(int cli_id, String type,int merchant) throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
-            + "transactions WHERE cli_acc_id = " + cli_id + " AND "
-            + "type = '" + type + "'");
+        if(merchant==0) {
+            rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
+                    + "transactions WHERE cli_acc_id = " + cli_id + " AND "
+                    + "type = '" + type + "'");
+        }else{
+            rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
+                    + "transactions WHERE mer_acc_id = " + cli_id + " AND "
+                    + "type = '" + type + "'");
+        }
+
 
         if ( !rs.next() ) {
 
@@ -217,13 +229,19 @@ public class TransactionsTable {
         return ret;
     }
 
-    public ArrayList<Transaction> getTrans(int cli_id, Date start, Date end) throws SQLException, ClassNotFoundException {
+    public ArrayList<Transaction> getTrans(int cli_id, Date start, Date end,int merchant) throws SQLException, ClassNotFoundException {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
-            + "transactions WHERE cli_acc_id = " + cli_id + " AND "
-            + "date >= '" + start + "' AND date <= '" + end + "'");
+        if(merchant==0) {
+            rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
+                    + "transactions WHERE cli_acc_id = " + cli_id + " AND "
+                    + "date >= '" + start + "' AND date <= '" + end + "'");
+        }else{
+            rs = stmt.executeQuery("SELECT tid, mer_acc_id, amount, type, date FROM "
+                    + "transactions WHERE mer_acc_id = " + cli_id + " AND "
+                    + "date >= '" + start + "' AND date <= '" + end + "'");
+        }
 
         if ( !rs.next() ) {
 

@@ -69,7 +69,7 @@ function updateUserInfo(usertype){
     xhr.onload = function (){
         if(xhr.readyState === 4 && xhr.status === 200){
             userdata = JSON.parse(xhr.responseText);
-            if(usertype!=undefined){if(userdata["usertype"]!=usertype){logout();}}
+            if(usertype!=undefined){if(userdata["usertype"]!=usertype){console.log(usertype)}}
             if(userdata["usertype"]=="merchant"){userdata["remaining_amount"]=userdata["profit"]}
             updateusergaf();
             getCompanyInfo();
