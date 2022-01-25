@@ -33,7 +33,7 @@ public class Individual extends Account{
         return billimit;
     }
 
-    public void setBillimit(int billimit) {
+    public void setBillimit(double billimit) {
         this.billimit = billimit;
     }
 
@@ -49,7 +49,7 @@ public class Individual extends Account{
         return amount_due;
     }
 
-    public void setAmount_due(int amount_due) {
+    public void setAmount_due(double amount_due) {
         this.amount_due = amount_due;
     }
 
@@ -57,7 +57,7 @@ public class Individual extends Account{
         return remaining_amount;
     }
 
-    public void setRemaining_amount(int remaining_amount) {
+    public void setRemaining_amount(double remaining_amount) {
         this.remaining_amount = remaining_amount;
     }
 }
