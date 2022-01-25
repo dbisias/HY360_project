@@ -160,7 +160,7 @@ public class IndividualTable implements DBTable {
 
         con = DB_Connection.getConnection();
         stmt = con.createStatement();
-        stmt.executeUpdate("DELETE FROM individuals WHERE accound_id = '"
+        stmt.executeUpdate("DELETE FROM individuals WHERE account_id = '"
             + acc_id + "'");
 
         stmt.close();
