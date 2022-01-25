@@ -27,8 +27,7 @@ public class Login extends HttpServlet {
         jsonreply.put("logged_in", true);
         jsonreply.put("usertype", usertype);
         try {
-            session.setAttribute("logged_in", logged_in.getUsername());
-            session.setAttribute("password", logged_in.getPassword());
+            session.setAttribute("logged_in", logged_in.getAccount_id());
         }catch (NullPointerException e){
             helper.createResponse(response,403,e.getMessage());
             return;

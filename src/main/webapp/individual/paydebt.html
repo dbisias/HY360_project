@@ -1,4 +1,5 @@
 <script>
+    var payas="individual";
     function paydebt(event) {
         event.preventDefault();
         var data={}
@@ -17,13 +18,16 @@
         data["amount"]=inputamount;
         data["username"]=userdata["username"];
         data["password"]=userdata["password"];
-        data["as_company"]
+        if(payas="individual"){data["as_company"]=0;}
+        else{data["as_company"]=userdata["company_account_id"];}
+
         xhr.open('PUT', '/HY360_Project_war_exploded/TransactionsAPI');
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send(data);
     }
 
-    function updateinfo(){
+    function updateindividualinfo(){
+        payas = "individual";
         if(userdata["remaining_amount"]<0) {
             $("#paybtn").prop('disabled', true);
         }
@@ -38,14 +42,42 @@
         $("#balancetext").html("Your balance is: "+userdata["remaining_amount"]+"€");
     }
 
+    function showcompanyselect(){
+        if(userdata["company_account_id"]==0){return}
+        getCompanyInfo();
+        $("#companypay").html("Pay as: <select id='as_select'><option value='individual' selected>Individual</option><option value='company'>Company</option></select>")
+    }
+
+    function updatecompanyinfo(){
+        payas = "company";
+        if(companydata["remaining_amount"]<0) {
+            $("#paybtn").prop('disabled', true);
+        }
+
+        if(companydata["amount_due"]>0) {
+            $("#debttext").html("You currently owe CCC: " + companydata["amount_due"] + "€!");
+        }else{
+            $("#debttext").html("You dont owe us any money!");
+            $("#paybtn").prop('disabled', true);
+        }
+
+        $("#balancetext").html("Your balance is: "+companydata["remaining_amount"]+"€");
+    }
+
     $(document).ready(function(){
         if(userdata["amount_due"]>userdata["remaining_amount"]){$("#amouninput").val(userdata["remaining_amount"]);}
         else{$("#amouninput").val(userdata["amount_due"]);}
-        updateinfo();
+        updateindividualinfo();
+        showcompanyselect()
 
+        $("#as_select").change(function(){
+            if($("#as_select").val()=="individual"){updateindividualinfo();}
+            else{updatecompanyinfo();}
+        });
     });
 </script>
 <div>
+    <header id="companypay"></header>
     <header><h4 id="debttext"></h4></header>
     <br>
     <header id="balancetext"></header>

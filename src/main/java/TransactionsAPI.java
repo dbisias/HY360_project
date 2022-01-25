@@ -1,6 +1,7 @@
 import Database.Tables.CompanyTable;
 import Database.Tables.IndividualTable;
 import Database.Tables.TransactionsTable;
+import Database.mainClasses.Company;
 import Database.mainClasses.Individual;
 import Exceptions.InsufficientBalanceException;
 import ServletHelper.ServletHelper;
@@ -75,5 +76,63 @@ public class TransactionsAPI extends HttpServlet {
             return;
         }
         helper.createResponse(response, 200, "Transaction added successfully");
+    }
+
+
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        BufferedReader inputJSONfromClient = request.getReader();
+        JSONTokener tokener = new JSONTokener(inputJSONfromClient);
+        System.out.println(tokener.next());
+        JSONObject jsonIn = new JSONObject(tokener);
+
+        String username = (String) jsonIn.get("username");
+        String password = (String) jsonIn.get("password");
+        int company_id = Integer.parseInt((String) jsonIn.get("as_company"));
+        double amount = Double.parseDouble((String) jsonIn.get("amount"));
+
+        try{
+            if(company_id == 0) {
+                IndividualTable iTable = new IndividualTable();
+                Individual individual = iTable.findAccount(username, password);
+                double ind_amount = individual.getRemaining_amount();
+                if(ind_amount == 0) {
+                    helper.createResponse(response, 403, "broke ass boy");
+                    return;
+                }
+                else if(ind_amount < amount) {
+                    iTable.payDebt(individual.getAccount_id(), ind_amount);
+                    helper.createResponse(response, 200, "You payed as much of your debt as your balance " +
+                            "allowed.");
+                    return;
+                }
+                else {
+                    iTable.payDebt(individual.getAccount_id(), amount);
+                    helper.createResponse(response, 200, "Whole or part of the debt payed successfully.");
+                }
+            }
+            else {
+                CompanyTable cTable = new CompanyTable();
+                Company company = cTable.findAccount(username, password);
+                double ind_amount = company.getRemaining_amount();
+                if(ind_amount == 0) {
+                    helper.createResponse(response, 403, "broke ass boy");
+                    return;
+                }
+                else if(ind_amount < amount) {
+                    cTable.payDebt(company.getAccount_id(), ind_amount);
+                    helper.createResponse(response, 200, "You payed as much of your debt as your balance " +
+                            "allowed.");
+                    return;
+                }
+                else {
+                    cTable.payDebt(company.getAccount_id(), amount);
+                    helper.createResponse(response, 200, "Whole or part of the debt payed successfully.");
+                    return;
+                }
+            }
+        }
+        catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

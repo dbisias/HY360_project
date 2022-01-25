@@ -51,7 +51,7 @@ public class AccountAPI extends HttpServlet {
 
     }
 
-    protected void doDELETE(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BufferedReader inputJSONfromClient = request.getReader();
         JSONTokener tokener = new JSONTokener(inputJSONfromClient);
         JSONObject jsonIn = new JSONObject(tokener);
@@ -59,40 +59,40 @@ public class AccountAPI extends HttpServlet {
         String username = (String) jsonIn.get("username");
         String password = (String) jsonIn.get("password");
         String usertype = (String) jsonIn.get("usertype");
-        String acc_id = (String)  jsonIn.get("acc_id");
+        int acc_id = Integer.parseInt((String)  jsonIn.get("acc_id"));
 
         try{
             if(usertype.equals("individual")) {
                 IndividualTable iTable = new IndividualTable();
-                Individual individual = iTable.findAccount(username, password);
+                Individual individual = iTable.findAccount(acc_id);
                 if(individual.getAmount_due() != 0) {
                     helper.createResponse(response, 403, "You can't delete your account. You still owe the CCC money");
                     return;
                 }
-//                iTable.deleteAccount(acc_id);
+                iTable.delAccount(acc_id);
                 helper.createResponse(response, 200, "Account deleted successfully");
                 return;
 
             }
             else if(usertype.equals("merchant")) {
                 MerchantTable mTable = new MerchantTable();
-                Merchant merchant = mTable.findAccount(username, password);
+                Merchant merchant = mTable.findAccount(acc_id);
                 if(merchant.getAmount_due() != 0) {
                     helper.createResponse(response, 403, "You can't delete your account. You still owe the CCC money");
                     return;
                 }
-//                mTable.deleteAccount(acc_id);
+                mTable.delAccount(acc_id);
                 helper.createResponse(response, 200, "Account deleted successfully");
                 return;
             }
             else {
                 CompanyTable cTable = new CompanyTable();
-                Company company = cTable.findAccount(username, password);
+                Company company = cTable.findAccount(acc_id);
                 if(company.getAmount_due() != 0) {
                     helper.createResponse(response, 403, "You can't delete your account. You still owe the CCC money");
                     return;
                 }
-//                cTable.deleteAccount(acc_id);
+                cTable.delAccount(acc_id);
                 helper.createResponse(response, 200, "Account deleted successfully");
                 return;
             }
