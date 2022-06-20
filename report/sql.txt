@@ -1,0 +1,108 @@
+[ AccountTable ]
+
+CREATE TABLE accounts (
+    account_id INTEGER not NULL AUTO_INCREMENT,
+    name VARCHAR (40) not null,
+    username VARCHAR (20) not null unique,
+    password VARCHAR (20) not null,
+    PRIMARY KEY ( account_id )
+)
+
+[ CompanyTable ]
+
+CREATE TABLE companies (
+    account_id INTEGER not NULL AUTO_INCREMENT unique,
+    billing_limit DOUBLE,
+    expiration_date DATE,
+    amount_due DOUBLE,
+    remaining_amount DOUBLE,
+    FOREIGN KEY (account_id) REFERENCES accounts(account_id)
+)
+
+[ IndividualTable ]
+
+CREATE TABLE individuals (
+    account_id INTEGER not NULL AUTO_INCREMENT unique,
+    billing_limit DOUBLE,
+    expiration_date DATE,
+    amount_due DOUBLE,
+    remaining_amount DOUBLE,
+    company_account_id INTEGER,
+    FOREIGN KEY (company_account_id) REFERENCES accounts(account_id),
+    FOREIGN KEY (account_id) REFERENCES accounts(account_id)
+)
+
+[ MerchantTable ]
+
+CREATE TABLE merchants (
+    account_id INTEGER not NULL AUTO_INCREMENT unique,
+    commission DOUBLE,
+    commission DOUBLE,
+    profit DOUBLE,
+    amount_due DOUBLE,
+    FOREIGN KEY (account_id) REFERENCES accounts(account_id)
+)
+
+[ TransactionsTable]
+CREATE TABLE transactions (
+    tid INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    cli_acc_id INTEGER NOT NULL,
+    mer_acc_id INTEGER NOT NULL,
+    date DATE NOT NULL,
+    amount DOUBLE NOT NULL,
+    type VARCHAR (15) NOT NULL,
+    FOREIGN KEY (cli_acc_id) REFERENCES accounts(account_id),
+    FOREIGN KEY (mer_acc_id) REFERENCES accounts(account_id)
+)
+
+[ Queries ]
+#Ό,τι ξεκινάει με 'v.' σημαίνει ότι στον κώδικά μας είναι μεταβλητή
+
+SELECT EXISTS (
+    SELECT 1 FROM individuals_view WHERE account_id = v.cli_id LIMIT 1
+)
+
+#Η λίστα της SELECT αγνοείται εξαιτίας της EXIST
+
+SELECT EXISTS (
+    SELECT 1 FROM companies_view WHERE account_id = v.cli_id LIMIT 1
+)
+
+SELECT EXISTS (
+    SELECT 1 FROM merchants_view WHERE account_id = v.mer_id LIMIT 1
+)
+
+SELECT cli_acc_id, mer_acc_id, amount FROM transactions WHERE tid = v.tid
+
+SELECT tid, mer_acc_id, amount, type, date FROM transactions WHERE cli_acc_id = v.cli_id
+
+SELECT name FROM accounts WHERE account_id = v.mer_acc_id
+
+SELECT tid, mer_acc_id, amount, type, date FROM transactions WHERE cli_acc_id = v.cli_id
+    AND type = v.type
+
+SELECT tid, mer_acc_id, amount, type, date FROM transactions WHERE cli_acc_id = v.cli_id
+    AND date >= v.start AND date <= v.end
+
+SELECT * FROM merchants_view WHERE account_id = v.cli_id
+
+SELECT * FROM merchants_view WHERE username = v.username AND v.password = password
+
+SELECT account_id, name FROM merchants_view
+
+SELECT * FROM merchants_view WHERE profit = (
+    SELECT MAX(profit) FROM merchants_view
+) LIMIT 1
+
+SELECT remaining_amount FROM individuals_view WHERE account_id = v.cli_id
+
+SELECT billing_limit, amount_due FROM individuals_view WHERE account_id = v.cli_add
+
+SELECT * FROM individuals_view WHERE amount_due = '0'
+
+SELECT * FROM individuals_view WHERE amount_due > '0' ORDER BY amount_due DESC
+#DESC --> Descending Order
+
+SELECT * FROM companies_view WHERE amount_due > '0' ORDER BY amount_due DESC
+
+SELECT billing_limit, amount_due FROM companies_view WHERE account_id = v.cli_id
