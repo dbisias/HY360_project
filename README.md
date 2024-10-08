@@ -1,6 +1,6 @@
 # CCC Bank *(Files and Databases Project)*
 
-For the project of **Files and Databases**, we created a website for the CCC Bank. In this website wnyone can create an account, and login to manage theri founds. Users and Companies can send or recieve founds to each other.
+For the project of **Files and Databases**, we created a website for the CCC Bank. In this website anyone can create an account, and login to manage their funds. Users and Companies can send or recieve funds to each other.
 
 The assignment details can be found in the [assignment PDF](https://github.com/papastam/HY360_project/blob/master/hy360_project.pdf)
 
